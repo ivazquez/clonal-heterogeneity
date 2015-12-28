@@ -1,0 +1,33 @@
+# LaTeX temporary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+
+# BibTeX
+*.bbl
+*.blg
+
+# Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+.DS_Store
+
+# Python
+paths.py
+*.pyc
+*.ipynb_checkpoints
+
+# Sequencing data
+*.ab1
+*.scf
+*.seq
+*.seq.clipped
+
+*.pdf
