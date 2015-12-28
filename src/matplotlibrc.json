@@ -1,0 +1,31 @@
+{
+  "lines.linewidth": 2.0,
+  "patch.linewidth": 0.5,
+  "legend.fancybox": false,
+  "axes.color_cycle": [
+    "#30a2da",
+    "#fc4f30",
+    "#e5ae38",
+    "#6d904f",
+    "#8b8b8b"
+  ],
+  "axes.labelsize": "large",
+  "axes.axisbelow": true,
+  "axes.grid": false,
+  "patch.edgecolor": "#eeeeee",
+  "axes.titlesize": "x-large",
+  "svg.embed_char_paths": "path",
+  "examples.directory": "",
+  "grid.linestyle": "-",
+  "grid.linewidth": 1.0,
+  "grid.color": "#cbcbcb",
+  "axes.linewidth": 1.0,
+  "font.size":14.0,
+  "lines.linewidth": 4,
+  "lines.solid_capstyle": "butt",
+  "figure.subplot.left"    : 0.08,
+  "figure.subplot.right"   : 0.95, 
+  "figure.subplot.bottom"  : 0.07,
+  "font.family" : "sans-serif",
+  "font.sans-serif" : "Helvetica"
+}
