@@ -92,9 +92,9 @@ def gmm_posterior(X, M_best):
 from statsmodels.formula.api import ols
 from statsmodels.stats.anova import anova_lm
 
-def run_anova(formula, df):
+def run_anova(formula, df, anova_type=3):
     lm = ols(formula, df).fit()
-    anova = anova_lm(lm, type=3)
+    anova = anova_lm(lm, type=anova_type)
     return lm, anova
 
 def fraction_of_explainable_variance(factor, anova):

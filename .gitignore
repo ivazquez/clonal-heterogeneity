@@ -29,5 +29,7 @@ paths.py
 *.scf
 *.seq
 *.seq.clipped
+*.vcf
+*.vcf.gz
 
 *.pdf
