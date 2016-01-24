@@ -1,7 +1,9 @@
 # Background-dependent selection of genetic variation in heterogeneous populations
 
 This repository contains supporting material for the manuscript in preparation:
+
 > "Background-dependent selection of genetic variation in heterogeneous populations"
+
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
 
 To clone this repository, run the following command in a local directory:
@@ -23,7 +25,7 @@ We carry out subclonal decomposition using a probabilistic inference method name
 ## Sequence data
 Sequencing reads are available in BAM format from the European Nucleotide Archive and the NCBI. The sequence data for the parental strains and the ancestral individuals were previously submitted to the NCBI BioProject under accession no. [PRJEB2299](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2299) and the SRA/ENA databases under study accession no. [ERP000361](http://www.ebi.ac.uk/ena/data/view/ERP000361), as part of the Saccharomyces Genome Resequencing Project. The sequence data for the time-resolved populations and the evolved individuals, have been submitted to NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608), and the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780).
 
-Variant calls are available in VCF format.
+Variant calls are available in VCF format in the `data/seq/` directory.
 
 ## Phenotype data
 Phenotype data are available under `data/pheno/`, in comma-separated format or in Pickle format for Python. 'NA' is used to indicate missing data or NaN. Raw imaging data is available upon request (~1TB).
