@@ -8,53 +8,6 @@ from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
 import pandas as pd
 
-def save_fig(path, ext='png', close=True, verbose=True):
-    """Save a figure from pyplot.
-    Parameters
-    ----------
-    path : string
-        The path (and filename, without the extension) to save the
-        figure to.
-    ext : string (default='png')
-        The file extension. This must be supported by the active
-        matplotlib backend (see matplotlib.backends module).  Most
-        backends support 'png', 'pdf', 'ps', 'eps', and 'svg'.
-    close : boolean (default=True)
-        Whether to close the figure after saving.  If you want to save
-        the figure multiple times (e.g., to multiple formats), you
-        should NOT close it in between saves or you will have to
-        re-plot it.
-    verbose : boolean (default=True)
-        Whether to print information about when and where the image
-        has been saved.
-    """
-    
-    # Extract the directory and filename from the given path
-    directory = os.path.split(path)[0]
-    filename = "%s.%s" % (os.path.split(path)[1], ext)
-    if directory == '':
-        directory = '.'
-
-    # If the directory does not exist, create it
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    # The final path to save to
-    savepath = os.path.join(directory, filename)
-
-    if verbose:
-        print("Saving figure to '%s'..." % savepath),
-
-    # Actually save the figure
-    plt.savefig(savepath)
-    
-    # Close it
-    if close:
-        plt.close()
-
-    if verbose:
-        print("Done")
-        
 def load_data(fn):
     '''Load the data for the plots
     
@@ -65,7 +18,8 @@ def load_data(fn):
     import cPickle as pickle
     with open(fn, 'rb') as f:
         return pickle.load(f)
-        
+
+
 def save_data(data, fn):
     '''Store data to file for the plots
     
@@ -77,58 +31,6 @@ def save_data(data, fn):
     import cPickle as pickle
     with open(fn, 'wb') as f:
         pickle.dump(data, f, protocol=-1)
-
-def create_grid_figure(nrows, ncolumns, plotwidth=2.0, plotheight=2.0, pad=0.1, padleft=0.1, padright=0.1, padtop=0.1, padbottom=0.1, clean=True):
-    '''
-    Function to...
-
-    Input
-    -----
-      nrows : 
-      ncols : 
-      plotwidth : 
-      plotheight : 
-      pad : 
-      padleft : 
-      padright : 
-      padtop : 
-      padbottom : 
-      clean : 
-    '''
-    wsize = padleft + (ncolumns * plotwidth) + (pad * (ncolumns - 1)) + padright
-    hsize = padtop + (nrows * plotheight) + (pad * (nrows - 1)) + padbottom
-    fig = plt.figure(figsize=(wsize, hsize))
-    wpadfraction = pad / wsize
-    hpadfraction = pad / hsize
-    wplotsize = plotwidth / wsize
-    hplotsize = plotheight / hsize 
-    axes = {}
-    # Create all the subplots
-    for row in range(nrows):
-        axes[row] = {}
-        for col in range(ncolumns):
-            axes[row][col] = plt.subplot(nrows, ncolumns, row * ncolumns + col + 1)
-            
-            # No labels, ticks, etc.
-            if clean:
-                for ax in [axes[row][col].xaxis, axes[row][col].yaxis]:
-                    ax.set_major_formatter(NullFormatter())
-                    ax.set_major_locator(NullLocator())
-    
-    # Resize all the subplots
-    for row in range(nrows):
-        for col in range(ncolumns):
-            x0 = (padleft / wsize ) + (wplotsize + wpadfraction) * col
-            x1 = wplotsize
-            y0 = (padbottom / hsize) + (nrows - row - 1) * (hplotsize + hpadfraction) 
-            y1 = hplotsize
-            coords = [x0, y0, x1, y1]
-            axes[row][col].set_position(coords)
-
-            for s in axes[row][col].spines.values():
-                s.set_linewidth(0.8)
-
-    return fig, axes
 
 
 # Noticeable points
@@ -361,14 +263,17 @@ def hex_to_rgb(value):
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
+
 def rgb_to_hex(rgb):
     return '#%02x%02x%02x' % rgb
+
     
 sgd_length = pd.read_csv('~/reference/SGD_2010.lengths', names=['chr_arabic','chrs','chr_length'], index_col=False, sep=' ')
 sgd_length = sgd_length[~(sgd_length['chr_arabic'].isin([17,18]))]
 sgd_length['chr_start'] = ((pd.rolling_sum((sgd_length['chr_length']), 2) - sgd_length['chr_length']).fillna(0)).cumsum(axis=0)
 sgd_length['chr_end'] = (sgd_length['chr_length'] + 1).cumsum(axis=0)
 sgd_length = sgd_length.drop('chr_length', axis=1)
+
 
 def chr_to_gw(df):
     df = df.merge(sgd_length, how='left', on='chr_arabic')

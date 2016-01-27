@@ -29,3 +29,7 @@ Variant calls are available in VCF format in the `data/seq/` directory.
 
 ## Phenotype data
 Phenotype data are available under `data/pheno/`, in comma-separated format or in Pickle format for Python. 'NA' is used to indicate missing data or NaN. Raw imaging data is available upon request (~1TB).
+
+[Figure 3](https://github.com/ivazquez/population-dynamics/blob/master/src/figure3.ipynb) and [Figure SX](https://github.com/ivazquez/population-dynamics/blob/master/src/figure3.ipynb)
+
+as shown in [Figure 5](https://github.com/ivazquez/population-dynamics/blob/master/src/figure5.ipynb) and [Figure SX](https://github.com/ivazquez/population-dynamics/blob/master/src/figure5.ipynb).

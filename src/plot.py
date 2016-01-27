@@ -40,7 +40,7 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
 
     for i in range(0, len(bp['boxes'])):
         bp['boxes'][i].set_color(colors[i])
-        #bp['boxes'][i].set_hatch('/')
+        # bp['boxes'][i].set_hatch(' ')
 
         # we have two whiskers!
         bp['whiskers'][i*2].set(color=colors[i], 
@@ -110,7 +110,7 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     from matplotlib.ticker import FormatStrFormatter
     
     if fold:
-        #
+        # get the matrix M and its transpose
         X = M.values
         Y = M.values.T
         # calculate the element-wise average of the two matrices
@@ -124,7 +124,7 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     Z = np.ma.array(Z, mask=np.isnan(Z))
     cmap.set_bad('0.1',1.)
 
-    # Shift colormap
+    # shift colormap
     orig_cmap = cmap
     mid=(1 - np.ma.max(Z)/(np.ma.max(Z) + abs(np.ma.min(Z))))
 
@@ -133,7 +133,7 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
 
     im = ax.pcolor(Z, edgecolors='lightgrey', linewidths=0.5, cmap=orig_cmap, vmin=vmin, vmax=vmax)
     
-    # Place the major ticks at the middle of each cell
+    # place the major ticks at the middle of each cell
     ax.set_xticks(np.arange(Z.shape[1]) + 0.5, minor=False)
     ax.set_yticks(np.arange(Z.shape[0]) + 0.5, minor=False)
 
@@ -146,11 +146,11 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     
-    # Remove last blank column
+    # remove last blank column
     ax.set_xlim( (0, Z.shape[1]) )
     ax.set_ylim( (0, Z.shape[0]) )
     
-    # Turn off all the ticks
+    # turn off all the ticks
     for t in ax.xaxis.get_major_ticks():
         t.tick1On = False
         t.tick2On = False
@@ -158,10 +158,10 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
         t.tick1On = False
         t.tick2On = False
         
-    # Proper orientation (origin at the top left instead of bottom left)
+    # proper orientation (origin at the top left instead of bottom left)
     ax.invert_yaxis()
     
-    # Set equal aspect ratio
+    # set equal aspect ratio
     ax.set_aspect('equal')
 
     # add colorbar
@@ -173,7 +173,6 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     cbar.ax.set_title(legend_title, horizontalalignment='center', fontsize=5)
     cbar.ax.tick_params(labelsize=5)
     cbar.locator = ticker.MaxNLocator(nbins = 3)
-    # cbar.outline.set_edgecolor('none')
     cbar.outline.set_visible(False)
     
 
@@ -183,17 +182,11 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     - http://stackoverflow.com/a/16124677/395857 
     - http://stackoverflow.com/a/25074150/395857
     '''
-    
-#     dy = np.arange(len(X)) + 1
-#     dx = X.columns.get_level_values('pos').values
-#     y, x = np.meshgrid(y, x)
-#     z = X.values.T
-#     z = z[:-1, :-1]
 
-    # Plot it out
+    # plot the heatmap
     c = ax.pcolor(x, y, z, linewidths=0, cmap=cmap, vmin=vmin, vmax=vmax)
 
-    # Place the major ticks at the middle of each cell
+    # place the major ticks at the middle of each cell
     ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
     ax.set_yticks(np.arange(z.shape[0]) + 0.5, minor=False)
 
@@ -207,8 +200,6 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     ax.set_ylabel(ylabel)
 
     # Remove last blank column
-#     ax.set_xlim( (0, z.shape[1]) )
-#     ax.set_ylim( (0, z.shape[0]) )
     ax.set_xlim( (min(x), max(x)) )
     ax.set_ylim( (min(y), max(y)) )
 
@@ -422,23 +413,18 @@ def align_xaxis(ax1, v1, ax2, v2):
     ax2.set_xlim(minx+dx, maxx+dx) 
     
        
-# def align_yaxis(ax1, v1, ax2, v2):
-#     """
-#     adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1
-#     see: http://stackoverflow.com/questions/7630778/matplotlib-align-origin-of-right-axis-with-specific-left-axis-value
-#     """
-#     _, y1 = ax1.transData.transform((0, v1))
-#     _, y2 = ax2.transData.transform((0, v2))
-#     inv = ax2.transData.inverted()
-#     _, dy = inv.transform((0, 0)) - inv.transform((0, y1-y2))
-#     miny, maxy = ax2.get_ylim()
-#     ax2.set_ylim(miny+dy, maxy+dy)
 def align_yaxis(ax1, v1, ax2, v2):
-    """adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1"""
+    """
+    adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1
+    see: http://stackoverflow.com/questions/7630778/matplotlib-align-origin-of-right-axis-with-specific-left-axis-value
+    """
     _, y1 = ax1.transData.transform((0, v1))
     _, y2 = ax2.transData.transform((0, v2))
-    adjust_yaxis(ax2,(y1-y2)/2,v2)
-    adjust_yaxis(ax1,(y2-y1)/2,v1)
+    inv = ax2.transData.inverted()
+    _, dy = inv.transform((0, 0)) - inv.transform((0, y1-y2))
+    miny, maxy = ax2.get_ylim()
+    ax2.set_ylim(miny+dy, maxy+dy)
+
 
 def adjust_yaxis(ax,ydif,v):
     """shift axis ax by ydiff, maintaining point v at the same location"""

@@ -26,7 +26,7 @@ def gmm_plot(X, M_best, label=None):
     #------------------------------------------------------------
     # Learn the best-fit GMM models
     #  Here we'll use GMM in the standard way: the fit() method
-    #  uses an Expectation-Maximization approach to find the best
+    #  uses Expectation-Maximization to find the best
     #  mixture of Gaussians for the data
 
     ax = plt.gca()
