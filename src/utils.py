@@ -175,6 +175,7 @@ def percentile(data):
     perc_25 = np.zeros(data.shape[1])
     perc_75 = np.zeros(data.shape[1])
     for i in range(0, len(median)):
+        
         median[i] = np.median(data[:, i])
         perc_25[i] = np.percentile(data[:, i], 25)
         perc_75[i] = np.percentile(data[:, i], 75)
@@ -270,7 +271,7 @@ def rgb_to_hex(rgb):
     
 sgd_length = pd.read_csv('~/reference/SGD_2010.lengths', names=['chr_arabic','chrs','chr_length'], index_col=False, sep=' ')
 sgd_length = sgd_length[~(sgd_length['chr_arabic'].isin([17,18]))]
-sgd_length['chr_start'] = ((pd.rolling_sum((sgd_length['chr_length']), 2) - sgd_length['chr_length']).fillna(0)).cumsum(axis=0)
+sgd_length['chr_start'] = ((pd.rolling_sum((sgd_length['chr_length']), 2) - sgd_length['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
 sgd_length['chr_end'] = (sgd_length['chr_length'] + 1).cumsum(axis=0)
 sgd_length = sgd_length.drop('chr_length', axis=1)
 
@@ -288,3 +289,11 @@ def chr_to_gw(df):
     df = df.drop(['chr_start','chr_end','chrs'], axis=1)
     
     return df
+
+
+
+def merge_two_dicts(x, y):
+    '''Given two dicts, merge them into a new dict as a shallow copy.'''
+    z = x.copy()
+    z.update(y)
+    return z

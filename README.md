@@ -14,7 +14,7 @@ To clone this repository, run the following command in a local directory:
 
 The source code contains notebooks to reproduce the manuscript figures.
 
-We carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 3](https://github.com/ivazquez/population-dynamics/blob/master/src/figure3.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. Documentation for [filterHD](https://github.com/andrej-fischer/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/andrej-fischer/cloneHD/blob/master/docs/README-cloneHD.md). To test this method with simulated data:
+We carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](https://github.com/ivazquez/population-dynamics/blob/master/src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. Documentation for [filterHD](https://github.com/andrej-fischer/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/andrej-fischer/cloneHD/blob/master/docs/README-cloneHD.md). To test this method with simulated data:
 
     `$ filterHD --data $bulkSNV --mode 1 --pre ${results}/bulk.snv --rnd 1e-8 --jump 0 --dist 1
 
@@ -30,6 +30,6 @@ Variant calls are available in VCF format in the `data/seq/` directory.
 ## Phenotype data
 Phenotype data are available under `data/pheno/`, in comma-separated format or in Pickle format for Python. 'NA' is used to indicate missing data or NaN. Raw imaging data is available upon request (~1TB).
 
-[Figure 3](https://github.com/ivazquez/population-dynamics/blob/master/src/figure3.ipynb) and [Figure SX](https://github.com/ivazquez/population-dynamics/blob/master/src/figure3.ipynb)
+[Figure 2](https://github.com/ivazquez/population-dynamics/blob/master/src/figure2.ipynb) and [Figure SX](https://github.com/ivazquez/population-dynamics/blob/master/src/figure2.ipynb)
 
-as shown in [Figure 5](https://github.com/ivazquez/population-dynamics/blob/master/src/figure5.ipynb) and [Figure SX](https://github.com/ivazquez/population-dynamics/blob/master/src/figure5.ipynb).
+as shown in [Figure 4](https://github.com/ivazquez/population-dynamics/blob/master/src/figure4.ipynb) and [Figure SX](https://github.com/ivazquez/population-dynamics/blob/master/src/figure4.ipynb).
