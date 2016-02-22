@@ -74,7 +74,7 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
 from matplotlib.collections import PatchCollection
 
 
-def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', radius=0.25):
+def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, radius=0.25):
     '''
     
     '''
@@ -97,6 +97,7 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
         shifted_cmap.set_bad('w')
         
         col.set(array=s, cmap=shifted_cmap)
+        col.set_clim([vmin, vmax])
         col.set_clip_on(False)
 
         ax.add_collection(col)
