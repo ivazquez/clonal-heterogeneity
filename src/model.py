@@ -1,3 +1,6 @@
+ #!/usr/bin/python
+ # -*- coding: utf-8 -*-
+ 
 """ 
 Module for 
 Mixture model.
@@ -22,14 +25,14 @@ def gmm_fit(X, N):
         
     return models
 
-def gmm_plot(X, M_best, label=None):
+def gmm_plot(ax, X, M_best, label=None):
     #------------------------------------------------------------
     # Learn the best-fit GMM models
     #  Here we'll use GMM in the standard way: the fit() method
     #  uses Expectation-Maximization to find the best
     #  mixture of Gaussians for the data
 
-    ax = plt.gca()
+    # ax = plt.gca()
 
     #------------------------------------------------------------
     # Plot the results
@@ -47,12 +50,10 @@ def gmm_plot(X, M_best, label=None):
     ax.hist(X, 30, normed=True, histtype='stepfilled', alpha=0.5)
     ax.plot(x, pdf, '-k', label=label)
     ax.plot(x, pdf_individual, '--k', label=label)
-    ax.text(0.04, 0.96, "Best-fit mixture",
-        ha='left', va='top', transform=ax.transAxes)
-    ax.set_xlabel('$x$')
-    ax.set_ylabel('$p(x)$')
+    # ax.set_xlabel('$x$')
+    # ax.set_ylabel('$p(x)$')
     
-    print M_best.n_components, M_best.means_.ravel()
+    # print M_best.n_components, M_best.means_.ravel()
 
     
 def gmm_components(AIC, BIC, N):
@@ -65,13 +66,13 @@ def gmm_components(AIC, BIC, N):
 #     ax.legend(loc=2)
 
 
-def gmm_posterior(X, M_best):
+def gmm_posterior(ax, X, M_best):
     # plot posterior probabilities for each component
-    ax = plt.gca()
+    # ax = plt.gca()
 
     x = np.linspace(X.min()-.2, X.max()+.2, 1000)
     p = M_best.predict_proba(np.array([x]).T)
-#     p = p[:, (1, 0, 2)]  # rearrange order so the plot looks better
+    # p = p[:, (1, 0, 2)]  # rearrange order so the plot looks better
     p = p.cumsum(1).T
 
     ax.fill_between(x, 0, p[0], color='gray', alpha=0.3)
@@ -79,8 +80,8 @@ def gmm_posterior(X, M_best):
 #     ax.fill_between(x, p[1], 1, color='gray', alpha=0.7)
     ax.set_xlim(X.min()-.2, X.max()+.2)
     ax.set_ylim(0, 1)
-    ax.set_xlabel('$x$')
-    ax.set_ylabel(r'$p({\rm class}|x)$')
+    # ax.set_xlabel('$x$')
+    # ax.set_ylabel(r'$p({\rm class}|x)$')
 
 #     ax.text(-5, 0.3, 'class 1', rotation='vertical')
 #     ax.text(0, 0.5, 'class 2', rotation='vertical')
@@ -103,21 +104,8 @@ def fraction_of_explainable_variance(factor, anova):
     denom = anova.ix[factors]['sum_sq'].sum()
     return num/denom
 
-def variance_explained(factor, anova):
-    
+def variance_explained(factor, anova):    
     return anova.ix[factor]['sum_sq']/anova['sum_sq'].sum()
-
-def mean_vectors(factor_data, formula, var_func=variance_explained):
-    results = defaultdict(list)
-#     for ii, (col, series) in enumerate(activity.iteritems()):
-#         factor_data['doubling_time'] = series.astype(float)
-    lm, anova = run_anova(formula, factor_data)
-    factors = [each for each in anova.index if each != 'Residual']
-    for factor in factors:
-        results[factor].append(var_func(factor, anova))
-#         results[factor].append(fraction_of_explainable_variance(factor, anova))
-#         results['P({})'.format(factor)].append(anova.ix[factor]['PR(>F)'])
-    return lm#pd.DataFrame(results)
 
 def variance_vectors(factor_data, formula, var_func=variance_explained):
     results = defaultdict(list)
