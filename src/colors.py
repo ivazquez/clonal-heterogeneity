@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Define colors and color utilities for plots
-
+# define colors and color utilities for plots
 from matplotlib.colors import colorConverter, LinearSegmentedColormap, cnames
 import brewer2mpl
 
