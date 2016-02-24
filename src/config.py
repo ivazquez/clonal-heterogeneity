@@ -401,3 +401,64 @@ dict_constructs = {
        u'YNR066C':{u'WT':0, u'ynr066cΔ':1,
                    u'ynr066cΔ WA/YNR066C NA':2, u'YNR066C WA/ynr066cΔ NA':3}}
 }
+
+
+def filter_spores(S, env_evo):
+    # filter by dictionary
+    S = S[(S['group'].isin(sp_bg_dict['position'][env_evo].keys())) &
+          (S['genotype_short'].isin(sp_gt_short_dict['position'][env_evo].keys())) &
+          (S['background'].isin(sp_cl_dict['position'][env_evo].keys()))]
+    return S
+          
+def filter_hybrids(H, env_evo):
+    # filter by dictionary
+    H = H[(H['group'].isin(hy_bg_dict['position'][env_evo].keys())) &
+          (H['genotype_short'].isin(hy_gt_short_dict['position'][env_evo].keys())) &
+          (H['background'].isin(hy_cl_dict['position'][env_evo].keys()))]
+    return H
+    
+def sort_spores(S, env_evo):
+    # apply sorting ranks to reorder rows
+    S.loc[:,'rank_group'] = S['group'].map(sp_bg_dict['position'][env_evo])
+    S.loc[:,'rank_background'] = S['background'].map(sp_cl_dict['position'][env_evo])
+    S.loc[:,'rank_gene'] = S['gene'].map(sp_gn_dict['position'][env_evo])
+    S.loc[:,'rank_genotype'] = S['genotype_short'].map(sp_gt_short_dict['position'][env_evo])
+    S.sort_values(['rank_group','rank_background','rank_gene','rank_genotype'],
+                  ascending=True,inplace=True)
+    return S
+
+def sort_hybrids(H, env_evo):
+    # apply sorting ranks to reorder rows
+    H.loc[:,'rank_group'] = H['group'].map(hy_bg_dict['position'][env_evo])
+    H.loc[:,'rank_background'] = H['background'].map(hy_cl_dict['position'][env_evo])
+    H.loc[:,'rank_gene'] = H['gene'].map(hy_gn_dict['position'][env_evo])
+    H.loc[:,'rank_genotype'] = H['genotype_short'].map(hy_gt_short_dict['position'][env_evo])
+    H.sort_values(['rank_group','rank_background','rank_gene','rank_genotype'],
+                  ascending=True,inplace=True)
+    return H
+    
+# def sort_spores(S):
+#     # apply sorting ranks to reorder rows
+#     S.loc[:,u'rank_group'] = S[u'group'].map(dict_population['position'])
+#     S.loc[:,u'rank_background'] = S[u'background'].map(dict_background['position'])
+#     S.loc[:,u'rank_genotype'] = S[u'genotype_short'].map(dict_genotype['position'])
+#     S.loc[:,u'rank_gene'] = S[u'gene'].map(dict_gene['position'])
+#     S.sort_values(by=[u'rank_group',u'rank_background',u'rank_genotype',u'rank_gene'],
+#                   ascending=True,inplace=True)
+#     return S
+#
+# def sort_hybrids(H):
+#     H.loc[:,u'rank_group_MATa'] = H[u'group_MATa'].map(dict_population['position'])
+#     H.loc[:,u'rank_group_MATα'] = H[u'group_MATα'].map(dict_population['position'])
+#     H.loc[:,u'rank_background_MATa'] = H[u'background_MATa'].map(dict_background['position'])
+#     H.loc[:,u'rank_background_MATα'] = H[u'background_MATα'].map(dict_background['position'])
+#     H.loc[:,u'rank_genotype_MATa'] = H[u'genotype_short_MATa'].map(dict_genotype['position'])
+#     H.loc[:,u'rank_genotype_MATα'] = H[u'genotype_short_MATα'].map(dict_genotype['position'])
+#     H.loc[:,u'rank_gene_MATa'] = H[u'gene_MATa'].map(dict_gene['position'])
+#     H.loc[:,u'rank_gene_MATα'] = H[u'gene_MATα'].map(dict_gene['position'])
+#     H.sort_values(by=[u'rank_group_MATa',u'rank_group_MATα',
+#                       u'rank_background_MATa',u'rank_background_MATα',
+#                       u'rank_gene_MATa',u'rank_gene_MATα',
+#                       u'rank_genotype_MATa',u'rank_genotype_MATα'],
+#                   ascending=True, inplace=True)
+#     return H
