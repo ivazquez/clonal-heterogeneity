@@ -109,12 +109,28 @@ def variance_explained(factor, anova):
 
 def variance_vectors(factor_data, formula, var_func=variance_explained):
     results = defaultdict(list)
-#     for ii, (col, series) in enumerate(activity.iteritems()):
-#         factor_data['doubling_time'] = series.astype(float)
     lm, anova = run_anova(formula, factor_data)
     factors = [each for each in anova.index if each != 'Residual']
-    for factor in factors:
-        results[factor].append(var_func(factor, anova))
-#         results[factor].append(fraction_of_explainable_variance(factor, anova))
-#         results['P({})'.format(factor)].append(anova.ix[factor]['PR(>F)'])
+    for factor in anova.index:
+        results[('var_explained',factor)].append(var_func(factor, anova))
+        results[('var_total',factor)].append(fraction_of_explainable_variance(factor, anova))
+        results[('df',factor)].append(anova.ix[factor]['df'])
+        results[('sum_sq',factor)].append(anova.ix[factor]['sum_sq'])
+        results[('mean_sq',factor)].append(anova.ix[factor]['mean_sq'])
+        results[('f_stat',factor)].append(anova.ix[factor]['F'])
+        results[('p_var',factor)].append(anova.ix[factor]['PR(>F)'])
     return pd.DataFrame(results)
+
+# def variance_vectors(factor_data, formula, var_func=variance_explained):
+#     results = defaultdict(list)
+#     lm, anova = run_anova(formula, factor_data)
+#     factors = [each for each in anova.index if each != 'Residual']
+#     for factor in anova.index:
+#         results[('var_explained',factor)].append(var_func(factor, anova))
+#         results[('var_total',factor)].append(fraction_of_explainable_variance(factor, anova))
+#         results[('df',factor)].append(anova.ix[factor]['df'])
+#         results[('sum_sq',factor)].append(anova.ix[factor]['sum_sq'])
+#         results[('mean_sq',factor)].append(anova.ix[factor]['mean_sq'])
+#         results[('f_stat',factor)].append(anova.ix[factor]['F'])
+#         results[('p_var',factor)].append(anova.ix[factor]['PR(>F)'])
+#     return pd.DataFrame(results)
