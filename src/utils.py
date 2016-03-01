@@ -33,23 +33,6 @@ def save_data(data, fn):
         pickle.dump(data, f, protocol=-1)
 
 
-# Noticeable points
-count = 0
-def highlight(ax, x, y, reason):
-    global count
-    #if index and index > 0:
-    #    x,y = (ava['seconds_elapsed'][index],
-    #           smooth(ava['successful_transactionssecond'])[index])
-    #    plot([x], [y], 'ko')
-    ax.annotate('%d TPS\n(%s)' % (y,reason), xy=(x,y),
-                xytext=(20, -(count+4.7)*22), textcoords='axes points',
-                arrowprops=dict(arrowstyle="-",
-                connectionstyle="angle,angleA=0,angleB=80,rad=10"),
-                horizontalalignment='left',
-                verticalalignment='bottom',
-                fontsize=8)
-
-
 def hide_axes(ax):
     '''
     Function to...
@@ -158,6 +141,7 @@ def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
 
     return newcmap
 
+
 def discrete_colormap(N, base_cmap=None):
     """Create an N-bin discrete colormap from the specified input map"""
 
@@ -169,6 +153,7 @@ def discrete_colormap(N, base_cmap=None):
     color_list = base(np.linspace(0, 1, N))
     cmap_name = base.name + str(N)
     return base.from_list(cmap_name, color_list, N)
+
 
 def percentile(data):
     median = np.zeros(data.shape[1])
@@ -289,7 +274,6 @@ def chr_to_gw(df):
     df = df.drop(['chr_start','chr_end','chrs'], axis=1)
     
     return df
-
 
 
 def merge_two_dicts(x, y):

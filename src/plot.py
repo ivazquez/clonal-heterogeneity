@@ -39,10 +39,9 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
             ax.add_patch(boxPolygon)
 
     for i in range(0, len(bp['boxes'])):
-        bp['boxes'][i].set_color(colors[i])
-        # bp['boxes'][i].set_hatch(' ')
-
-        # we have two whiskers!
+        # boxes
+        bp['boxes'][i].set(color=colors[i], zorder=2)
+        # whiskers
         bp['whiskers'][i*2].set(color=colors[i], 
                                 linewidth=1.5,
                                 linestyle='-')
@@ -89,14 +88,7 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
 
         s = S.ix[mating].values
         
-        # shift colormap
-        orig_cmap = cmap
-        mid = (1 - np.ma.max(S)/(np.ma.max(S) + abs(np.ma.min(S))))
-                    
-        shifted_cmap = utils.shift_colormap(orig_cmap, midpoint=mid, name='shifted')
-        shifted_cmap.set_bad('w')
-        
-        col.set(array=s, cmap=shifted_cmap)
+        col.set(array=s, cmap=cmap)
         col.set_clim([vmin, vmax])
         col.set_clip_on(False)
 
@@ -125,14 +117,7 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     Z = np.ma.array(Z, mask=np.isnan(Z))
     cmap.set_bad('0.1',1.)
 
-    # shift colormap
-    orig_cmap = cmap
-    mid=(1 - np.ma.max(Z)/(np.ma.max(Z) + abs(np.ma.min(Z))))
-
-    # shifted_cmap = utils.shift_colormap(orig_cmap, midpoint=mid, name='shifted')
-    # shifted_cmap.set_bad('w') # default value is 'k'
-
-    im = ax.pcolor(Z, edgecolors='lightgrey', linewidths=0.5, cmap=orig_cmap, vmin=vmin, vmax=vmax)
+    im = ax.pcolor(Z, edgecolors='lightgrey', linewidths=0.5, cmap=cmap, vmin=vmin, vmax=vmax)
     
     # place the major ticks at the middle of each cell
     ax.set_xticks(np.arange(Z.shape[1]) + 0.5, minor=False)
