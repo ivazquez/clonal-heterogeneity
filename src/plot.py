@@ -35,25 +35,29 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
             boxPolygon = Polygon(boxCoords, 
                                  facecolor = colors[i % len(colors)], 
                                  linewidth=0, 
-                                 hatch = hatches[i % len(hatches)])
+                                 hatch = hatches[i % len(hatches)],
+                                 zorder=4)
             ax.add_patch(boxPolygon)
 
     for i in range(0, len(bp['boxes'])):
         # boxes
-        bp['boxes'][i].set(color=colors[i], zorder=2)
+        bp['boxes'][i].set(color=colors[i])
         # whiskers
         bp['whiskers'][i*2].set(color=colors[i], 
                                 linewidth=1.5,
-                                linestyle='-')
+                                linestyle='-',
+                                zorder=4)
         bp['whiskers'][i*2 + 1].set(color=colors[i], 
                                 linewidth=1.5,
-                                linestyle='-')
+                                linestyle='-',
+                                zorder=4)
         # top and bottom fliers
         bp['fliers'][i].set(markerfacecolor=colors[i],
                             marker='o', alpha=0.75, markersize=3,
-                            markeredgecolor='none')
-        bp['medians'][i].set_color('black')
-        bp['medians'][i].set_linewidth(2)
+                            markeredgecolor='none', zorder=4)
+        bp['medians'][i].set(color='black',
+                             linewidth=2,
+                             zorder=5)
         # and 4 caps to remove
         for c in bp['caps']:
             c.set_linewidth(0)
@@ -66,8 +70,8 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
     ax.get_yaxis().tick_left()
     ax.tick_params(axis='y', length=0)
 
-    ax.grid(axis='y', color="0.9", linestyle='-', linewidth=1)
-    ax.set_axisbelow(True)
+    # ax.grid(axis='y', color="0.9", linestyle='-', linewidth=1)
+    # ax.set_axisbelow(True)
     
     
 from matplotlib.collections import PatchCollection
