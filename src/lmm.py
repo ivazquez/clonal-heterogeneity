@@ -2,8 +2,7 @@
  # -*- coding: utf-8 -*-
  
 """ 
-Module for 
-ANOVA and variance explained analysis. 
+Variance component analysis 
 """
 
 from collections import defaultdict

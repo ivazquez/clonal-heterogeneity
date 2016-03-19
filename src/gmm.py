@@ -2,9 +2,7 @@
  # -*- coding: utf-8 -*-
  
 """ 
-Module for 
-Mixture model.
-ANOVA and variance explained analysis. 
+Gaussian mixture model
 """
 
 from collections import defaultdict
