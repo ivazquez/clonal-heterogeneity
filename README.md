@@ -12,7 +12,7 @@ To clone this repository, run the following command in a local directory:
 
 ## Source code
 
-The source code contains notebooks to reproduce the manuscript figures.
+The source code contains notebooks to reproduce the manuscript figures. These are found in the `src/` directory. To install all requirements and modify the notebooks locally, run the following commands in `src/`:
 
     $ pip install -r requirements.txt
 	$ jupyter notebook
