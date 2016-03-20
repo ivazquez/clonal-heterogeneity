@@ -3,6 +3,8 @@
  
 import colors
 import matplotlib.patheffects as PathEffects
+import matplotlib.pyplot as plt
+import numpy as np
 
 # population attributes
 sp_bg_dict = {
@@ -66,9 +68,9 @@ sp_gt_short_dict = {
   },
 'color':
   {'HU': 
-  {'+': colors.fte_colors[1], '-': colors.fte_colors[5]},
+  {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
   'RM': 
-  {'+': colors.fte_colors[1], '-': colors.fte_colors[5]}
+  {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
   }
 }
 
@@ -149,26 +151,27 @@ hy_gt_long_dict = {
 hy_gt_short_dict = {
 'position':
 {'HU': 
- {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
+{('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
 'RM':
- {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
- },
+{('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}, 
+},
 'color':
 {'HU':
- {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
+{('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
 'RM':
- {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
+{('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
 }
 }
 
 # factor attributes
-factor_dict = {
+dict_factors = {
     'color': {
-        'time': colors.fte_colors[0],
-        'background\n(genotype)': colors.fte_colors_dark[0],
-        'de novo\n(gene identity)': colors.fte_colors[1], 
-        'de novo\n(genotype)': colors.fte_colors_dark[1],
+        'time': colors.fte_colors[2],
+        'background\n(genotype)': colors.fte_colors[0],
+        'de novo\n(gene identity)': colors.fte_colors_dark[1], 
+        'de novo\n(genotype)': colors.fte_colors[1],
         'auxotrophy': colors.fte_colors[5],
+        'measurement\nerror': colors.fte_colors[3],
         'tetrad': colors.fte_colors[4],
         'spore': colors.fte_colors[4]
 #         'background': "#348ABD", 
@@ -261,18 +264,18 @@ dict_background = {
         'WA/NA':5
     },
     'color':{
-        # 'WA':colors.bg_colors[0],
-        # 'NA':colors.bg_colors[1],
-        # 'WAxNA':colors.bg_colors[2],
-        # 'WA/WA':colors.bg_colors[0],
-        # 'NA/NA':colors.bg_colors[1],
-        # 'WA/NA':colors.bg_colors[2]
-        'WA':colors.fte_colors[0], 
-        'NA':colors.fte_colors[1], 
-        'WAxNA':colors.fte_colors[2],
-        'WA/WA':colors.fte_colors[0],
-        'NA/NA':colors.fte_colors[1],
-        'WA/NA':colors.fte_colors[2]
+        'WA':colors.bg_colors[0],
+        'NA':colors.bg_colors[1],
+        'WAxNA':colors.bg_colors[2],
+        'WA/WA':colors.bg_colors[0],
+        'NA/NA':colors.bg_colors[1],
+        'WA/NA':colors.bg_colors[2]
+        # 'WA':colors.fte_colors[0],
+        # 'NA':colors.fte_colors[1],
+        # 'WAxNA':colors.fte_colors[2],
+        # 'WA/WA':colors.fte_colors[0],
+        # 'NA/NA':colors.fte_colors[1],
+        # 'WA/NA':colors.fte_colors[2]
     },
     'marker':{
         'WA':'o', 
@@ -288,18 +291,50 @@ labels = {
     'genotype_short':'de_novo_genotype'
 }
 
-# environment attributes
-dict_environment = {
+# selection attributes
+dict_selection= {
     'color': {
-        'HU':colors.mr_colors[2],
-        'RM':colors.mr_colors[1],
-        'YPD':'k'
+        'HU':colors.fte_colors_light[5],
+        'RM':colors.fte_colors[5],
+        'YPD':colors.fte_colors_dark[5]
+        # 'HU':colors.mr_colors[2],
+        # 'RM':colors.mr_colors[1],
+        # 'YPD':'k'
     },
     'linewidth': {
         'HU':0.75,'RM':0.75,'YPD':0.75
     },
     'style': {
         'HU':'-','RM':'-','YPD':'-' 
+    },
+    'long_label': {
+        u'HU': u'Hydroxyurea (YPD+HU 10 mg/ml)', 
+        u'RM': u'Rapamycin (YPD+RM 0.025 μg/ml)',
+        u'YPD': u'Control (YNB)',
+        'COM':'Control', 
+        'null': u'Control'
+    },
+    'short_label': {
+        'HU':'Hydroxyurea',
+        'RM':'Rapamycin',
+        'YPD':'Control',
+        'COM':'Control', 
+        'null': u'Control'
+    }
+}
+
+# environment attributes
+dict_environment = {
+    'color': {
+        'HU':colors.mr_colors[2],
+        'RM':colors.mr_colors[1],
+        'YNB':'k'
+    },
+    'linewidth': {
+        'HU':0.75,'RM':0.75,'YNB':0.75
+    },
+    'style': {
+        'HU':'-','RM':'-','YNB':'-' 
     },
     'long_label': {
         u'HU': u'Hydroxyurea (YNB+HU 10 mg/ml)', 
@@ -311,7 +346,6 @@ dict_environment = {
     'short_label': {
         'HU':'Hydroxyurea',
         'RM':'Rapamycin',
-        'YPD':'Control',
         'YNB':'Control',
         'COM':'Control', 
         'null': u'Control'
@@ -362,14 +396,16 @@ dict_consequence_short = {
 }
 
 # time attributes
+vir = [plt.cm.viridis_r(x) for x in np.linspace(0, 1, 6)]
+vir = [plt.cm.YlGnBu(x) for x in np.linspace(0.25, 1, 6)]
 dict_time = {
     'color': {
-        0:colors.blues[1],
-        2:colors.blues[1],
-        4:colors.blues[2],
-        8:colors.blues[3],
-        16:colors.blues[0],
-        32:colors.blues[4]
+        0:vir[0],
+        2:vir[1],
+        4:vir[2],
+        8:vir[3],
+        16:vir[4],
+        32:vir[5]
     },
     'linewidth': {
         0:0.75,2:0.75,4:0.75,8:0.75,16:0.75,32:0.75
@@ -402,6 +438,68 @@ dict_constructs = {
                    u'ynr066cΔ WA/YNR066C NA':2, u'YNR066C WA/ynr066cΔ NA':3}}
 }
 
+# statistical tests for genetic constructs
+dict_construct_tests = {
+    u'CTF8':{
+        (u'WA', u'ctf8Δ'): (u'WA', u'WT'),
+        (u'NA', u'ctf8Δ'): (u'NA', u'WT'),
+        (u'WA/NA', u'ctf8Δ'): (u'WA/NA', u'WT'),
+        (u'WA/NA', u'CTF8 WA/ctf8Δ NA'): (u'WA/NA', u'ctf8Δ WA/CTF8 NA')
+    },
+    u'DEP1':{
+        (u'WA', u'dep1Δ'): (u'WA', u'WT'),
+        (u'NA', u'dep1Δ'): (u'NA', u'WT'),
+        (u'WA/NA', u'dep1Δ'): (u'WA/NA', u'WT'),
+        (u'WA/NA', u'DEP1 WA/dep1Δ NA'): (u'WA/NA', u'dep1Δ WA/DEP1 NA')
+    },
+    u'FPR1':{
+        (u'WA', u'fpr1Δ'): (u'WA', u'WT'),
+        (u'NA', u'fpr1Δ'): (u'NA', u'WT'),
+        (u'WA/WA', u'fpr1Δ/FPR1'): (u'WA/WA', u'WT'),
+        (u'NA/NA', u'fpr1Δ/FPR1'): (u'NA/NA', u'WT'),
+        (u'WA/NA', u'fpr1Δ'): (u'WA/NA', u'WT'),
+        (u'WA/NA', u'FPR1 WA/fpr1Δ NA'): (u'WA/NA', u'fpr1Δ WA/FPR1 NA')
+    },
+    u'INP54':{
+        (u'WA', u'inp54Δ'): (u'WA', u'WT'),
+        (u'NA', u'inp54Δ'): (u'NA', u'WT'),
+        (u'WA/NA', u'inp54Δ'): (u'WA/NA', u'WT'),
+        (u'WA/NA', u'INP54 WA/inp54Δ NA'): (u'WA/NA', u'inp54Δ WA/INP54 NA')
+    },
+    u'KOG1':{
+        (u'WA/NA', u'KOG1 WA/kog1Δ NA'): (u'WA/NA', u'kog1Δ WA/KOG1 NA')
+    },
+    u'RNR2':{
+        (u'WA', u'rnr2Δ'): (u'WA', u'WT'),
+        (u'NA', u'rnr2Δ'): (u'NA', u'WT'),
+        (u'WA/WA', u'rnr2Δ/RNR2'): (u'WA/WA', u'WT'),
+        (u'NA/NA', u'rnr2Δ/RNR2'): (u'NA/NA', u'WT'),
+        (u'WA/NA', u'rnr2*Δ/RNR2'): (u'WA/NA', u'RNR2*/rnr2Δ'),
+        (u'WA/NA', u'RNR2 WA/rnr2Δ NA'): (u'WA/NA', u'rnr2Δ WA/RNR2 NA')
+    },
+    u'RNR4':{
+        (u'WA', u'rnr4Δ'): (u'WA', u'WT'),
+        (u'NA', u'rnr4Δ'): (u'NA', u'WT'),
+        (u'WA/WA', u'rnr4Δ/RNR4'): (u'WA/WA', u'WT'),
+        (u'NA/NA', u'rnr4Δ/RNR4'): (u'NA/NA', u'WT'),
+        (u'NA/NA', u'rnr4::RNR4*'): (u'NA/NA', u'WT'),
+        (u'WA/NA', u'RNR4 WA/rnr4Δ NA'): (u'WA/NA', u'rnr4Δ WA/RNR4 NA')
+    },
+    u'TOR1':{
+        (u'WA', u'tor1Δ'): (u'WA', u'WT'),
+        (u'NA', u'tor1Δ'): (u'NA', u'WT'),
+        (u'WA/WA', u'tor1Δ/TOR1'): (u'WA/WA', u'WT'),
+        (u'NA/NA', u'tor1Δ/TOR1'): (u'NA/NA', u'WT'),
+        (u'WA/NA', u'tor1*Δ/TOR1'): (u'WA/NA', u'TOR1*/tor1Δ'),
+        (u'WA/NA', u'TOR1 WA/tor1Δ NA'): (u'WA/NA', u'tor1Δ WA/TOR1 NA')
+    },
+    u'YNR066C':{
+        (u'WA', u'ynr066cΔ'): (u'WA', u'WT'),
+        (u'NA', u'ynr066cΔ'): (u'NA', u'WT'),
+        (u'WA/NA', u'ynr066cΔ'): (u'WA/NA', u'WT'),
+        (u'WA/NA', u'YNR066C WA/ynr066cΔ NA'): (u'WA/NA', u'ynr066cΔ WA/YNR066C NA')
+    }
+}
 
 def filter_spores(S, env_evo):
     # filter by dictionary
