@@ -379,7 +379,7 @@ run_1,lane_1,tag_1,run_2,lane_2,tag_2,sample_accession_number,sanger_sample_id,n
 16356,6,20,16549,5,20,ERS661971,2787STDY6029280,,Saccharomyces cerevisiae,WA,diploid,,,RM,2,8,,WA_RM_2_T8,WA_RM_2,88.51860502
 16356,6,56,16549,5,56,ERS662007,2787STDY6029316,,Saccharomyces cerevisiae,WA,diploid,,,RM,2,16,,WA_RM_2_T16,WA_RM_2,98.89426765
 16356,7,14,16549,6,14,ERS662043,2787STDY6029352,,Saccharomyces cerevisiae,WA,diploid,,,RM,2,32,,WA_RM_2_T32,WA_RM_2,95.89650891
-,,,,,,,,DBVPG6044,Saccharomyces cerevisiae,WA,haploid,,,YPD,,0,,WA_YPD_T0,WA_YPD,24.65909059
+4505,7,2,4505,7,12,ERS016990,,DBVPG6044,Saccharomyces cerevisiae,WA,haploid,,,YPD,,0,,WA_YPD_T0,WA_YPD,24.65909059
 16356,5,15,16549,4,15,ERS661888,2787STDY6029196,,Saccharomyces cerevisiae,NA,diploid,,,HU,1,2,,NA_HU_1_T2,NA_HU_1,98.56162953
 16356,5,51,16549,4,51,ERS661924,2787STDY6029232,,Saccharomyces cerevisiae,NA,diploid,,,HU,1,4,,NA_HU_1_T4,NA_HU_1,81.50832067
 16356,6,9,16549,5,9,ERS661960,2787STDY6029268,,Saccharomyces cerevisiae,NA,diploid,,,HU,1,8,,NA_HU_1_T8,NA_HU_1,93.39122479
@@ -400,4 +400,4 @@ run_1,lane_1,tag_1,run_2,lane_2,tag_2,sample_accession_number,sanger_sample_id,n
 16356,6,26,16549,5,26,ERS661977,2787STDY6029286,,Saccharomyces cerevisiae,NA,diploid,,,RM,2,8,,NA_RM_2_T8,NA_RM_2,84.56667323
 16356,6,62,16549,5,62,ERS662013,2787STDY6029322,,Saccharomyces cerevisiae,NA,diploid,,,RM,2,16,,NA_RM_2_T16,NA_RM_2,89.22729864
 16356,7,20,16549,6,20,ERS662049,2787STDY6029358,,Saccharomyces cerevisiae,NA,diploid,,,RM,2,32,,NA_RM_2_T32,NA_RM_2,89.40483736
-,,,,,,,,YPS128,Saccharomyces cerevisiae,NA,haploid,,,YPD,,0,,NA_YPD_T0,NA_YPD,48.06474373
+4505,7,1,4505,8,1,ERS016989,,YPS128,Saccharomyces cerevisiae,NA,haploid,,,YPD,,0,,NA_YPD_T0,NA_YPD,48.06474373
