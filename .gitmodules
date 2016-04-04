@@ -1,0 +1,3 @@
+[submodule "cloneHD"]
+	path = cloneHD
+	url = https://github.com/ivazquez/cloneHD.git
