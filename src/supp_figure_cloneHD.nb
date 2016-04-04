@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     92469,       2104]
-NotebookOptionsPosition[     91273,       2060]
-NotebookOutlinePosition[     91631,       2076]
-CellTagsIndexPosition[     91588,       2073]
+NotebookDataLength[     92629,       2107]
+NotebookOptionsPosition[     91434,       2063]
+NotebookOutlinePosition[     91791,       2079]
+CellTagsIndexPosition[     91748,       2076]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -50,21 +50,22 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"dir", " ", "=", " ", 
    RowBox[{
-    RowBox[{"NotebookDirectory", "[", "]"}], "<>", 
-    "\"\<../manuscript/supp/figures/figureSX_cloneHD/\>\""}]}], 
+    RowBox[{"NotebookDirectory", "[", "]"}], "<>", "\"\<../\>\""}]}], 
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"datadir", "=", 
-   RowBox[{"dir", "<>", "\"\<data/\>\""}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"dir", "<>", "\"\<data/seq/subclonality/simulations/\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"resdir", "=", 
-   RowBox[{"dir", "<>", "\"\<results/\>\""}]}], ";"}], "\[IndentingNewLine]", 
-
+   RowBox[{"dir", "<>", "\"\<data/seq/subclonality/simulations/\>\""}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"plotdir", "=", 
-    RowBox[{"dir", "<>", "\"\<plots/\>\""}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+    RowBox[{
+    "dir", "<>", "\"\<manuscript/supp/figures/supp_figure_cloneHD\>\""}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"opts", "=", 
    RowBox[{"{", "\[IndentingNewLine]", 
@@ -118,7 +119,9 @@ Cell[BoxData[{
    3.64441069878808*^9}, {3.644485808430458*^9, 3.6444858086693497`*^9}, {
    3.6445955999092617`*^9, 3.644595600159301*^9}, {3.662147139603097*^9, 
    3.662147202147992*^9}, {3.6621527042301188`*^9, 3.6621527524403477`*^9}, 
-   3.6621529107478228`*^9, {3.6669837816961727`*^9, 3.666983910932639*^9}}],
+   3.6621529107478228`*^9, {3.6669837816961727`*^9, 3.666983910932639*^9}, {
+   3.6687989094411507`*^9, 3.6687989398182707`*^9}, {3.668798987963529*^9, 
+   3.668799013692298*^9}}],
 
 Cell[CellGroupData[{
 
@@ -2058,7 +2061,7 @@ Cell[BoxData[{
    3.666969039699438*^9, 3.666969084436652*^9, 3.666969175634102*^9}]
 }, Open  ]]
 },
-WindowSize->{1916, 1035},
+WindowSize->{1436, 855},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"10.4 for Mac OS X x86 (32-bit, 64-bit Kernel) (February 25, \
 2016)",
@@ -2075,36 +2078,36 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[557, 20, 4407, 100, 301, "Input"],
+Cell[557, 20, 4568, 103, 318, "Input"],
 Cell[CellGroupData[{
-Cell[4989, 124, 10095, 136, 35, "Subsubsection"],
-Cell[15087, 262, 17386, 292, 352, "Input"]
+Cell[5150, 127, 10095, 136, 35, "Subsubsection"],
+Cell[15248, 265, 17386, 292, 352, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[32510, 559, 123, 1, 44, "Subsection"],
-Cell[32636, 562, 3264, 86, 233, "Input"],
-Cell[35903, 650, 2502, 58, 165, "Input"]
+Cell[32671, 562, 123, 1, 44, "Subsection"],
+Cell[32797, 565, 3264, 86, 233, "Input"],
+Cell[36064, 653, 2502, 58, 165, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[38442, 713, 228, 3, 44, "Subsection"],
-Cell[38673, 718, 16093, 454, 930, "Input"]
+Cell[38603, 716, 228, 3, 44, "Subsection"],
+Cell[38834, 721, 16093, 454, 930, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[54803, 1177, 132, 1, 44, "Subsection"],
-Cell[54938, 1180, 10003, 256, 600, "Input"],
-Cell[64944, 1438, 90, 1, 28, "Input"]
+Cell[54964, 1180, 132, 1, 44, "Subsection"],
+Cell[55099, 1183, 10003, 256, 600, "Input"],
+Cell[65105, 1441, 90, 1, 28, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[65071, 1444, 260, 5, 36, "Subsection"],
-Cell[65334, 1451, 6013, 148, 420, "Input"]
+Cell[65232, 1447, 260, 5, 36, "Subsection"],
+Cell[65495, 1454, 6013, 148, 420, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[71384, 1604, 107, 1, 36, "Subsection"],
-Cell[71494, 1607, 4947, 120, 437, "Input"]
+Cell[71545, 1607, 107, 1, 36, "Subsection"],
+Cell[71655, 1610, 4947, 120, 437, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[76478, 1732, 302, 4, 36, "Subsection"],
-Cell[76783, 1738, 14474, 319, 646, "Input"]
+Cell[76639, 1735, 302, 4, 36, "Subsection"],
+Cell[76944, 1741, 14474, 319, 680, "Input"]
 }, Open  ]]
 }
 ]
