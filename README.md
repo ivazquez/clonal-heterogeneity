@@ -28,7 +28,7 @@ We carry out subclonal decomposition using a probabilistic inference method name
 ## Sequence data
 Sequencing reads are available in BAM format from the European Nucleotide Archive and the NCBI. The sequence data for the parental strains and the ancestral individuals were previously submitted to the NCBI BioProject under accession no. [PRJEB2299](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2299) and the SRA/ENA databases under study accession no. [ERP000361](http://www.ebi.ac.uk/ena/data/view/ERP000361), as part of the Saccharomyces Genome Resequencing Project. The sequence data for the time-resolved populations and the evolved individuals, have been submitted to NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608), and the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780).
 
-Variant calls are available in VCF format in the `data/seq/` directory. annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html). 
+Variant calls are available in VCF format in the `data/seq/` directory, annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html). 
 
 ## Phenotype data
 Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available under `data/pheno/`, in tab-separated format or serialized in Pickle format for Python. 'NA' is used to indicate missing data or NaN.
