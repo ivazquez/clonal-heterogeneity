@@ -16,15 +16,14 @@ The source code contains notebooks to reproduce the manuscript figures. These ar
 
     $ make
 
-This will install all requirements. To run the notebooks locally, run the following commands in `src/`:
+This will install all requirements. You can browse and run the notebooks locally to reproduce all figures, by running:
 
-    $ pip install -r requirements.txt
 	$ jupyter notebook
 
 We carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](https://github.com/ivazquez/population-dynamics/blob/master/src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. Documentation for [filterHD](https://github.com/andrej-fischer/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/andrej-fischer/cloneHD/blob/master/docs/README-cloneHD.md). To test this method with simulated data:
 
-    $ src/run_filterHD.sh data/seq/subclonality/simulations/
-	$ src/run_cloneHD.sh data/seq/subclonality/simulations/
+    $ src/run_filterHD.sh
+	$ src/run_cloneHD.sh
 
 ## Sequence data
 Sequencing reads are available in BAM format from the European Nucleotide Archive and the NCBI. The sequence data for the parental strains and the ancestral individuals were previously submitted to the NCBI BioProject under accession no. [PRJEB2299](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2299) and the SRA/ENA databases under study accession no. [ERP000361](http://www.ebi.ac.uk/ena/data/view/ERP000361), as part of the Saccharomyces Genome Resequencing Project. The sequence data for the time-resolved populations and the evolved individuals, have been submitted to NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608), and the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780).
