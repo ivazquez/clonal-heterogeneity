@@ -4,13 +4,15 @@ hatches = []
 
 import colors, utils
 
+import numpy as np
+from numpy.random import *
+
 import matplotlib.pyplot as plt
 from matplotlib.collections import PatchCollection
 from matplotlib import lines,ticker
 from matplotlib.patches import Polygon
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-import numpy as np
 
 def histogram_binned_data(ax, data, bins=50):
     
@@ -22,6 +24,7 @@ def histogram_binned_data(ax, data, bins=50):
     y = np.ravel(zip(nx_frac,nx_frac))
     
     return x, y
+
 
 def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
     for i in range(len(bp['boxes'])):
@@ -74,10 +77,48 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
     # ax.grid(axis='y', color="0.9", linestyle='-', linewidth=1)
     # ax.set_axisbelow(True)
     
+
+def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', vmin=0.0, vmax=1.0, show=False):
+    '''
+    Inspired by:
+    - http://stackoverflow.com/a/16124677/395857 
+    - http://stackoverflow.com/a/25074150/395857
+    '''
+
+    # plot the heatmap
+    c = ax.pcolor(x, y, z, linewidths=0, cmap=cmap, vmin=vmin, vmax=vmax)
+
+    # place the major ticks at the middle of each cell
+    ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
+    ax.set_yticks(np.arange(z.shape[0]) + 0.5, minor=False)
+
+    # set tick labels
+    ax.set_xticklabels(xticklabels, minor=False, rotation=90)
+    ax.set_yticklabels(yticklabels, minor=False)
+
+    # set title and x/y labels
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+
+    # Remove last blank column
+    ax.set_xlim( (min(x), max(x)) )
+    ax.set_ylim( (min(y), max(y)) )
+
+    # Turn off all the ticks
+    for t in ax.xaxis.get_major_ticks():
+        t.tick1On = False
+        t.tick2On = False
+    for t in ax.yaxis.get_major_ticks():
+        t.tick1On = False
+        t.tick2On = False
+
+    # Proper orientation (origin at the top left instead of bottom left)
+    ax.invert_yaxis()
     
-from matplotlib.collections import PatchCollection
-
-
+    return c
+    
+    
 def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, radius=0.25):
     '''
     
@@ -165,47 +206,6 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     cbar.ax.tick_params(labelsize=5)
     cbar.locator = ticker.MaxNLocator(nbins = 3)
     cbar.outline.set_visible(False)
-    
-
-def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', vmin=0.0, vmax=1.0, show=False):
-    '''
-    Inspired by:
-    - http://stackoverflow.com/a/16124677/395857 
-    - http://stackoverflow.com/a/25074150/395857
-    '''
-
-    # plot the heatmap
-    c = ax.pcolor(x, y, z, linewidths=0, cmap=cmap, vmin=vmin, vmax=vmax)
-
-    # place the major ticks at the middle of each cell
-    ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
-    ax.set_yticks(np.arange(z.shape[0]) + 0.5, minor=False)
-
-    # set tick labels
-    ax.set_xticklabels(xticklabels, minor=False, rotation=90)
-    ax.set_yticklabels(yticklabels, minor=False)
-
-    # set title and x/y labels
-    ax.set_title(title)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-
-    # Remove last blank column
-    ax.set_xlim( (min(x), max(x)) )
-    ax.set_ylim( (min(y), max(y)) )
-
-    # Turn off all the ticks
-    for t in ax.xaxis.get_major_ticks():
-        t.tick1On = False
-        t.tick2On = False
-    for t in ax.yaxis.get_major_ticks():
-        t.tick1On = False
-        t.tick2On = False
-
-    # Proper orientation (origin at the top left instead of bottom left)
-    ax.invert_yaxis()
-    
-    return c
 
 
 def set_custom_labels(index, pos):
@@ -301,8 +301,6 @@ def zoom_effect(ax1, ax2, xmin, xmax, **kwargs):
     return c1, c2, bbox_patch1, bbox_patch2, p
 
 
-from numpy.random import *
-
 def get_text_positions(x_data, y_data, txt_width, txt_height):
     a = zip(y_data, x_data)
     text_positions = y_data.copy()
@@ -349,7 +347,8 @@ def annotate_custom(ax, s, xy_arr=[], *args, **kwargs):
         an = ax.annotate(s, xy, alpha=0.0, xytext=(0,0), textcoords=an, **d)
         ans.append(an)
     return ans
-    
+
+
 def custom_div_cmap(numcolors=11, name='custom_div_cmap',
                     mincol='blue', midcol='white', maxcol='red'):
     """ Create a custom diverging colormap with three colors
@@ -390,7 +389,8 @@ def adjust_spines(ax, spines):
     else:
         # no xaxis ticks
         ax.xaxis.set_ticks([])
- 
+
+
 def align_xaxis(ax1, v1, ax2, v2):
     """
     adjust ax2 xlimit so that v2 in ax2 is aligned to v1 in ax1
