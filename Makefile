@@ -1,4 +1,4 @@
-all: install submodule
+all: notebooks cloneHD
 	
 # The following defaults are based on my preferences, but possible for others
 # to override thanks to the `?=' operator.
@@ -11,22 +11,25 @@ default:
 	@echo
 	@echo 'Commands:'
 	@echo
-	@echo '    make install    install the package in a virtual environment'
-	@echo '    make submodule  recreate the virtual environment'
-	@echo '    make clean      cleanup all temporary files'
+	@echo '    make notebooks	install the package in a virtual environment'
+	@echo '    make cloneHD		recreate the virtual environment'
+	@echo '    make clean		cleanup all temporary files'
 
-install:
+notebooks:
 	test -d "$(VIRTUAL_ENV)" || mkdir -p "$(VIRTUAL_ENV)"
 	test -x "$(VIRTUAL_ENV)/bin/python" || virtualenv "$(VIRTUAL_ENV)"
 	$(ACTIVATE) && pip install -r src/requirements.txt
 
-submodule:
+cloneHD:
+	mkdir -p cloneHD/build
 	cd cloneHD/src && $(MAKE)
-	cp cloneHD/build/cloneHD bin/
-	cp cloneHD/build/filterHD bin/
+	mkdir -p build
+	cp cloneHD/build/cloneHD build/
+	cp cloneHD/build/cloneHD build/
+	cp cloneHD/build/filterHD build/
 
 clean:
 	cd cloneHD/src && make clean
-	rm bin/cloneHD bin/filterHD
+	rm build/pre-filter build/cloneHD build/filterHD
 
 .PHONY: clean
