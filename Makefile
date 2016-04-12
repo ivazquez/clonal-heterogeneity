@@ -11,8 +11,8 @@ default:
 	@echo
 	@echo 'Commands:'
 	@echo
-	@echo '    make notebooks	install the package in a virtual environment'
-	@echo '    make cloneHD		recreate the virtual environment'
+	@echo '    make notebooks	install notebook requirements in a virtual environment'
+	@echo '    make cloneHD	compile the cloneHD submodule'
 	@echo '    make clean		cleanup all temporary files'
 
 notebooks:
@@ -21,15 +21,14 @@ notebooks:
 	$(ACTIVATE) && pip install -r src/requirements.txt
 
 cloneHD:
-	mkdir -p cloneHD/build
+	test -d "cloneHD/build" || mkdir -p "cloneHD/build"
 	cd cloneHD/src && $(MAKE)
-	mkdir -p build
-	cp cloneHD/build/cloneHD build/
+	test -d "build" || mkdir -p "build"
 	cp cloneHD/build/cloneHD build/
 	cp cloneHD/build/filterHD build/
 
 clean:
-	cd cloneHD/src && make clean
-	rm build/pre-filter build/cloneHD build/filterHD
+	cd cloneHD/src && $(MAKE) clean
+	rm build/cloneHD build/filterHD
 
-.PHONY: clean
+.PHONY: notebooks cloneHD clean
