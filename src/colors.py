@@ -5,35 +5,7 @@
 from matplotlib.colors import colorConverter, LinearSegmentedColormap, cnames
 import brewer2mpl
 
-COLOR_MAP = {
-    "red":"#e41a1c",
-    "blue":"#377eb8",
-    "green":"#4daf4a",
-    "purple":"#984ea3",
-    "orange":"#ff7f00",
-    "yellow":"#ebbc57",
-    "brown":"#a65628",
-    "pink": "#f781bf", 
-    "grey": "#999999",
-    "white": "#ffffff",
-    "black": "#000000",
-}
-
-bmap = brewer2mpl.get_map('Set2', 'qualitative', 8)
-colors = bmap.mpl_colors
 hatches = [' ', ' ', ' ', ' ', ' ']
-
-reds = brewer2mpl.get_map('Reds', 'Sequential', 9).mpl_colors
-greens = brewer2mpl.get_map('Greens', 'Sequential', 9).mpl_colors
-blues = color = brewer2mpl.get_map('Blues', 'Sequential', 9).mpl_colors
-color = brewer2mpl.get_map('Paired', 'qualitative', 12).mpl_colors
-pastel1 = brewer2mpl.get_map('Pastel1', 'qualitative', 9)
-set1 = brewer2mpl.get_map('Set1', 'qualitative', 9)
-pastel2 = brewer2mpl.get_map('Pastel2', 'qualitative', 8)
-set2 = brewer2mpl.get_map('Set2', 'qualitative', 8)
-dark2 = brewer2mpl.get_map('Dark2', 'qualitative', 8)
-bmap = brewer2mpl.get_map('Paired', 'qualitative', 12)
-colors = bmap.mpl_colors
 
 my_colors = [(62, 62, 61), (217, 77, 77), (235, 165, 56),(75, 179, 210),(140, 173, 109)]#, (75, 179, 210),(140, 173, 109),
 my_colors = [(c[0]/256.,c[1]/256.,c[2]/256.) for c in my_colors]

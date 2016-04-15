@@ -32,7 +32,7 @@ With the sequence data we carry out subclonal decomposition using a probabilisti
     $ src/run_filterHD.sh
 	$ src/run_cloneHD.sh
 
-The details  documentation for [filterHD](cloneHD/docs/README-filterHD.md) and [cloneHD](cloneHD/docs/README-cloneHD.md).
+The full documentation for [filterHD](cloneHD/docs/README-filterHD.md) and [cloneHD](cloneHD/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
 ## Phenotype data
 Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in tab-separated format or serialized in Pickle format for Python. They can be found in the `data/pheno/` directory. 'NA' is used to indicate missing data or NaN.
