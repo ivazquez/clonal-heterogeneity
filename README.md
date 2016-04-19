@@ -23,9 +23,17 @@ You can then browse and run the notebooks locally to reproduce all figures with:
 	$ jupyter notebook
 
 ## Sequence data
-Sequencing reads are available in BAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the NCBI BioProject under accession no. [PRJEB2299](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2299) and the SRA/ENA databases under study accession no. [ERP000361](http://www.ebi.ac.uk/ena/data/view/ERP000361), as part of the Saccharomyces Genome Resequencing Project. Sequence data for the time-resolved populations and the evolved individuals, have been submitted to NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608), and the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780).
+Sequencing reads are available in BAM or CRAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780) and the NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608). Sequence data for the time-resolved populations and the evolved individuals have been submitted to the SRA/ENA databases under study accession no. [ERP003953](http://www.ebi.ac.uk/ena/data/view/ERP003953) and the NCBI BioProject under accession no. [PRJEB4645](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB4645). To download the files programmatically (~??Gb):
 
-Variant calls can be browsed on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491), where they can be downloaded in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). Variants can also be found in tab-separated format or serialized in Pickle format for Python in the `data/seq/` directory, annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html). Each file contains pre-existing variants (`*.background.vcf.gz`) and *de novo* variants (`*.de_novo.vcf.gz`) found in each [sample](data/seq/sample\_ids\_merged\_dup.csv).
+	$ wget -i data/seq/ena_query_reads.txt
+
+Sequences were aligned to the *S. cerevisiae* reference genome [R64-1-1](http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz).
+
+Variant calls can be browsed on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). They can be downloaded in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`) which can be downloaded by:
+
+	$ wget -i data/seq/ena_query_variants.txt
+
+Variants can also be found in tab-separated format or serialized in Pickle format for Python in the `data/seq/` directory, annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html).
 
 With the sequence data we carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. To test this method with simulated data:
 
