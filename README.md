@@ -8,9 +8,10 @@ This repository contains supporting material for the manuscript in preparation:
 
 To clone this repository, run the following command in a local directory:
 
-    ```shell
-		git clone --recursive https://github.com/ivazquez/gv-paper-2016.git
-		```
+    
+	```shell
+	git clone --recursive https://github.com/ivazquez/gv-paper-2016.git
+	```
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
 
