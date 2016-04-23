@@ -8,7 +8,9 @@ This repository contains supporting material for the manuscript in preparation:
 
 To clone this repository, run the following command in a local directory:
 
-    $ git clone --recursive https://github.com/ivazquez/population-dynamics.git
+    ```shell
+		git clone --recursive https://github.com/ivazquez/gv-paper-2016.git
+		```
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
 
@@ -23,12 +25,12 @@ To install all Python dependencies inside a virtual environment and build the cl
 
 You can then browse and run the notebooks locally to reproduce all figures with:
 
-	$ jupyter notebook
+		$ jupyter notebook
 
 ## Sequence data
 Sequencing reads are available in BAM or CRAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780) and the NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608). Sequence data for the time-resolved populations and the evolved individuals have been submitted to the SRA/ENA databases under study accession no. [ERP003953](http://www.ebi.ac.uk/ena/data/view/ERP003953) and the NCBI BioProject under accession no. [PRJEB4645](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB4645). To download the files programmatically from the FTP server (156GB):
 
-	$ wget -i <(awk -F, '{sub("#","%23",$NF); print $NF}' data/seq/sample_ids_unmerged.csv)
+		$ wget -i <(awk -F, '{sub("#","%23",$NF); print $NF}' data/seq/sample_ids_unmerged.csv)
 
 Sequences must be aligned to the *S. cerevisiae* reference genome [R64-1-1](http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz).
 
