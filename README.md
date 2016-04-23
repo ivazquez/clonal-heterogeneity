@@ -8,9 +8,7 @@ This repository contains supporting material for the manuscript in preparation:
 
 To clone this repository, run the following command in a local directory:
 
-```shell
-git clone --recursive https://github.com/ivazquez/gv-paper-2016.git
-```
+    $ git clone --recursive https://github.com/ivazquez/gv-paper-2016.git
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
 
@@ -36,14 +34,14 @@ Sequences must be aligned to the *S. cerevisiae* reference genome [R64-1-1](http
 
 Variant calls are available in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). They will also become available for browsing on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491) upon publication. Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`). They can be downloaded programmatically from the FTP (713MB):
 
-	$ wget -i <(awk -F, '{print $NF;}' data/seq/sample_ids_merged_dup.csv)
+		$ wget -i <(awk -F, '{print $NF;}' data/seq/sample_ids_merged_dup.csv)
 
 Alternatively, variants can also be found in tab-separated format or serialized in Pickle format for Python in the `data/seq/` directory, annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html).
 
 With the sequence data we carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. To test this method with simulated data:
 
     $ src/run_filterHD.sh
-	$ src/run_cloneHD.sh
+		$ src/run_cloneHD.sh
 
 The full documentation for [filterHD](cloneHD/docs/README-filterHD.md) and [cloneHD](cloneHD/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
