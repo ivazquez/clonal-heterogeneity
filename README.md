@@ -17,7 +17,7 @@ The `--recursive` flag is required in order to download the nested git submodule
 The source code contains iPython notebooks to reproduce the manuscript figures, which make use of numpy, scipy, the matplotlib plotting environment
 and others. These are found in the `src/` directory. The repository also includes the cloneHD submodule, which is in C++ and requires g++ with the GSL library.
 
-To install all requirements and build the cloneHD executables into the `build/` directory, run:
+To install all Python dependencies inside a virtual environment and build the cloneHD executables into the `build/` directory, run:
 
     $ make
 

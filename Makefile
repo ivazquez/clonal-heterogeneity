@@ -29,6 +29,6 @@ cloneHD:
 
 clean:
 	cd cloneHD/src && $(MAKE) clean
-	rm build/cloneHD build/filterHD
+	${RM} build/cloneHD build/filterHD
 
 .PHONY: all default notebooks cloneHD clean
