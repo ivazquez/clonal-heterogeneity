@@ -32,7 +32,7 @@ Sequencing reads are available in BAM or CRAM format from the European Nucleotid
 
 Sequences must be aligned to the *S. cerevisiae* reference genome [R64-1-1](http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz).
 
-Variant calls are available in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). They will also become available for browsing on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491) upon publication. Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`). They can be downloaded programmatically from the FTP (713MB):
+Variant calls are available in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/ena/data/view/PRJEB13491). They will also become available for browsing on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491) upon publication. Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`). They can be downloaded programmatically from the FTP (713MB):
 
     $ wget -i <(awk -F, '{print $NF;}' data/seq/sample_ids_merged_dup.csv)
 
