@@ -31,63 +31,19 @@ def save_data(data, fn):
     import cPickle as pickle
     with open(fn, 'wb') as f:
         pickle.dump(data, f, protocol=-1)
-
-
-def hide_axes(ax):
-    '''
-    Function to...
-
-    Input
-    -----
-      ax : 
-    '''
-    for x in [ax.xaxis, ax.yaxis]:
-        x.set_major_formatter(NullFormatter())
-        x.set_major_locator(NullLocator())
-    for loc,spine in ax.spines.iteritems():
-        spine.set_color('none')
         
         
 def simple_axes(ax):
+    '''Show left and bottom axes in a plot
+
+    Input
+    -----
+      ax : matplotlib axis
+    '''
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.get_xaxis().tick_bottom()
     ax.get_yaxis().tick_left()
-        
-            
-def annotate_group(name, yspan, ax=None):
-    '''
-    Annotates a span of the y-axis
-    http://stackoverflow.com/questions/3918028/how-do-i-plot-multiple-x-or-y-axes-in-matplotlib 
-    '''
-    def annotate(ax, name, left, right, x, pad):
-        arrow = ax.annotate(name,
-                xy=(left, x), xycoords='data',
-                xytext=(right, x-pad), textcoords='data',
-                annotation_clip=False, verticalalignment='top',
-                horizontalalignment='center', linespacing=2.0#,
-                # arrowprops=dict(arrowstyle='-', shrinkA=0, shrinkB=0,
-             #            connectionstyle='angle,angleB=90,angleA=0,rad=5')
-                )
-        return arrow
-    if ax is None:
-        ax = plt.gca()
-    xmin = ax.get_xlim()[0]
-    xpad = 0.01 * np.ptp(ax.get_xlim())
-    ycenter = np.mean(yspan)
-    left_arrow = annotate(ax, name, yspan[0], ycenter, xmin, xpad)
-    right_arrow = annotate(ax, name, yspan[1], ycenter, xmin, xpad)
-    return left_arrow, right_arrow
-        
-        
-def force_aspect(ax,aspect=1):
-    '''
-    
-    http://stackoverflow.com/questions/7965743/how-can-i-set-the-aspect-ratio-in-matplotlib
-    '''
-    im = ax.get_images()
-    extent =  im[0].get_extent()
-    ax.set_aspect(abs((extent[1]-extent[0])/(extent[3]-extent[2]))/aspect)
 
 
 def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
@@ -143,7 +99,13 @@ def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
 
 
 def discrete_colormap(N, base_cmap=None):
-    """Create an N-bin discrete colormap from the specified input map"""
+    """Create an N-bin discrete colormap from the specified input map
+    
+    Input
+    -----
+      N : number of bins
+      cmap : The matplotlib colormap to be altered
+    """
 
     # Note that if base_cmap is a string or None, you can simply do
     #    return plt.cm.get_cmap(base_cmap, N)
@@ -156,6 +118,12 @@ def discrete_colormap(N, base_cmap=None):
 
 
 def percentile(data):
+    """Calculate the median and top/bottom percentiles
+    
+    Input
+    -----
+      data : pandas series or dataframe
+    """
     median = np.zeros(data.shape[1])
     perc_25 = np.zeros(data.shape[1])
     perc_75 = np.zeros(data.shape[1])
@@ -168,7 +136,7 @@ def percentile(data):
 
 def stars(p):
     '''
-    Function to...
+    Convert p-values to star notation
 
     Input
     -----

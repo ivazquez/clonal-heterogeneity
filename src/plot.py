@@ -73,9 +73,6 @@ def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
     ax.get_xaxis().tick_bottom()
     ax.get_yaxis().tick_left()
     ax.tick_params(axis='y', length=0)
-
-    # ax.grid(axis='y', color="0.9", linestyle='-', linewidth=1)
-    # ax.set_axisbelow(True)
     
 
 def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', vmin=0.0, vmax=1.0, show=False):
@@ -143,21 +140,21 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
     return dict_mat
 
 
-def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, pad=0.25, legend_title=''):
+def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, pad=0.25, legend_title=''):
     '''
     '''
     from matplotlib.ticker import FormatStrFormatter
     
     if fold:
         # get the matrix M and its transpose
-        X = M.values
-        Y = M.values.T
+        X = H.values
+        Y = H.values.T
         # calculate the element-wise average of the two matrices
         Z = np.add(X, Y) / 2.
         Z = np.tril(Z) # get the lower triangle of the matrix
         Z = np.ma.masked_array(Z, Z == 0) # mask the upper triangle
     else:
-        Z = M.values
+        Z = H.values
     
     #
     Z = np.ma.array(Z, mask=np.isnan(Z))
@@ -210,7 +207,9 @@ def heatmap_hybrids(M, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
 
 def set_custom_labels(index, pos):
     """
-    
+    Custom labels for nested axes.
+    index : 
+    pos : 
     """
     start = dict((m[pos], ii) for ii,m in enumerate(index.values))
     end = dict((m[pos], len(index)-ii-1) for ii,m in enumerate(index[::-1].values))
