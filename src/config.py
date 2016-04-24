@@ -2,9 +2,8 @@
  # -*- coding: utf-8 -*-
  
 import colors
-import matplotlib.patheffects as PathEffects
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.patheffects as PathEffects
 
 # population attributes
 sp_bg_dict = {
@@ -384,16 +383,14 @@ dict_consequence_short = {
 }
 
 # time attributes
-vir = [plt.cm.viridis_r(x) for x in np.linspace(0, 1, 6)]
-vir = [plt.cm.YlGnBu(x) for x in np.linspace(0.25, 1, 6)]
 dict_time = {
     'color': {
-        0:vir[0],
-        2:vir[1],
-        4:vir[2],
-        8:vir[3],
-        16:vir[4],
-        32:vir[5]
+        0:colors.t_colors[0],
+        2:colors.t_colors[1],
+        4:colors.t_colors[2],
+        8:colors.t_colors[3],
+        16:colors.t_colors[4],
+        32:colors.t_colors[5]
     },
     'linewidth': {
         0:0.75,2:0.75,4:0.75,8:0.75,16:0.75,32:0.75
@@ -403,8 +400,19 @@ dict_time = {
     }
 }
 
-# attributes for genetic constructs
-dict_constructs = {
+# background attributes for genetic constructs
+construct_background = {
+    'color': {
+        'wt': {'WA':colors.bg_colors_wt[0], 'NA':colors.bg_colors_wt[1], 'WA/WA':colors.bg_colors_wt[0], 'NA/NA':colors.bg_colors_wt[1], 'WA/NA':colors.bg_colors_wt[2]},
+        'mut': {'WA':colors.bg_colors_mut[0], 'NA':colors.bg_colors_mut[1], 'WA/WA':colors.bg_colors_mut[0], 'NA/NA':colors.bg_colors_mut[1], 'WA/NA':colors.bg_colors_mut[2]}
+    },
+    'position': {
+        'WA':0, 'NA':1, 'WA/WA':2, 'NA/NA':3, 'WA/NA':4
+    }
+}
+
+# genotype attributes for genetic constructs
+construct_genotype = {
 'HU': {u'RNR2':{u'WT':0, u'rnr2Δ':1, u'rnr2Δ/RNR2':2, u'rnr2::RNR2*':3,
                 u'rnr2Δ WA/RNR2 NA':4, u'RNR2 WA/rnr2Δ NA':5,
                 u'RNR2*/rnr2Δ':6, u'rnr2*Δ/RNR2':7}, 
@@ -427,7 +435,7 @@ dict_constructs = {
 }
 
 # statistical tests for genetic constructs
-dict_construct_tests = {
+construct_tests = {
     u'CTF8':{
         (u'WA', u'ctf8Δ'): (u'WA', u'WT'),
         (u'NA', u'ctf8Δ'): (u'NA', u'WT'),
@@ -488,37 +496,3 @@ dict_construct_tests = {
         (u'WA/NA', u'YNR066C WA/ynr066cΔ NA'): (u'WA/NA', u'ynr066cΔ WA/YNR066C NA')
     }
 }
-
-def filter_spores(S, env_evo):
-    # filter by dictionary
-    S = S[(S['group'].isin(sp_bg_dict['position'][env_evo].keys())) &
-          (S['genotype_short'].isin(sp_gt_short_dict['position'][env_evo].keys())) &
-          (S['background'].isin(sp_cl_dict['position'][env_evo].keys()))]
-    return S
-          
-def filter_hybrids(H, env_evo):
-    # filter by dictionary
-    H = H[(H['group'].isin(hy_bg_dict['position'][env_evo].keys())) &
-          (H['genotype_short'].isin(hy_gt_short_dict['position'][env_evo].keys())) &
-          (H['background'].isin(hy_cl_dict['position'][env_evo].keys()))]
-    return H
-    
-def sort_spores(S, env_evo):
-    # apply sorting ranks to reorder rows
-    S.loc[:,'rank_group'] = S['group'].map(sp_bg_dict['position'][env_evo])
-    S.loc[:,'rank_background'] = S['background'].map(sp_cl_dict['position'][env_evo])
-    S.loc[:,'rank_gene'] = S['gene'].map(sp_gn_dict['position'][env_evo])
-    S.loc[:,'rank_genotype'] = S['genotype_short'].map(sp_gt_short_dict['position'][env_evo])
-    S.sort_values(['rank_group','rank_background','rank_gene','rank_genotype'],
-                  ascending=True,inplace=True)
-    return S
-
-def sort_hybrids(H, env_evo):
-    # apply sorting ranks to reorder rows
-    H.loc[:,'rank_group'] = H['group'].map(hy_bg_dict['position'][env_evo])
-    H.loc[:,'rank_background'] = H['background'].map(hy_cl_dict['position'][env_evo])
-    H.loc[:,'rank_gene'] = H['gene'].map(hy_gn_dict['position'][env_evo])
-    H.loc[:,'rank_genotype'] = H['genotype_short'].map(hy_gt_short_dict['position'][env_evo])
-    H.sort_values(['rank_group','rank_background','rank_gene','rank_genotype'],
-                  ascending=True,inplace=True)
-    return H
