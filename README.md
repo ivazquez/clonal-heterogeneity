@@ -40,8 +40,11 @@ Alternatively, variants can also be found in tab-separated format or serialized 
 
 With the sequence data we carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. To test this method with simulated data:
 
-    $ src/run_filterHD.sh
-    $ src/run_cloneHD.sh
+		$ src/subclonality_simulated.sh
+
+Also, to test this on a representative time series dataset for one of the populations (as shown in [Figure 1](src/figure1.ipynb)):
+
+    $ src/subclonality_experiment.sh
 
 The full documentation for [filterHD](cloneHD/docs/README-filterHD.md) and [cloneHD](cloneHD/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
