@@ -17,7 +17,7 @@
   "grid.color": "#cbcbcb",
   "axes.linewidth": 1.0,
   "font.size": 10.0,
-  "lines.linewidth": 4,
+  "lines.linewidth": 2,
   "lines.solid_capstyle": "butt",
   "figure.subplot.left"    : 0.08,
   "figure.subplot.right"   : 0.95, 
