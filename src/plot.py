@@ -1,8 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-hatches = []
-
-import colors, utils
 
 import numpy as np
 from numpy.random import *
@@ -15,7 +12,8 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 
 def histogram_binned_data(ax, data, bins=50):
-    
+    '''
+    '''
     nx, xbins = np.histogram(data, bins=bins, normed=True)
 
     nx_frac = nx/float(len(nx)) # each bin divided by total number of objects.
@@ -26,7 +24,10 @@ def histogram_binned_data(ax, data, bins=50):
     return x, y
 
 
-def boxplot_custom(bp, ax, colors=colors, hatches=hatches):
+def boxplot_custom(bp, ax, colors, hatches):
+    '''
+    Custom boxplot style
+    '''
     for i in range(len(bp['boxes'])):
         box = bp['boxes'][i]
         box.set_linewidth(0)
@@ -142,6 +143,7 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
 
 def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, pad=0.25, legend_title=''):
     '''
+    
     '''
     from matplotlib.ticker import FormatStrFormatter
     

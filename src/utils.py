@@ -3,10 +3,21 @@
 
 import os, re
 import matplotlib.pyplot as plt
-from matplotlib.ticker import NullFormatter,NullLocator
 from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
 import pandas as pd
+
+
+def get_git_path():
+    '''Return the git path of the current repository
+    '''
+    import subprocess
+    try:
+        dir_repo = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
+        return dir_repo
+    except ValueError:
+        print "Error: no git repo found."
+
 
 def load_data(fn):
     '''Load the data for the plots
@@ -154,7 +165,7 @@ def stars(p):
         return "n.s."
         
 #Define digit mapping
-romanNumeralMap = (('M',  1000),
+roman_numeral = (('M',  1000),
                    ('CM', 900),
                    ('D',  500),
                    ('CD', 400),
@@ -169,21 +180,21 @@ romanNumeralMap = (('M',  1000),
                    ('I',  1))
 
 def int_to_roman(n):
-    """convert integer to Roman numeral"""
+    """convert integer to roman numeral"""
     if not (0 < n < 5000):
         raise OutOfRangeError, "number out of range (must be 1..4999)"
     if int(n) != n:
         raise NotIntegerError, "decimals can not be converted"
 
     result = ""
-    for numeral, integer in romanNumeralMap:
+    for numeral, integer in roman_numeral:
         while n >= integer:
             result += numeral
             n -= integer
     return result
 
 #Define pattern to detect valid Roman numerals
-romanNumeralPattern = re.compile("""
+roman_numeral_pattern = re.compile("""
     ^                   # beginning of string
     M{0,4}              # thousands - 0 to 4 M's
     (CM|CD|D?C{0,3})    # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C's),
@@ -199,12 +210,12 @@ def roman_to_int(s):
     """convert Roman numeral to integer"""
     if not s:
         raise InvalidRomanNumeralError, 'Input can not be blank'
-    if not romanNumeralPattern.search(s):
+    if not roman_numeral_pattern.search(s):
         raise InvalidRomanNumeralError, 'Invalid Roman numeral: %s' % s
 
     result = 0
     index = 0
-    for numeral, integer in romanNumeralMap:
+    for numeral, integer in roman_numeral:
         while s[index:index+len(numeral)] == numeral:
             result += integer
             index += len(numeral)

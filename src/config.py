@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.patheffects as PathEffects
 
 # population attributes
-sp_bg_dict = {
+sp_bg = {
     'position': {
         'HU': 
         {'parents': 0, 'ancestral': 1, 'evolved': 2},
@@ -16,7 +16,7 @@ sp_bg_dict = {
 }
 
 # background attributes
-sp_cl_dict = {
+sp_cl = {
     'position': {
         'HU': 
         {'WA': 0, 'NA': 1, 'WAxNA': 2},
@@ -32,7 +32,7 @@ sp_cl_dict = {
 }
 
 # gene attributes
-sp_gn_dict = {
+sp_gn = {
     'position': {
         'HU': 
         {'RNR2': 0, 'RNR4': 1},
@@ -42,7 +42,7 @@ sp_gn_dict = {
 }
 
 # genotype attributes
-sp_gt_long_dict = {
+sp_gt_long = {
     'position': {
         'HU': 
         {'': 0, 'RNR2': 1, 'RNR2*': 2, 'RNR4': 3, 'RNR4*': 4},
@@ -58,7 +58,7 @@ sp_gt_long_dict = {
 }
 
 # genotype attributes
-sp_gt_short_dict = {
+sp_gt_short = {
 'position':
  {'HU': 
   {'+': 0, '-': 1},
@@ -74,7 +74,7 @@ sp_gt_short_dict = {
 }
 
 # collection attributes
-hy_bg_dict = {
+hy_bg = {
 'position':
 {'HU': 
  {('parents','parents'): 0, ('ancestral','ancestral'): 1, 
@@ -86,7 +86,7 @@ hy_bg_dict = {
 }
 
 # background attributes
-hy_cl_dict = {
+hy_cl = {
 'position':
 {'HU': 
  {('WA','WA'): 0, ('NA','NA'): 1, ('WAxNA','WAxNA'): 2},
@@ -102,7 +102,7 @@ hy_cl_dict = {
 }
 
 # gene attributes
-hy_gn_dict = {
+hy_gn = {
 'position':
 {'HU': 
  {('','RNR2'): 0, ('','RNR4'): 1,
@@ -115,7 +115,7 @@ hy_gn_dict = {
 }
 
 # genotype attributes
-hy_gt_long_dict = {
+hy_gt_long = {
 'position':
 {'HU': 
  {('',''): 0,
@@ -147,7 +147,7 @@ hy_gt_long_dict = {
 }
 
 # genotype attributes
-hy_gt_short_dict = {
+hy_gt_short = {
 'position':
 {'HU': 
 {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
@@ -163,7 +163,7 @@ hy_gt_short_dict = {
 }
 
 # factor attributes
-dict_factors = {
+factors = {
     'color': {
         'time': colors.fte_colors[2],
         'background\n(genotype)': colors.fte_colors[0],
@@ -190,14 +190,14 @@ dict_factors = {
 }
 
 # gene attributes
-dict_gene = {
+gene = {
     'position':{
         'RNR2':0, 'RNR4':1, 'no driver':0, 'FPR1':1, 'TOR1':2   
     }
 }
 
 # genotype attributes
-dict_genotype = {
+genotype = {
     'position':{
         '+':0,
         '-':1
@@ -210,7 +210,7 @@ dict_genotype = {
 }
 
 # population attributes
-dict_population = {
+population = {
     'position':{
         'parents': 0, 'ancestral': 1, 'evolved': 2
     },
@@ -247,7 +247,7 @@ dict_population = {
 }
 
 # background attributes
-dict_background = {
+background = {
     'position':{
         'WA':0, 
         'NA':1,
@@ -279,7 +279,7 @@ labels = {
 }
 
 # selection attributes
-dict_selection= {
+selection = {
     'color': {
         'HU':colors.fte_colors_light[5],
         'RM':colors.fte_colors[5],
@@ -311,7 +311,7 @@ dict_selection= {
 }
 
 # environment attributes
-dict_environment = {
+environment = {
     'color': {
         'HU':colors.mr_colors[2],
         'RM':colors.mr_colors[1],
@@ -340,7 +340,7 @@ dict_environment = {
 }
 
 # lineage attributes
-dict_lineages = {
+lineages = {
     'subclone A': {'fill':colors.fte_colors[0], 'line':colors.fte_colors[0]},
     'subclone B': {'fill':colors.fte_colors[1], 'line':colors.fte_colors[1]},
     'subclone C': {'fill':colors.fte_colors[2], 'line':colors.fte_colors[2]},
@@ -350,7 +350,7 @@ dict_lineages = {
 }
 
 # mutation type attributes
-dict_mutation_type = {
+mutation_type = {
     'driver' : {
         'linestyle':'-',
         'linewidth':1.5,
@@ -367,7 +367,7 @@ dict_mutation_type = {
 }
 
 # mutation consequence attributes
-dict_consequence_short = {
+consequence_short = {
     'non-synonymous' : {
         'marker':'o',
         'markersize':2,
@@ -383,7 +383,7 @@ dict_consequence_short = {
 }
 
 # time attributes
-dict_time = {
+time = {
     'color': {
         0:colors.t_colors[0],
         2:colors.t_colors[1],
