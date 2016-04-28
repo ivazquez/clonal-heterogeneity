@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.patheffects as PathEffects
 
 # population attributes
-sp_bg = {
+spores_bg = {
     'position': {
         'HU': 
         {'parents': 0, 'ancestral': 1, 'evolved': 2},
@@ -16,7 +16,7 @@ sp_bg = {
 }
 
 # background attributes
-sp_cl = {
+spores_cl = {
     'position': {
         'HU': 
         {'WA': 0, 'NA': 1, 'WAxNA': 2},
@@ -32,7 +32,7 @@ sp_cl = {
 }
 
 # gene attributes
-sp_gn = {
+spores_gn = {
     'position': {
         'HU': 
         {'RNR2': 0, 'RNR4': 1},
@@ -42,7 +42,7 @@ sp_gn = {
 }
 
 # genotype attributes
-sp_gt_long = {
+spores_gt_long = {
     'position': {
         'HU': 
         {'': 0, 'RNR2': 1, 'RNR2*': 2, 'RNR4': 3, 'RNR4*': 4},
@@ -58,7 +58,7 @@ sp_gt_long = {
 }
 
 # genotype attributes
-sp_gt_short = {
+spores_gt_short = {
 'position':
  {'HU': 
   {'+': 0, '-': 1},
@@ -74,7 +74,7 @@ sp_gt_short = {
 }
 
 # collection attributes
-hy_bg = {
+hybrids_bg = {
 'position':
 {'HU': 
  {('parents','parents'): 0, ('ancestral','ancestral'): 1, 
@@ -86,7 +86,7 @@ hy_bg = {
 }
 
 # background attributes
-hy_cl = {
+hybrids_cl = {
 'position':
 {'HU': 
  {('WA','WA'): 0, ('NA','NA'): 1, ('WAxNA','WAxNA'): 2},
@@ -102,7 +102,7 @@ hy_cl = {
 }
 
 # gene attributes
-hy_gn = {
+hybrids_gn = {
 'position':
 {'HU': 
  {('','RNR2'): 0, ('','RNR4'): 1,
@@ -115,7 +115,7 @@ hy_gn = {
 }
 
 # genotype attributes
-hy_gt_long = {
+hybrids_gt_long = {
 'position':
 {'HU': 
  {('',''): 0,
@@ -147,7 +147,7 @@ hy_gt_long = {
 }
 
 # genotype attributes
-hy_gt_short = {
+hybrids_gt_short = {
 'position':
 {'HU': 
 {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
@@ -257,12 +257,12 @@ background = {
         'WA/NA':5
     },
     'color':{
-        'WA':colors.bg_colors[0],
-        'NA':colors.bg_colors[1],
-        'WAxNA':colors.bg_colors[2],
-        'WA/WA':colors.bg_colors[0],
-        'NA/NA':colors.bg_colors[1],
-        'WA/NA':colors.bg_colors[2]
+        'WA':colors.bg_colors_mut[0],
+        'NA':colors.bg_colors_mut[1],
+        'WAxNA':colors.bg_colors_mut[2],
+        'WA/WA':colors.bg_colors_mut[0],
+        'NA/NA':colors.bg_colors_mut[1],
+        'WA/NA':colors.bg_colors_mut[2]
     },
     'marker':{
         'WA':'o', 
@@ -324,18 +324,14 @@ environment = {
         'HU':'-','RM':'-','YNB':'-' 
     },
     'long_label': {
-        u'HU': u'Hydroxyurea (YNB+HU 10 mg/ml)', 
-        u'RM': u'Rapamycin (YNB+RM 0.025 μg/ml)',
-        u'YNB': u'Control (YNB)',
-        'COM':'Control', 
-        'null': u'Control'
+        'HU': u'Hydroxyurea (YNB+HU 10 mg/ml)', 
+        'RM': u'Rapamycin (YNB+RM 0.025 μg/ml)',
+        'YNB': u'Control (YNB)'
     },
     'short_label': {
         'HU':'Hydroxyurea',
         'RM':'Rapamycin',
-        'YNB':'Control',
-        'COM':'Control', 
-        'null': u'Control'
+        'YNB':'Control'
     }
 }
 

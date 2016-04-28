@@ -76,7 +76,7 @@ def boxplot_custom(bp, ax, colors, hatches):
     ax.tick_params(axis='y', length=0)
     
 
-def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', vmin=0.0, vmax=1.0, show=False):
+def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', hatch='', vmin=0.0, vmax=1.0, show=False):
     '''
     Inspired by:
     - http://stackoverflow.com/a/16124677/395857 
@@ -84,7 +84,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     '''
 
     # plot the heatmap
-    c = ax.pcolor(x, y, z, linewidths=0, cmap=cmap, vmin=vmin, vmax=vmax)
+    c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
 
     # place the major ticks at the middle of each cell
     ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
