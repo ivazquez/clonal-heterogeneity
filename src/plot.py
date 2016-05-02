@@ -9,6 +9,7 @@ from matplotlib.collections import PatchCollection
 from matplotlib import lines,ticker
 from matplotlib.patches import Polygon
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+import matplotlib.colors as mcolors
 
 
 def histogram_binned_data(ax, data, bins=50):
@@ -300,6 +301,38 @@ def zoom_effect(ax1, ax2, xmin, xmax, **kwargs):
     ax2.add_patch(p)
 
     return c1, c2, bbox_patch1, bbox_patch2, p
+
+def colorbar_index(ncolors, cmap):
+    cmap = cmap_discretize(cmap, ncolors)
+    mappable = plt.cm.ScalarMappable(cmap=cmap)
+    mappable.set_array([])
+    mappable.set_clim(-0.5, ncolors+0.5)
+    return mappable
+
+
+def cmap_discretize(cmap, N):
+    """Return a discrete colormap from the continuous colormap cmap.
+
+        cmap: colormap instance, eg. cm.jet. 
+        N: number of colors.
+
+    Example
+        x = resize(arange(100), (5,100))
+        djet = cmap_discretize(cm.jet, 5)
+        imshow(x, cmap=djet)
+    """
+
+    if type(cmap) == str:
+        cmap = plt.get_cmap(cmap)
+    colors_i = np.concatenate((np.linspace(0, 1., N), (0.,0.,0.,0.)))
+    colors_rgba = cmap(colors_i)
+    indices = np.linspace(0, 1., N+1)
+    cdict = {}
+    for ki,key in enumerate(('red','green','blue')):
+        cdict[key] = [ (indices[i], colors_rgba[i-1,ki], colors_rgba[i,ki])
+                       for i in xrange(N+1) ]
+    # Return colormap object.
+    return mcolors.LinearSegmentedColormap(cmap.name + "_%d"%N, cdict, 1024)
 
 
 def get_text_positions(x_data, y_data, txt_width, txt_height):

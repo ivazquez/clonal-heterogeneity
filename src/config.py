@@ -59,133 +59,126 @@ spores_gt_long = {
 
 # genotype attributes
 spores_gt_short = {
-'position':
- {'HU': 
-  {'+': 0, '-': 1},
-  'RM': 
-  {'+': 0, '-': 1}
-  },
-'color':
-  {'HU': 
-  {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
-  'RM': 
-  {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
-  }
+    'position': {
+        'HU': 
+        {'+': 0, '-': 1},
+        'RM': 
+        {'+': 0, '-': 1}
+    },
+    'color': {
+        'HU': 
+        {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
+        'RM': 
+        {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
+    }
 }
 
 # collection attributes
 hybrids_bg = {
-'position':
-{'HU': 
- {('parents','parents'): 0, ('ancestral','ancestral'): 1, 
-  ('ancestral','evolved'): 2, ('evolved','evolved'): 3},
-'RM':
- {('parents','parents'): 0, ('ancestral','ancestral'): 1, 
-  ('ancestral','evolved'): 2, ('evolved','evolved'): 3}
- }
+    'position': {
+        'HU': 
+        {('parents','parents'): 0, ('ancestral','ancestral'): 1, 
+        ('ancestral','evolved'): 2, ('evolved','evolved'): 3},
+        'RM':
+        {('parents','parents'): 0, ('ancestral','ancestral'): 1, 
+        ('ancestral','evolved'): 2, ('evolved','evolved'): 3}
+    }
 }
 
 # background attributes
 hybrids_cl = {
-'position':
-{'HU': 
- {('WA','WA'): 0, ('NA','NA'): 1, ('WAxNA','WAxNA'): 2},
-'RM':
- {('WA','WA'): 0, ('NA','NA'): 1, ('WAxNA','WAxNA'): 2},
- },
-'color':
-{'HU':
- {('WA','WA'): colors.fte_colors[0], ('NA','NA'): colors.fte_colors[1], ('WAxNA','WAxNA'): colors.fte_colors[2]},
-'RM':
- {('WA','WA'): colors.fte_colors[0], ('NA','NA'): colors.fte_colors[1], ('WAxNA','WAxNA'): colors.fte_colors[2]},
-}
+    'position': {
+        'HU': 
+        {('WA','WA'): 0, ('NA','NA'): 1, ('WAxNA','WAxNA'): 2},
+        'RM':
+        {('WA','WA'): 0, ('NA','NA'): 1, ('WAxNA','WAxNA'): 2},
+    },
+    'color': {
+        'HU':
+        {('WA','WA'): colors.fte_colors[0], ('NA','NA'): colors.fte_colors[1], ('WAxNA','WAxNA'): colors.fte_colors[2]},
+        'RM':
+        {('WA','WA'): colors.fte_colors[0], ('NA','NA'): colors.fte_colors[1], ('WAxNA','WAxNA'): colors.fte_colors[2]}
+    }
 }
 
 # gene attributes
 hybrids_gn = {
-'position':
-{'HU': 
- {('','RNR2'): 0, ('','RNR4'): 1,
-  ('RNR2','RNR2'): 0, ('RNR4','RNR4'): 1, ('RNR2','RNR4'): 2},
-'RM':
- {('','no driver'): 0, ('','FPR1'): 1, ('','TOR1'): 2,
-  ('no driver','no driver'): 0, ('FPR1','FPR1'): 1, ('TOR1','TOR1'): 2, 
-  ('FPR1','TOR1'): 3, ('FPR1','no driver'): 4, ('TOR1','no driver'): 5},
- }
+    'position': {
+        'HU': 
+        {('','RNR2'): 0, ('','RNR4'): 1,
+        ('RNR2','RNR2'): 0, ('RNR4','RNR4'): 1, ('RNR2','RNR4'): 2},
+        'RM':
+        {('','no driver'): 0, ('','FPR1'): 1, ('','TOR1'): 2,
+        ('no driver','no driver'): 0, ('FPR1','FPR1'): 1, ('TOR1','TOR1'): 2, 
+        ('FPR1','TOR1'): 3, ('FPR1','no driver'): 4, ('TOR1','no driver'): 5}
+    }
 }
 
 # genotype attributes
 hybrids_gt_long = {
-'position':
-{'HU': 
- {('',''): 0,
-  ('','RNR2'): 1, ('','RNR2*'): 2, ('','RNR4'): 3, ('','RNR4*'): 4,
-  ('RNR2','RNR2'): 5, ('RNR2','RNR2*'): 6, ('RNR2*','RNR2*'): 7, 
-  ('RNR4','RNR4'): 8, ('RNR4','RNR4*'): 9, ('RNR4*','RNR4*'): 10, 
-  ('RNR2','RNR4'): 11, ('RNR2*','RNR4'): 12, ('RNR2','RNR4*'): 13, ('RNR2*','RNR4*'): 14},
-'RM':
- {('',''): 0,
-  ('','FPR1'): 1, ('','FPR1*'): 2, ('','TOR1'): 3, ('','TOR1*'): 4,
-  ('no driver','no driver'): 5, ('FPR1','FPR1'): 6, ('FPR1*','FPR1*'): 7,
-  ('TOR1','TOR1'): 8, ('TOR1','TOR1*'): 9, ('TOR1*','TOR1*'): 10,
-  ('FPR1','TOR1'): 11, ('FPR1*','TOR1'): 12, ('FPR1','TOR1*'): 13, ('FPR1*','TOR1*'): 14},
- },
-'color':
-{'HU':
- {('',''): colors.fte_colors[0],
-  ('','RNR2'): colors.fte_colors[1], ('','RNR2*'): colors.fte_colors[2], ('','RNR4'): colors.fte_colors[1], ('','RNR4*'): colors.fte_colors[2],
-  ('RNR2','RNR2'): colors.fte_colors[1], ('RNR2','RNR2*'): colors.fte_colors[2], ('RNR2*','RNR2*'): colors.fte_colors[3],
-  ('RNR4','RNR4'): colors.fte_colors[1], ('RNR4','RNR4*'): colors.fte_colors[2], ('RNR4*','RNR4*'): colors.fte_colors[3],
-  ('RNR2','RNR4'): colors.fte_colors[1], ('RNR2*','RNR4'): colors.fte_colors[2], ('RNR2','RNR4*'): colors.fte_colors[2], ('RNR2*','RNR4*'): colors.fte_colors[3]},
-'RM':
- {('',''): colors.fte_colors[0],
-  ('','FPR1'): colors.fte_colors[1], ('','FPR1*'): colors.fte_colors[2], ('','TOR1'): colors.fte_colors[1], ('','TOR1*'): colors.fte_colors[2],
-  ('no driver','no driver'): colors.fte_colors[1], ('FPR1','FPR1'): colors.fte_colors[1], ('FPR1*','FPR1*'): colors.fte_colors[3],
-  ('TOR1','TOR1'): colors.fte_colors[1], ('TOR1','TOR1*'): colors.fte_colors[2], ('TOR1*','TOR1*'): colors.fte_colors[3],
-  ('FPR1','TOR1'): colors.fte_colors[1], ('FPR1*','TOR1'): colors.fte_colors[2], ('FPR1','TOR1*'): colors.fte_colors[2], ('FPR1*','TOR1*'): colors.fte_colors[3]},
-}
+    'position': {
+        'HU': 
+        {('',''): 0,
+        ('','RNR2'): 1, ('','RNR2*'): 2, ('','RNR4'): 3, ('','RNR4*'): 4,
+        ('RNR2','RNR2'): 5, ('RNR2','RNR2*'): 6, ('RNR2*','RNR2*'): 7, 
+        ('RNR4','RNR4'): 8, ('RNR4','RNR4*'): 9, ('RNR4*','RNR4*'): 10, 
+        ('RNR2','RNR4'): 11, ('RNR2*','RNR4'): 12, ('RNR2','RNR4*'): 13, ('RNR2*','RNR4*'): 14},
+        'RM':
+        {('',''): 0,
+        ('','FPR1'): 1, ('','FPR1*'): 2, ('','TOR1'): 3, ('','TOR1*'): 4,
+        ('no driver','no driver'): 5, ('FPR1','FPR1'): 6, ('FPR1*','FPR1*'): 7,
+        ('TOR1','TOR1'): 8, ('TOR1','TOR1*'): 9, ('TOR1*','TOR1*'): 10,
+        ('FPR1','TOR1'): 11, ('FPR1*','TOR1'): 12, ('FPR1','TOR1*'): 13, ('FPR1*','TOR1*'): 14}
+    },
+    'color': {
+        'HU':
+        {('',''): colors.fte_colors[0],
+        ('','RNR2'): colors.fte_colors[1], ('','RNR2*'): colors.fte_colors[2], ('','RNR4'): colors.fte_colors[1], ('','RNR4*'): colors.fte_colors[2],
+        ('RNR2','RNR2'): colors.fte_colors[1], ('RNR2','RNR2*'): colors.fte_colors[2], ('RNR2*','RNR2*'): colors.fte_colors[3],
+        ('RNR4','RNR4'): colors.fte_colors[1], ('RNR4','RNR4*'): colors.fte_colors[2], ('RNR4*','RNR4*'): colors.fte_colors[3],
+        ('RNR2','RNR4'): colors.fte_colors[1], ('RNR2*','RNR4'): colors.fte_colors[2], ('RNR2','RNR4*'): colors.fte_colors[2], ('RNR2*','RNR4*'): colors.fte_colors[3]},
+        'RM':
+        {('',''): colors.fte_colors[0],
+        ('','FPR1'): colors.fte_colors[1], ('','FPR1*'): colors.fte_colors[2], ('','TOR1'): colors.fte_colors[1], ('','TOR1*'): colors.fte_colors[2],
+        ('no driver','no driver'): colors.fte_colors[1], ('FPR1','FPR1'): colors.fte_colors[1], ('FPR1*','FPR1*'): colors.fte_colors[3],
+        ('TOR1','TOR1'): colors.fte_colors[1], ('TOR1','TOR1*'): colors.fte_colors[2], ('TOR1*','TOR1*'): colors.fte_colors[3],
+        ('FPR1','TOR1'): colors.fte_colors[1], ('FPR1*','TOR1'): colors.fte_colors[2], ('FPR1','TOR1*'): colors.fte_colors[2], ('FPR1*','TOR1*'): colors.fte_colors[3]}
+    }
 }
 
 # genotype attributes
 hybrids_gt_short = {
-'position':
-{'HU': 
-{('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
-'RM':
-{('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}, 
-},
-'color':
-{'HU':
-{('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
-'RM':
-{('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
-}
+    'position': {
+        'HU': 
+        {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
+        'RM':
+        {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}
+    },
+    'color': {
+        'HU':
+        {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        'RM':
+        {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+    }
 }
 
 # factor attributes
 factors = {
     'color': {
-        'time': colors.fte_colors[2],
-        'background\n(genotype)': colors.fte_colors[0],
-        'de novo\n(gene identity)': colors.fte_colors_dark[1], 
-        'de novo\n(genotype)': colors.fte_colors[1],
-        'auxotrophy': colors.fte_colors[5],
-        'measurement\nerror': colors.fte_colors[3],
-        'tetrad': colors.fte_colors[4],
-        'spore': colors.fte_colors[4]
+        'Time': colors.fte_colors[2],
+        'Background\n(genotype)': colors.fte_colors[0],
+        'De novo\n(genotype)': colors.fte_colors[1],
+        'Auxotrophy': colors.fte_colors[5]
         },
     'hatch': {
         'spores': " ", 
         'hybrids': "/"
         },
     'position': {
-        'time': 0, 
-        'de novo\n(gene identity)': 1, 
-        'de novo\n(genotype)': 2,
-        'auxotrophy': 3,
-        'background\n(genotype)': 4,
-        'tetrad': 4,
-        'spore': 5     
+        'Time': 0, 
+        'De novo\n(genotype)': 1,
+        'Auxotrophy': 2,
+        'Background\n(genotype)': 3
     }
 }
 
@@ -297,24 +290,20 @@ selection = {
     'long_label': {
         u'HU': u'Hydroxyurea (YPD+HU 10 mg/ml)', 
         u'RM': u'Rapamycin (YPD+RM 0.025 μg/ml)',
-        u'YPD': u'Control (YNB)',
-        'COM':'Control', 
-        'null': u'Control'
+        u'YPD': u'Control (YNB)'
     },
     'short_label': {
         'HU':'Hydroxyurea',
         'RM':'Rapamycin',
-        'YPD':'Control',
-        'COM':'Control', 
-        'null': u'Control'
+        'YPD':'Control'
     }
 }
 
 # environment attributes
 environment = {
     'color': {
-        'HU':colors.mr_colors[2],
-        'RM':colors.mr_colors[1],
+        'HU':colors.bg_colors[2],
+        'RM':colors.bg_colors[1],
         'YNB':'k'
     },
     'linewidth': {
