@@ -18,7 +18,7 @@ default:
 notebooks:
 	test -d "$(VIRTUAL_ENV)" || mkdir -p "$(VIRTUAL_ENV)"
 	test -x "$(VIRTUAL_ENV)/bin/python" || virtualenv "$(VIRTUAL_ENV)"
-	$(ACTIVATE) && pip install -r src/requirements.txt
+	$(ACTIVATE) && pip install -r requirements.txt
 
 cloneHD:
 	test -d "cloneHD/build" || mkdir -p "cloneHD/build"
