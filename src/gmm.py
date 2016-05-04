@@ -14,6 +14,7 @@ import pandas as pd
 
 from sklearn.mixture import GMM
 
+
 def gmm_fit(X, N):
     ''' Fit models with N range components
     '''
@@ -80,8 +81,8 @@ def gmm_posterior(ax, X, M_best):
 #     ax.fill_between(x, p[1], 1, color='gray', alpha=0.7)
     ax.set_xlim(X.min()-.2, X.max()+.2)
     ax.set_ylim(0, 1)
-    # ax.set_xlabel('$x$')
-    # ax.set_ylabel(r'$p({\rm class}|x)$')
+    ax.set_xlabel('$\lambda$')
+    ax.set_ylabel(r'$p(j|\lambda)$')
 
 #     ax.text(-5, 0.3, 'class 1', rotation='vertical')
 #     ax.text(0, 0.5, 'class 2', rotation='vertical')

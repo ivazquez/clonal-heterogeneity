@@ -31,5 +31,6 @@ paths.py
 *.seq.clipped
 *.vcf
 *.vcf.gz
+*.vcf.gz.tbi
 
 *.pdf

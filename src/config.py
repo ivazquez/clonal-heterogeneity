@@ -67,9 +67,17 @@ spores_gt_short = {
     },
     'color': {
         'HU': 
-        {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
+        {'+': colors.fte_colors[1], '-': colors.fte_colors[5]},
         'RM': 
-        {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
+        {'+': colors.fte_colors[1], '-': colors.fte_colors[5]}
+        # 'HU':
+        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
+        # 'RM':
+        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
+        # 'HU':
+        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
+        # 'RM':
+        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
     }
 }
 
@@ -156,9 +164,17 @@ hybrids_gt_short = {
     },
     'color': {
         'HU':
-        {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
         'RM':
-        {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
+        # 'HU':
+        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        # 'RM':
+        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        # 'HU':
+        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        # 'RM':
+        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
     }
 }
 
