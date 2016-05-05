@@ -27,6 +27,14 @@ You can then browse and run the notebooks locally to reproduce all figures with:
 
 Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/gv-paper-2016).
 
+| Figures | Notebook |
+| --- | --- |
+| Figures 1, S2 | [Study design and driver-passenger dynamics](src/figure1.ipynb) |
+| Figures 2, S3, S4, S6 | [Reconstruction of subclonal heterogeneity](src/figure2.ipynb) |
+| Figures 3, S5 | [Pervasive genome instability](src/figure3.ipynb) |
+| Figures 4, S10, S11, S12 | [Background-averaged fitness effects](src/figure4.ipynb)|
+| Figures S7, S8, S9 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
+
 ## Sequence data
 Sequencing reads are available in BAM or CRAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780) and the NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608). Sequence data for the time-resolved populations and the evolved individuals have been submitted to the SRA/ENA databases under study accession no. [ERP003953](http://www.ebi.ac.uk/ena/data/view/ERP003953) and the NCBI BioProject under accession no. [PRJEB4645](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB4645). To download the files programmatically from the FTP server (156GB):
 
