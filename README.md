@@ -56,7 +56,7 @@ Also, to test this on a representative time series dataset for one of the popula
 
     $ src/subclonality_experiment.sh
 
-The full documentation for [filterHD](https://github.com/ivazquez/cloneHD/docs/README-filterHD.md) and [cloneHD](https://github.com/ivazquez/cloneHD/docs/README-cloneHD.md) can be found in the cloneHD repository.
+The full documentation for [filterHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
 ## Phenotype data
 Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in tab-separated format or serialized in Pickle format for Python. They can be found in the `data/pheno/` directory. 'NA' is used to indicate missing data or NaN.
