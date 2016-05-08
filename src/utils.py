@@ -42,8 +42,15 @@ def save_data(data, fn):
     import cPickle as pickle
     with open(fn, 'wb') as f:
         pickle.dump(data, f, protocol=-1)
-        
-        
+
+
+def merge_two_dicts(x, y):
+    '''Given two dicts, merge them into a new dict as a shallow copy.'''
+    z = x.copy()
+    z.update(y)
+    return z
+
+    
 def simple_axes(ax):
     '''Show left and bottom axes in a plot
 
@@ -207,7 +214,7 @@ roman_numeral_pattern = re.compile("""
     """ ,re.VERBOSE)
 
 def roman_to_int(s):
-    """convert Roman numeral to integer"""
+    """convert roman numeral to integer"""
     if not s:
         raise InvalidRomanNumeralError, 'Input can not be blank'
     if not roman_numeral_pattern.search(s):
@@ -223,24 +230,28 @@ def roman_to_int(s):
     
     
 def hex_to_rgb(value):
+    """convert hex code to rgb"""
     value = value.lstrip('#')
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
 
 def rgb_to_hex(rgb):
+    """convert rgb to hex code"""
     return '#%02x%02x%02x' % rgb
 
-    
-sgd_length = pd.read_csv('~/reference/SGD_2010.lengths', names=['chr_arabic','chrs','chr_length'], index_col=False, sep=' ')
-sgd_length = sgd_length[~(sgd_length['chr_arabic'].isin([17,18]))]
-sgd_length['chr_start'] = ((pd.rolling_sum((sgd_length['chr_length']), 2) - sgd_length['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
-sgd_length['chr_end'] = (sgd_length['chr_length'] + 1).cumsum(axis=0)
-sgd_length = sgd_length.drop('chr_length', axis=1)
+
+def chr_coords(fn):
+    df = pd.read_csv(fn, names=['chr_arabic','chr_length'], index_col=False, sep=' ')
+    df = df[~(df['chr_arabic'].isin([17,18]))]
+    df['chr_start'] = ((df['chr_length'].rolling(window=2,center=False).sum() - df['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
+    df['chr_end'] = (df['chr_length'] + 1).cumsum(axis=0)
+    # df = df.drop('chr_length', axis=1)
+    return df
 
 
-def chr_to_gw(df):
-    df = df.merge(sgd_length, how='left', on='chr_arabic')
+def chr_to_gw(df, chr_coords):
+    df = df.merge(chr_coords, how='left', on='chr_arabic')
     if 'start' and 'end' in df:
         df['pos_start'] = df.start + df.chr_start
         df['pos_end'] = df.end + df.chr_start
@@ -249,13 +260,6 @@ def chr_to_gw(df):
         
     df['chr_roman'] = df['chr_arabic'].apply(int_to_roman)
     
-    df = df.drop(['chr_start','chr_end','chrs'], axis=1)
+    df = df.drop(['chr_start','chr_end'], axis=1)
     
     return df
-
-
-def merge_two_dicts(x, y):
-    '''Given two dicts, merge them into a new dict as a shallow copy.'''
-    z = x.copy()
-    z.update(y)
-    return z

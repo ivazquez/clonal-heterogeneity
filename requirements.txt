@@ -6,3 +6,5 @@ pandas
 rpy2
 scikit-learn
 statsmodels
+patsy
+pyvcf
