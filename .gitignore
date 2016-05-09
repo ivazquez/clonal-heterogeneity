@@ -22,7 +22,7 @@
 # Python
 paths.py
 *.pyc
-*.ipynb_checkpoints
+.ipynb_checkpoints
 
 # Sequencing data
 *.ab1

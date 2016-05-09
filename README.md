@@ -19,6 +19,7 @@ and others. These are found in the `src/` directory. The repository also include
 
 To install all Python dependencies inside a virtual environment and build the cloneHD executables into the `build/` directory, run:
 
+    $ cd gv-paper-2016
     $ make
 
 You can then browse and run the notebooks locally to reproduce all figures with:
