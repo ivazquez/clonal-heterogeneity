@@ -1,4 +1,4 @@
-run,lane,tag,sample_accession_number,sanger_sample_id,nice_sample_id,species,background,ploidy,cross,cross_rep,selection,selection_rep,time,clone,sample,population,coverage,ftp_submission
+run,lane,tag,sample_accession_number,sanger_sample_id,nice_sample_id,species,background,ploidy,cross,cross_rep,selection,selection_rep,time,clone,sample,population,coverage,ftp_submission_reads
 8616,5,6,ERS169291,R1_HU_T2,,Saccharomyces cerevisiae,WAxNA,diploid,F12,1,HU,1,2,,WAxNA_F12_1_HU_1_T2,WAxNA_F12_1_HU_1,43.2909551,ftp://ftp.sra.ebi.ac.uk/vol1/ERA182/ERA182294/bam/8616_5#6.bam
 8939,1,6,ERS169291,R1_HU_T2,,Saccharomyces cerevisiae,WAxNA,diploid,F12,1,HU,1,2,,WAxNA_F12_1_HU_1_T2,WAxNA_F12_1_HU_1,46.35822907,ftp://ftp.sra.ebi.ac.uk/vol1/ERA195/ERA195404/bam/8939_1#6.bam
 8616,5,18,ERS169307,R1_HU_T4,,Saccharomyces cerevisiae,WAxNA,diploid,F12,1,HU,1,4,,WAxNA_F12_1_HU_1_T4,WAxNA_F12_1_HU_1,41.4028403,ftp://ftp.sra.ebi.ac.uk/vol1/ERA182/ERA182294/bam/8616_5#18.bam
