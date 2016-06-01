@@ -77,7 +77,7 @@ def boxplot_custom(bp, ax, colors, hatches):
     ax.tick_params(axis='y', length=0)
     
 
-def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', hatch='', vmin=0.0, vmax=1.0, show=False):
+def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', hatch='', vmin=0.0, vmax=1.0, show=False, speed='slow'):
     '''
     Inspired by:
     - http://stackoverflow.com/a/16124677/395857 
@@ -85,26 +85,29 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     '''
 
     # plot the heatmap
-    c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
+    if speed=='slow':
+        c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
+    
+        # place the major ticks at the middle of each cell
+        ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
+        ax.set_yticks(np.arange(z.shape[0]) + 0.5, minor=False)
 
-    # place the major ticks at the middle of each cell
-    ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
-    ax.set_yticks(np.arange(z.shape[0]) + 0.5, minor=False)
-
-    # set tick labels
-    ax.set_xticklabels(xticklabels, minor=False, rotation=90)
-    ax.set_yticklabels(yticklabels, minor=False)
+        # set tick labels
+        ax.set_xticklabels(xticklabels, minor=False, rotation=90)
+        ax.set_yticklabels(yticklabels, minor=False)
+    else:
+        c = ax.pcolormesh(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
 
     # set title and x/y labels
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
-    # Remove last blank column
+    # remove last blank column
     ax.set_xlim( (min(x), max(x)) )
     ax.set_ylim( (min(y), max(y)) )
 
-    # Turn off all the ticks
+    # turn off all the ticks
     for t in ax.xaxis.get_major_ticks():
         t.tick1On = False
         t.tick2On = False
@@ -112,7 +115,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
         t.tick1On = False
         t.tick2On = False
 
-    # Proper orientation (origin at the top left instead of bottom left)
+    # proper orientation (origin at the top left instead of bottom left)
     ax.invert_yaxis()
     
     return c
@@ -122,7 +125,6 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
     '''
     
     '''
-    
     dict_mat = {u'MATa':{'x':[-radius]*len(S.loc[u'MATa']), 'y':np.arange(0.5,len(S.loc[u'MATa']))},
                 u'MATα':{'x':np.arange(0.5,len(S.loc[u'MATα'])), 'y':[-radius]*len(S[u'MATα'])}}
     
