@@ -12,7 +12,3 @@ bg_colors = ["#50ade5","#bf1b2c","#512268"]
 bg_colors_wt = [fte_colors_light[0],fte_colors_light[1],fte_colors_light[6]]
 bg_colors_mut = [fte_colors[0],fte_colors[1],fte_colors_dark[6]]
 t_colors = [plt.cm.viridis_r(x) for x in np.linspace(0, 1, 6)]
-
-# t_colors=["#80d07f","#60b487","#328b87","#245d5c","#243b52","#242e3e"]
-# t_colors = [plt.cm.YlGnBu(x) for x in np.linspace(0.25, 1, 6)]
-# fte_colors=["#8b8b8b","#cf2730","#ed6619","#23612e","#811c89","#80d4c9","#4759b1"]
