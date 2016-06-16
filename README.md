@@ -1,8 +1,8 @@
-# Background-dependent selection of genetic variation in heterogeneous populations
+# Background-dependent effects of selection on genetic variation
 
 This repository contains supporting material for the manuscript in preparation:
 
-> "Background-dependent selection of genetic variation in heterogeneous populations"
+> "Background-dependent effects of selection on genetic variation"
 
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
 
