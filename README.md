@@ -32,8 +32,8 @@ Alternatively, you can run the notebooks online using [Binder](http://mybinder.o
 | --- | --- |
 | Figure 1, Extended Data Fig. 2 | [Study design and driver-passenger dynamics](src/figure1.ipynb) |
 | Figure 2, Extended Data Figs. 3, 4, 7 | [Reconstruction of subclonal heterogeneity](src/figure2.ipynb) |
-| Figures 3, Extended Data Figs. 5, 6 | [Pervasive genome instability](src/figure3.ipynb) |
-| Figures 4, Extended Data Figs. 11, 12, 13 | [Background-averaged fitness effects](src/figure4.ipynb)|
+| Figure 3, Extended Data Figs. 5, 6 | [Pervasive genome instability](src/figure3.ipynb) |
+| Figure 4, Extended Data Figs. 11, 12, 13 | [Background-averaged fitness effects](src/figure4.ipynb)|
 | Extended Data Figs. 8, 9, 10 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
 
 ## Sequence data
