@@ -1,8 +1,8 @@
-# Background-dependent effects of selection on genetic variation
+# Background-dependent effects of selection on subclonal heterogeneity
 
 This repository contains supporting material for the manuscript in preparation:
 
-> "Background-dependent effects of selection on genetic variation"
+> "Background-dependent effects of selection on subclonal heterogeneity"
 
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
 
