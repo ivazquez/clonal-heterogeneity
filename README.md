@@ -30,11 +30,11 @@ Alternatively, you can run the notebooks online using [Binder](http://mybinder.o
 
 | Figures | Notebook |
 | --- | --- |
-| Figure 1, Extended Data Fig. 2 | [Study design and driver-passenger dynamics](src/figure1.ipynb) |
-| Figure 2, Extended Data Figs. 3, 4, 7 | [Reconstruction of subclonal heterogeneity](src/figure2.ipynb) |
-| Figure 3, Extended Data Figs. 5, 6 | [Pervasive genome instability](src/figure3.ipynb) |
-| Figure 4, Extended Data Figs. 11, 12, 13 | [Background-averaged fitness effects](src/figure4.ipynb)|
-| Extended Data Figs. 8, 9, 10 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
+| Figure 1, Figure S2 | [Study design and driver-passenger dynamics](src/figure1.ipynb) |
+| Figure 2, Figures S3, S4, S7 | [Reconstruction of subclonal heterogeneity](src/figure2.ipynb) |
+| Figure 3, Figures S5, S6 | [Pervasive genome instability](src/figure3.ipynb) |
+| Figure 4, Figures S11, S12, S13 | [Background-averaged fitness effects](src/figure4.ipynb)|
+| Figures S8, S9, S10 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
 
 ## Sequence data
 Sequencing reads are available in BAM or CRAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780) and the NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608). Sequence data for the time-resolved populations and the evolved individuals have been submitted to the SRA/ENA databases under study accession no. [ERP003953](http://www.ebi.ac.uk/ena/data/view/ERP003953) and the NCBI BioProject under accession no. [PRJEB4645](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB4645). To download the files programmatically from the FTP server (156GB):
@@ -62,4 +62,4 @@ The full documentation for [filterHD](https://github.com/ivazquez/cloneHD/blob/m
 ## Phenotype data
 Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in tab-separated format or serialized in Pickle format for Python. They can be found in the `data/pheno/` directory. 'NA' is used to indicate missing data or NaN.
 
-Temporal changes to the phenotype distribution are analysed in this [notebook](src/figure2.ipynb). The results are shown in [Figure 2](manuscript/main/figures/figure2/figure2_submission.png) and [Extended Data Figure 7](manuscript/supp/figures/supp_figure_pheno_evolution/supp_figure_pheno_evolution_submission.png). Phenotype measurements of the genetic cross are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 4](manuscript/main/figures/figure4/figure4_submission.png) and [Extended Data Figures 11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_submission.png) and [12](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_submission.png). Phenotype measurements of the genetic constructs are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).
+Temporal changes to the phenotype distribution are analysed in this [notebook](src/figure2.ipynb). The results are shown in [Figure 2](manuscript/main/figures/figure2/figure2_submission.png) and [S7](manuscript/supp/figures/supp_figure_pheno_evolution/supp_figure_pheno_evolution_submission.png). Phenotype measurements of the genetic cross are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 4](manuscript/main/figures/figure4/figure4_submission.png) and [Figures S11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_submission.png) and [S12](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_submission.png). Phenotype measurements of the genetic constructs are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).
