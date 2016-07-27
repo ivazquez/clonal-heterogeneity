@@ -6,7 +6,7 @@ This repository contains supporting material for the manuscript in preparation:
 
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
 
-> [bioRxiv 039859; doi: http://http://dx.doi.org/10.1101/039859](http://biorxiv.org/content/early/2016/07/27/039859)
+> [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://biorxiv.org/content/early/2016/07/27/039859)
 
 To clone this repository, run the following command in a local directory:
 
