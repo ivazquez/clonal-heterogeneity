@@ -224,14 +224,14 @@ population = {
         'parents': 0, 'ancestral': 1, 'evolved': 2
     },
     'facecolor':{
-        'parents': colors.fte_colors[0], 
-        'ancestral': colors.fte_colors[0],
-        'evolved': colors.fte_colors[1]
+        'parents': '#32a273', 
+        'ancestral': '#32a273',
+        'evolved': '#6a3d9a'
     },
     'color':{
-        'parents': colors.fte_colors[0], 
-        'ancestral': colors.fte_colors[0],
-        'evolved': colors.fte_colors[1]   
+        'parents': '#32a273', 
+        'ancestral': '#32a273',
+        'evolved': '#6a3d9a'
     },
     'long_label':{
         'parents': 'parents', 
@@ -251,7 +251,7 @@ population = {
     'pad':{
         'parents': 0.11, 
         'ancestral': 0.11, 
-        'evolved':0.11
+        'evolved': 0.11
     }
 }
 
