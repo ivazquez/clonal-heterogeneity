@@ -10,7 +10,7 @@ This repository contains supporting material for the manuscript in preparation:
 
 To clone this repository, run the following command in a local directory:
 
-    $ git clone --recursive https://github.com/ivazquez/gv-paper-2016.git
+    $ git clone --recursive https://github.com/ivazquez/science-advances-2016.git
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
 
@@ -21,17 +21,17 @@ and others. These are found in the `src/` directory. The repository also include
 
 To install all Python dependencies inside a virtual environment and build the cloneHD executables into the `build/` directory, run:
 
-    $ cd gv-paper-2016
+    $ cd science-advances-2016
     $ make
 
 You can then browse and run the notebooks locally to reproduce all figures with:
 
     $ jupyter notebook
 
-Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/gv-paper-2016).
+Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/science-advances-2016).
 
 | Figures | Notebook |
-| --- | --- |
+| ------- | -------- |
 | Figures 1, S2 | [Study design and driver-passenger dynamics](src/figure1.ipynb) |
 | Figures 2, S3, S4, S7 | [Reconstruction of subclonal heterogeneity](src/figure2.ipynb) |
 | Figures 3, S5, S6 | [Pervasive genome instability](src/figure3.ipynb) |
@@ -45,7 +45,7 @@ Sequencing reads are available in BAM or CRAM format from the European Nucleotid
 
 Sequences must be aligned to the *S. cerevisiae* reference genome [R64-1-1](http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz).
 
-Variant calls are available in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/ena/data/view/PRJEB13491). They will also become available for browsing on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491) upon publication. Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`). They can be downloaded programmatically from the FTP (713MB):
+Variant calls are available in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/ena/data/view/PRJEB13491) and can be browsed on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`). They can be downloaded programmatically from the FTP (713MB):
 
     $ wget -i <(awk -F, '{gsub(";","\n",$NF); print $NF;}' data/seq/sample_ids_merged_dup.csv)
 

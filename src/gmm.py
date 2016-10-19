@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from sklearn.mixture import GMM
+from sklearn.mixture import GaussianMixture
 
 
 def gmm_fit(X, N):
@@ -21,7 +21,7 @@ def gmm_fit(X, N):
     models = [None for i in range(len(N))]
     
     for i in range(len(N)):
-        models[i] = GMM(N[i]).fit(X)
+        models[i] = GaussianMixture(N[i]).fit(X)
         
     return models
 

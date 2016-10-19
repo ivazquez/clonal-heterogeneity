@@ -5,6 +5,31 @@ import colors
 import numpy as np
 import matplotlib.patheffects as PathEffects
 
+# chromosome length
+# S. cerevisiae (R64-1-1) 
+# chr 1-16 (autosomes), chr 17 (MT), chr 18 (unknown)
+# http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz
+chrom_len = {
+	1: 230218,
+	2: 813184,
+	3: 316620,
+	4: 1531933,
+	5: 576874,
+	6: 270161,
+	7: 1090940,
+	8: 562643,
+	9: 439888,
+	10: 745751,
+	11: 666816,
+	12: 1078177,
+	13: 924431,
+	14: 784333,
+	15: 1091291,
+	16: 948066,
+	17: 85779,
+	18: 6318
+}
+
 # population attributes
 spores_bg = {
     'position': {
@@ -70,14 +95,6 @@ spores_gt_short = {
         {'+': colors.fte_colors[1], '-': colors.fte_colors[5]},
         'RM': 
         {'+': colors.fte_colors[1], '-': colors.fte_colors[5]}
-        # 'HU':
-        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
-        # 'RM':
-        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
-        # 'HU':
-        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]},
-        # 'RM':
-        # {'+': colors.fte_colors_dark[5], '-': colors.fte_colors_light[5]}
     }
 }
 
@@ -166,15 +183,7 @@ hybrids_gt_short = {
         'HU':
         {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
         'RM':
-        {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
-        # 'HU':
-        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
-        # 'RM':
-        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
-        # 'HU':
-        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
-        # 'RM':
-        # {('+','+'): colors.fte_colors_dark[5], ('+','-'): colors.fte_colors[5], ('-','+'): colors.fte_colors[5], ('-','-'): colors.fte_colors_light[5]},
+        {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]}
     }
 }
 
@@ -293,9 +302,6 @@ selection = {
         'HU':colors.fte_colors_light[5],
         'RM':colors.fte_colors[5],
         'YPD':colors.fte_colors_dark[5]
-        # 'HU':colors.mr_colors[2],
-        # 'RM':colors.mr_colors[1],
-        # 'YPD':'k'
     },
     'linewidth': {
         'HU':0.75,'RM':0.75,'YPD':0.75
@@ -324,6 +330,9 @@ environment = {
     },
     'linewidth': {
         'HU':0.75,'RM':0.75,'YNB':0.75
+    },
+    'marker': {
+        'HU':'.','RM':'d','YNB':'o' 
     },
     'style': {
         'HU':'-','RM':'-','YNB':'-' 
@@ -495,5 +504,56 @@ construct_tests = {
         (u'NA', u'ynr066cΔ'): (u'NA', u'WT'),
         (u'WA/NA', u'ynr066cΔ'): (u'WA/NA', u'WT'),
         (u'WA/NA', u'YNR066C WA/ynr066cΔ NA'): (u'WA/NA', u'ynr066cΔ WA/YNR066C NA')
+    }
+}
+
+# attributes for variant types
+variant_type = {
+    'snp': {
+		'color':'r',
+        'linestyle':'-',
+        'linewidth':1
+    },
+    'insertion': {
+		'color':'g',
+        'linestyle':'-',
+        'linewidth':1
+    },
+    'deletion': {
+		'color':'r',
+        'linestyle':'-',
+        'linewidth':1
+    },
+    'duplication': {
+		'color':'g',
+        'linestyle':'-',
+        'linewidth':1
+    },
+    'inversion': {
+		'color':'b',
+        'linestyle':'-',
+        'linewidth':1
+    },
+    'translocation': {
+		'color':'k',
+        'linestyle':'-',
+        'linewidth':1
+    }
+}
+
+# mutation type attributes
+mutation_type = {
+    'driver' : {
+        'linestyle':'-',
+        'linewidth':1.5,
+        'path_effects':[PathEffects.withStroke(linewidth=2, foreground="k")],
+        'zorder':2
+    },
+    'passenger': {
+        'linestyle':'--',
+        'dashes':(3,2),
+        'linewidth':1.5,
+        'path_effects':[PathEffects.withStroke(linewidth=2, foreground="k")],
+        'zorder':1,
     }
 }

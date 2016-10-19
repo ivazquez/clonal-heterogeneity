@@ -5,12 +5,14 @@ import os, re
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
+import scipy as sp
 import pandas as pd
 
 
 def get_git_path():
-    '''Return the git path of the current repository
-    '''
+    """
+	Return the git path of the current repository
+    """
     import subprocess
     try:
         dir_repo = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
@@ -20,44 +22,49 @@ def get_git_path():
 
 
 def load_data(fn):
-    '''Load the data for the plots
+    """
+	Load the data for the plots
     
     Input
     -----
       fn : filename 
-    '''
+    """
     import cPickle as pickle
     with open(fn, 'rb') as f:
         return pickle.load(f)
 
 
 def save_data(data, fn):
-    '''Store data to file for the plots
+    """
+	Store data to file for the plots
     
     Input
     -----
       data : pandas dataframe
       fn : filename 
-    '''
+    """
     import cPickle as pickle
     with open(fn, 'wb') as f:
         pickle.dump(data, f, protocol=-1)
 
 
 def merge_two_dicts(x, y):
-    '''Given two dicts, merge them into a new dict as a shallow copy.'''
+    """
+	Given two dicts, merge them into a new dict as a shallow copy.
+	"""
     z = x.copy()
     z.update(y)
     return z
 
     
 def simple_axes(ax):
-    '''Show left and bottom axes in a plot
+    """
+	Show left and bottom axes in a plot
 
     Input
     -----
       ax : matplotlib axis
-    '''
+    """
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.get_xaxis().tick_bottom()
@@ -65,7 +72,7 @@ def simple_axes(ax):
 
 
 def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
-    '''
+    """
     Function to offset the "center" of a colormap. Useful for
     data with a negative min and positive max and you want the
     middle of the colormap's dynamic range to be at zero
@@ -85,7 +92,7 @@ def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
       stop : Offset from highets point in the colormap's range.
           Defaults to 1.0 (no upper ofset). Should be between
           `midpoint` and 1.0.
-    '''
+    """
     cdict = {
         'red': [],
         'green': [],
@@ -117,7 +124,8 @@ def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
 
 
 def discrete_colormap(N, base_cmap=None):
-    """Create an N-bin discrete colormap from the specified input map
+    """
+	Create an N-bin discrete colormap from the specified input map
     
     Input
     -----
@@ -136,7 +144,8 @@ def discrete_colormap(N, base_cmap=None):
 
 
 def percentile(data):
-    """Calculate the median and top/bottom percentiles
+    """
+	Calculate the median and top/bottom percentiles
     
     Input
     -----
@@ -153,13 +162,13 @@ def percentile(data):
 
 
 def stars(p):
-    '''
+    """
     Convert p-values to star notation
 
     Input
     -----
       p : p-value
-    '''
+    """
     if p < 0.0001:
         return "****"
     elif (p < 0.001):
@@ -173,21 +182,23 @@ def stars(p):
         
 #Define digit mapping
 roman_numeral = (('M',  1000),
-                   ('CM', 900),
-                   ('D',  500),
-                   ('CD', 400),
-                   ('C',  100),
-                   ('XC', 90),
-                   ('L',  50),
-                   ('XL', 40),
-                   ('X',  10),
-                   ('IX', 9),
-                   ('V',  5),
-                   ('IV', 4),
-                   ('I',  1))
+				 ('CM', 900),
+				 ('D',  500),
+				 ('CD', 400),
+				 ('C',  100),
+				 ('XC', 90),
+				 ('L',  50),
+				 ('XL', 40),
+				 ('X',  10),
+				 ('IX', 9),
+				 ('V',  5),
+				 ('IV', 4),
+				 ('I',  1))
 
 def int_to_roman(n):
-    """convert integer to roman numeral"""
+    """
+	Convert integer to roman numeral
+	"""
     if not (0 < n < 5000):
         raise OutOfRangeError, "number out of range (must be 1..4999)"
     if int(n) != n:
@@ -200,7 +211,7 @@ def int_to_roman(n):
             n -= integer
     return result
 
-#Define pattern to detect valid Roman numerals
+# Define pattern to detect valid Roman numerals
 roman_numeral_pattern = re.compile("""
     ^                   # beginning of string
     M{0,4}              # thousands - 0 to 4 M's
@@ -214,7 +225,9 @@ roman_numeral_pattern = re.compile("""
     """ ,re.VERBOSE)
 
 def roman_to_int(s):
-    """convert roman numeral to integer"""
+    """
+	Convert roman numeral to integer
+	"""
     if not s:
         raise InvalidRomanNumeralError, 'Input can not be blank'
     if not roman_numeral_pattern.search(s):
@@ -230,14 +243,18 @@ def roman_to_int(s):
     
     
 def hex_to_rgb(value):
-    """convert hex code to rgb"""
+    """
+	Convert hex code to rgb
+	"""
     value = value.lstrip('#')
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
 
 def rgb_to_hex(rgb):
-    """convert rgb to hex code"""
+    """
+	Convert rgb to hex code
+	"""
     return '#%02x%02x%02x' % rgb
 
 
@@ -263,3 +280,39 @@ def chr_to_gw(df, chr_coords):
     df = df.drop(['chr_start','chr_end'], axis=1)
     
     return df
+	
+def est_cum_pos(position, aggregation='chrom', column='pos', offset=0, chrom_len=None):
+    """
+	Compute the cumulative position of each variant given the position and the chromosome
+    Also return the starting cumulativeposition of each chromosome
+
+    Args:
+        position:   pandas DataFrame of basepair positions (key='pos') and chromosome values (key='chrom')
+                    The DataFrame will be updated with field 'pos_cum'
+        chrom_len:  vector with predefined chromosome length
+        offset:     offset between chromosomes for cumulative position (default 0 bp)
+    
+    Returns:
+        chrom_pos,position:
+        chrom_pos:  numpy.array of starting cumulative positions for each chromosome
+        position:   augmented position object where cumulative positions are defined
+    """
+    RV = position.copy()
+    chromvals =  sp.unique(position[aggregation]) # sp.unique is always sorted
+    chrom_pos_cum= sp.zeros_like(chromvals) # get the starting position of each Chrom
+    pos_cum= sp.zeros_like(position.shape[0])
+    if not column+'_cum' in position:
+        RV[column+'_cum']= sp.zeros_like(position[column]) # get the cum_pos of each variant.
+    pos_cum=RV[column+'_cum'].values
+    maxpos_cum=0
+    for i,mychrom in enumerate(chromvals):
+        chrom_pos_cum[i] = maxpos_cum
+        i_chr=position[aggregation]==mychrom
+        if chrom_len is None:
+            maxpos = position[column][i_chr].max()+offset
+        else:
+            maxpos = chrom_len[mychrom]+offset
+        pos_cum[i_chr.values]=maxpos_cum+position.loc[i_chr,column]
+        maxpos_cum+=maxpos      
+    
+    return RV, chrom_pos_cum

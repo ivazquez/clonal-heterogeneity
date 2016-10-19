@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import scipy as sp
 from numpy.random import *
 
 import matplotlib.pyplot as plt
@@ -11,10 +12,11 @@ from matplotlib.patches import Polygon
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import matplotlib.colors as mcolors
 
+import config
 
 def histogram_binned_data(ax, data, bins=50):
-    '''
-    '''
+    """
+	"""
     nx, xbins = np.histogram(data, bins=bins, normed=True)
 
     nx_frac = nx/float(len(nx)) # each bin divided by total number of objects.
@@ -26,9 +28,9 @@ def histogram_binned_data(ax, data, bins=50):
 
 
 def boxplot_custom(bp, ax, colors, hatches):
-    '''
+    """
     Custom boxplot style
-    '''
+    """
     for i in range(len(bp['boxes'])):
         box = bp['boxes'][i]
         box.set_linewidth(0)
@@ -78,12 +80,11 @@ def boxplot_custom(bp, ax, colors, hatches):
     
 
 def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', hatch='', vmin=0.0, vmax=1.0, show=False, speed='slow'):
-    '''
+    """
     Inspired by:
     - http://stackoverflow.com/a/16124677/395857 
     - http://stackoverflow.com/a/25074150/395857
-    '''
-
+    """
     # plot the heatmap
     if speed=='slow':
         c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
@@ -122,9 +123,9 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     
     
 def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, radius=0.25):
-    '''
+    """
     
-    '''
+    """
     dict_mat = {u'MATa':{'x':[-radius]*len(S.loc[u'MATa']), 'y':np.arange(0.5,len(S.loc[u'MATa']))},
                 u'MATα':{'x':np.arange(0.5,len(S.loc[u'MATα'])), 'y':[-radius]*len(S[u'MATα'])}}
     
@@ -145,9 +146,9 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
 
 
 def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=False, cmap='RdBu', vmin=0.0, vmax=1.0, pad=0.25, legend_title=''):
-    '''
+    """
     
-    '''
+    """
     from matplotlib.ticker import FormatStrFormatter
     
     if fold:
@@ -208,7 +209,113 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     cbar.ax.tick_params(labelsize=5)
     cbar.locator = ticker.MaxNLocator(nbins = 3)
     cbar.outline.set_visible(False)
+	
 
+def bezier_curve(start, end, ax=None, offset=0, **kwargs):
+    """
+    
+    """
+    # A list of P0's and P3's. Must be the same length
+    origins = [[start,offset],[start,-1], [start,1]]
+    destinations = [[end,offset],[end,offset],[end,offset]]
+
+    # The angle the control point will make with the green line
+    blue_angle = sp.pi/4
+    red_angle = sp.pi/4
+
+    # Lengths of the lines (as a fraction of the length of the green one)
+    blue_len = 1./5
+    red_len = 1./3
+    
+    # Setup the parameterisation
+    t = sp.linspace(0,1,100)
+
+    for i in xrange(len(origins)):
+        # Read in the origin & destination points
+        POx,POy = origins[i][0], origins[i][1]
+        P3x,P3y = destinations[i][0], destinations[i][1]
+
+    # Work out r and theta (as if based at P3)
+    r = ((POx-P3x)**2 + (POy-P3y)**2)**0.5
+    theta = sp.arctan2((POy-P3y),(POx-P3x))
+
+    # Find the relevant angles for the control points
+    aO = theta + blue_angle + sp.pi
+    aD = theta - red_angle
+
+    # Work out the control points
+    P1x, P1y = POx+ blue_len*r*sp.cos(aO), POy + blue_len*r*sp.sin(aO)
+    P2x, P2y = P3x+ red_len*r*sp.cos(aD), P3y + red_len*r*sp.sin(aD)
+
+#     #Plot the control points and their vectors
+#     ax.plot((P3x,P2x),(P3y,P2y), 'r')
+#     ax.plot((POx,P1x),(POy,P1y), 'b')
+#     ax.plot(P1x, P1y, 'ob')
+#     ax.plot(P2x, P2y, 'or')
+
+    # Bezier formula
+    Bx = (1-t)**3*POx + 3*(1-t)**2*t*P1x + 3*(1-t)*t**2*P2x + t**3*P3x
+    By = (1-t)**3*POy + 3*(1-t)**2*t*P1y + 3*(1-t)*t**2*P2y + t**3*P3y
+
+    # Plot the Bezier curve
+    import matplotlib.transforms as transforms
+    transform = transforms.blended_transform_factory(ax.transData, ax.transAxes)
+    ax.plot(Bx, By, **kwargs)#, transform=transform)
+	
+    # Plot the origin/destination points
+    ax.plot(POx,POy, color='b', marker='o', markersize=3)
+    ax.plot(P3x,P3y, color='r', marker='o', markersize=3)
+#     ax.plot((POx,P3x),(POy,P3y), 'g')
+	
+	# Draw horizontal line at y=0 and remove frame
+    ax.axhline(y=0, color='k', linewidth=1, zorder=0)
+	
+    ax.set_xticks([])
+    ax.set_xticklabels([])
+    ax.set_yticks([])
+    ax.set_yticklabels([])
+    
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+def structural_variants(data, ax=None, offset=0):
+    """
+    
+    """
+    
+    # ### Deletions ###
+    # for ii, variant in data.ix['DEL'].iterrows():
+    #     start = variant['start_cum']
+    #     end = variant['end_cum']
+    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['deletion'])
+    #
+    # ### Duplications ###
+    # for ii, variant in data.ix['DUP'].iterrows():
+    #     start = variant['start_cum']
+    #     end = variant['end_cum']
+    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['duplication'])
+    #
+    # ### Insertions ###
+    # for ii, variant in data.ix['INS'].iterrows():
+    #     start = variant['start_cum']
+    #     end = variant['end_cum']
+    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['insertion'])
+    #
+    # ### Inversions ###
+    # for ii, variant in data.ix['INV'].iterrows():
+    #     start = variant['start_cum']
+    #     end = variant['end_cum']
+    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['inversion'])
+
+    ### Translocations ###
+    for ii, variant in data.ix['TRA'].iterrows():
+        start = variant['start_cum']
+        end = variant['end_cum']
+        bezier_curve(start, end, ax, offset=offset, **config.variant_type['translocation'])
+    
+    ax.set_xlim((0, 1.2E7))
 
 def set_custom_labels(index, pos):
     """
@@ -276,7 +383,6 @@ def zoom_effect(ax1, ax2, xmin, xmax, **kwargs):
     connect ax1 & ax2. The x-range of (xmin, xmax) in both axes will
     be marked.  The keywords parameters will be used to create
     patches.
-
     """
 
     trans1 = blended_transform_factory(ax1.transData, ax1.transAxes)
@@ -313,7 +419,8 @@ def colorbar_index(ncolors, cmap):
 
 
 def cmap_discretize(cmap, N):
-    """Return a discrete colormap from the continuous colormap cmap.
+    """
+	Return a discrete colormap from the continuous colormap cmap.
 
         cmap: colormap instance, eg. cm.jet. 
         N: number of colors.
@@ -387,7 +494,8 @@ def annotate_custom(ax, s, xy_arr=[], *args, **kwargs):
 
 def custom_div_cmap(numcolors=11, name='custom_div_cmap',
                     mincol='blue', midcol='white', maxcol='red'):
-    """ Create a custom diverging colormap with three colors
+    """
+	Create a custom diverging colormap with three colors
     
     Default is blue to white to red with 11 colors.  Colors can be specified
     in any way understandable by matplotlib.colors.ColorConverter.to_rgb()
@@ -403,9 +511,9 @@ def custom_div_cmap(numcolors=11, name='custom_div_cmap',
 
 
 def adjust_spines(ax, spines):
-    '''
+    """
     see http://matplotlib.org/devdocs/examples/pylab_examples/spine_placement_demo.html#pylab-examples-spine-placement-demo
-    '''
+    """
     for loc, spine in ax.spines.items():
         if loc in spines:
             spine.set_position(('outward', 10))  # outward by 10 points
@@ -429,7 +537,7 @@ def adjust_spines(ax, spines):
 
 def align_xaxis(ax1, v1, ax2, v2):
     """
-    adjust ax2 xlimit so that v2 in ax2 is aligned to v1 in ax1
+    Adjust ax2 xlimit so that v2 in ax2 is aligned to v1 in ax1
     see: http://stackoverflow.com/questions/7630778/matplotlib-align-origin-of-right-axis-with-specific-left-axis-value
     """
     _, x1 = ax1.transData.transform((0, v1))
@@ -442,7 +550,7 @@ def align_xaxis(ax1, v1, ax2, v2):
        
 def align_yaxis(ax1, v1, ax2, v2):
     """
-    adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1
+    Adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1
     see: http://stackoverflow.com/questions/7630778/matplotlib-align-origin-of-right-axis-with-specific-left-axis-value
     """
     _, y1 = ax1.transData.transform((0, v1))
@@ -454,7 +562,9 @@ def align_yaxis(ax1, v1, ax2, v2):
 
 
 def adjust_yaxis(ax,ydif,v):
-    """shift axis ax by ydiff, maintaining point v at the same location"""
+    """
+	Shift axis ax by ydiff, maintaining point v at the same location
+	"""
     inv = ax.transData.inverted()
     _, dy = inv.transform((0, 0)) - inv.transform((0, ydif))
     miny, maxy = ax.get_ylim()
