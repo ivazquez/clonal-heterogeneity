@@ -8,6 +8,7 @@ import numpy as np
 import scipy as sp
 import pandas as pd
 
+import config, utils
 
 def get_git_path():
     """
@@ -63,7 +64,7 @@ def simple_axes(ax):
 
     Input
     -----
-      ax : matplotlib axis
+	ax : matplotlib axis
     """
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -258,12 +259,14 @@ def rgb_to_hex(rgb):
     return '#%02x%02x%02x' % rgb
 
 
-def chr_coords(fn):
-    df = pd.read_csv(fn, names=['chr_arabic','chr_length'], index_col=False, sep=' ')
+def chr_coords():
+	# Load config file with chromosome lengths
+    df = pd.DataFrame(config.chrom_len.items(), columns=['chr_arabic', 'chr_length'])
     df = df[~(df['chr_arabic'].isin([17,18]))]
+    df['chr_roman'] = df['chr_arabic'].apply(utils.int_to_roman)
+	# Calculate start/end coordinates
     df['chr_start'] = ((df['chr_length'].rolling(window=2,center=False).sum() - df['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
-    df['chr_end'] = (df['chr_length'] + 1).cumsum(axis=0)
-    # df = df.drop('chr_length', axis=1)
+    df['chr_end'] = (df['chr_length']).cumsum(axis=0)
     return df
 
 

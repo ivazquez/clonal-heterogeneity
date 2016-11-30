@@ -5,6 +5,7 @@ import numpy as np
 import scipy as sp
 from numpy.random import *
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.collections import PatchCollection
 from matplotlib import lines,ticker
@@ -12,7 +13,7 @@ from matplotlib.patches import Polygon
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import matplotlib.colors as mcolors
 
-import config
+import config, utils
 
 def histogram_binned_data(ax, data, bins=50):
     """
@@ -79,7 +80,7 @@ def boxplot_custom(bp, ax, colors, hatches):
     ax.tick_params(axis='y', length=0)
     
 
-def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', hatch='', vmin=0.0, vmax=1.0, show=False, speed='slow'):
+def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='RdBu', hatch='', vmin=0.0, vmax=1.0, show=False, speed='slow', zorder=1):
     """
     Inspired by:
     - http://stackoverflow.com/a/16124677/395857 
@@ -87,7 +88,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     """
     # plot the heatmap
     if speed=='slow':
-        c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
+        c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, zorder=zorder)
     
         # place the major ticks at the middle of each cell
         ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
@@ -97,7 +98,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
         ax.set_xticklabels(xticklabels, minor=False, rotation=90)
         ax.set_yticklabels(yticklabels, minor=False)
     else:
-        c = ax.pcolormesh(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax)
+        c = ax.pcolormesh(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, zorder=zorder)
 
     # set title and x/y labels
     ax.set_title(title)
@@ -210,112 +211,416 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     cbar.locator = ticker.MaxNLocator(nbins = 3)
     cbar.outline.set_visible(False)
 	
+def gw_frequency(data, ax=None):
 
-def bezier_curve(start, end, ax=None, offset=0, **kwargs):
-    """
+    colors = [config.time['color'][k] for k in data.columns.get_level_values('time')]
+    data.reset_index().plot(ax=ax, kind='line',
+							x='pos', y=data.columns,
+							color=colors, lw=0.4, #alpha=(0.6 if e in ['HU','RM'] else 0.9), 
+							legend=False, zorder=3)
+	# shades
+    chr_coords = utils.chr_coords()
+    for start, end in zip(chr_coords.chr_start, chr_coords.chr_end):
+		for chrom, g in chr_coords.groupby('chr_arabic'):
+			ax.axvspan(g.chr_start.squeeze(), g.chr_end.squeeze(),
+					   color=('0.95' if chrom % 2 == 1 else 'w'), lw=0, zorder=0) 
     
-    """
-    # A list of P0's and P3's. Must be the same length
-    origins = [[start,offset],[start,-1], [start,1]]
-    destinations = [[end,offset],[end,offset],[end,offset]]
+    ax.set_ylim((0, 1))
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
+    ax.yaxis.set_minor_locator(ticker.MaxNLocator(nbins=4))
+    ax.yaxis.set_ticks_position('left')
 
-    # The angle the control point will make with the green line
-    blue_angle = sp.pi/4
-    red_angle = sp.pi/4
+    ax.yaxis.grid(lw=0.6, ls='-', color='0.9', which='minor')
+	
+def histogram_frequency(data, ax=None):
+	
+    for time in data:    
+        x, y = histogram_binned_data(ax, data[time], bins=50)
+        ax.plot(x, y, color=config.time['color'][time], lw=0.5)
+        ax.fill_between(x, 0, y, label=time, #alpha=(0.6 if e in ['HU','RM'] else 0.9), 
+						facecolor=config.time['color'][time])            
+	
+    ax.set_xlim((0, 1))
+    ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
+    ax.xaxis.set_minor_locator(ticker.MaxNLocator(nbins=4))
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=3, prune='upper'))
+    ax.yaxis.set_ticks_position('right')
+	
+    ax.xaxis.grid(lw=0.6, ls=':', color='0.9', which='minor')
 
-    # Lengths of the lines (as a fraction of the length of the green one)
-    blue_len = 1./5
-    red_len = 1./3
+def loh_length(data, ax=None):
     
-    # Setup the parameterisation
-    t = sp.linspace(0,1,100)
+    colors = [config.selection['color'][e] for e in data.columns]
+    
+    data.rename(columns=config.selection['short_label'])\
+    .plot(ax=ax, logy=True, color=colors, style='.', marker='o', ms=3, mec='none', legend=False)
 
-    for i in xrange(len(origins)):
-        # Read in the origin & destination points
-        POx,POy = origins[i][0], origins[i][1]
-        P3x,P3y = destinations[i][0], destinations[i][1]
+    utils.simple_axes(ax)
+    ax.set_xlim(0,1.1E3)
+    ax.set_xlabel('Homozygosity segment length (kb)')
+    ax.set_ylabel('Frequency')
 
-    # Work out r and theta (as if based at P3)
-    r = ((POx-P3x)**2 + (POy-P3y)**2)**0.5
-    theta = sp.arctan2((POy-P3y),(POx-P3x))
+    ax.legend(frameon=False, loc='upper right', 
+              borderaxespad=0., prop={'size':5},
+              handlelength=0.75)
 
-    # Find the relevant angles for the control points
-    aO = theta + blue_angle + sp.pi
-    aD = theta - red_angle
+def loh_fluctuation(data, ax=None):
+    
+    colors = [config.background['color'][b] for b in data['LOH rate','mean'].columns] 
+    data['LOH rate','mean'].plot(ax=ax, kind='bar', yerr = data['LOH rate','sem'], 
+                                 color=colors, edgecolor='k', legend=False,
+                                 error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
 
-    # Work out the control points
-    P1x, P1y = POx+ blue_len*r*sp.cos(aO), POy + blue_len*r*sp.sin(aO)
-    P2x, P2y = P3x+ red_len*r*sp.cos(aD), P3y + red_len*r*sp.sin(aD)
+    utils.simple_axes(ax)
+    
+    ax.set_xlabel('Environment')
+    ax.set_ylabel('5-FOA+/total 5-FOA')
+    ax.set_yscale('log')
+    ax.set_xticklabels(data.index.get_level_values('environment'), minor=False, rotation=0)
 
-#     #Plot the control points and their vectors
-#     ax.plot((P3x,P2x),(P3y,P2y), 'r')
-#     ax.plot((POx,P1x),(POy,P1y), 'b')
-#     ax.plot(P1x, P1y, 'ob')
-#     ax.plot(P2x, P2y, 'or')
-
-    # Bezier formula
-    Bx = (1-t)**3*POx + 3*(1-t)**2*t*P1x + 3*(1-t)*t**2*P2x + t**3*P3x
-    By = (1-t)**3*POy + 3*(1-t)**2*t*P1y + 3*(1-t)*t**2*P2y + t**3*P3y
-
-    # Plot the Bezier curve
-    import matplotlib.transforms as transforms
-    transform = transforms.blended_transform_factory(ax.transData, ax.transAxes)
-    ax.plot(Bx, By, **kwargs)#, transform=transform)
+    ax.legend(frameon=False, loc='upper right', 
+              borderaxespad=0., prop={'size':5},
+              handlelength=0.75)
+			  
+def filter_multiindex(data, names=None):
+	indexer = [slice(None)]*len(data.index.names)
+	indexer[data.index.names.index('type')] = names
+	return data.loc[tuple(indexer),:].dropna(axis=1, how='all')
 	
-    # Plot the origin/destination points
-    ax.plot(POx,POy, color='b', marker='o', markersize=3)
-    ax.plot(P3x,P3y, color='r', marker='o', markersize=3)
-#     ax.plot((POx,P3x),(POy,P3y), 'g')
+### Consensus genotype ###
+def consensus_genotype(data, ax=None):
+
+	if len(data) > 0:
+		x = data.columns.get_level_values('pos').values
+		y = np.arange(len(data.index))
+					
+		# Make a color map of fixed colors
+		cmap = mpl.colors.ListedColormap([config.background['color']['NA/NA'],
+										  config.background['color']['WA/NA'],
+										  config.background['color']['WA/WA']])
+		bounds = [0,1,2]
+		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+			
+		heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
+				ax, '', '', '', [], [], cmap=cmap, vmin=0, vmax=2)
+
+### SNP/indel mutations ###
+def snp_indel_genotype(data, ax=None):
+
+	if len(data) > 0:
+		
+		for ii,(k,g) in enumerate(data.groupby(level='clone')):
+			g = g.dropna(axis=1)
+			x = g.columns.get_level_values('pos').values
+			y = [ii+.5]*len(x)
+			colors = [config.genotype['color'][int(gt)] for gt in g.values.flatten()]
+			ax.scatter(x, y, facecolors=colors, edgecolors='k', s=8, zorder=3)
+
+### Copy number ###
+def copy_number(data, ax=None):
+		
+	if len(data) > 0:
+			
+		x = data.columns.get_level_values('pos').values
+		y = np.arange(len(data.index.get_level_values('clone')))
+					
+		cmap = mpl.colors.ListedColormap(['none','w','none'])
+		bounds = [1,2,3]
+		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+			
+		for cn, hatch in zip([1, 3], ['xxx','-----']):
+			heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], np.ma.masked_array(data, data!=cn),
+					ax, '', '', '', [], [], cmap=cmap, hatch=hatch, vmin=1, vmax=3, zorder=2)
+
+### LOH ###
+def loh_genotype(data, ax=None):
 	
-	# Draw horizontal line at y=0 and remove frame
-    ax.axhline(y=0, color='k', linewidth=1, zorder=0)
+	if len(data) > 0:
+
+		x = data.columns.get_level_values('pos').values
+		y = np.arange(len(data.index.get_level_values('clone')))
+				
+		# Make a color map of fixed colors
+		cmap = mpl.colors.ListedColormap(['k','w','k'])
+		bounds = [-1,0,1]
+		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+			
+		heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
+				ax, '', '', '', [], [], cmap=cmap, vmin=-1, vmax=1, zorder=1)
+
+
+def annotate_genotype(data, ax=None):
 	
-    ax.set_xticks([])
-    ax.set_xticklabels([])
-    ax.set_yticks([])
-    ax.set_yticklabels([])
+	labels = data.columns.get_level_values('gene')
+	loc = zip(data.columns.get_level_values('pos'), [-.25]*data.shape[1])
+		
+	for l, xy in zip(labels, loc):
+		trans = ax.get_xaxis_transform() # x in data units, y in axes fraction
+		ax.annotate(l, xy=xy, xytext=(0, 4), textcoords='offset points',
+					arrowprops=dict(arrowstyle='wedge,tail_width=0.7', color='black'),
+					fontsize=5, style=('italic' if l!='non-coding' else 'normal'),
+					weight=('bold' if l in ['RNR2','RNR4','FPR1','TOR1'] else 'normal'),
+					annotation_clip=False, va='bottom', ha='center')
+
+
+def genome_instability(data, ax=None, title=None):
+	
+	idx = 0
+	
+	# Plot tracks
+	for ii, (s, group) in enumerate(data.groupby(level='set')):
+		
+		# Consensus genotypes
+		consensus_data = filter_multiindex(group, names=['consensus'])
+		nrows = consensus_data.index.get_level_values('clone').nunique()
+		
+		ax1 = plt.subplot(ax[idx:idx+nrows])
+		consensus_genotype(consensus_data, ax1)
+		
+		if ax1.is_first_row():
+			# Set axis label
+			labels = ['Consensus']
+			ax1.set_yticks(np.arange(len(labels)) + 0.5, minor=True)
+			ax1.set_yticklabels(labels, fontweight='bold', va='center', minor=True)
+			ax1.set_title(title, fontsize=6, y=2, weight='bold')
+			# Annotate variants
+			annotation = filter_multiindex(data, names=['snp_indel'])
+			annotate_genotype(annotation, ax1)
+		
+		idx += nrows
+		
+		# De novo genotypes
+		de_novo_data = filter_multiindex(group, names=['snp_indel','copy_number','loh'])
+		labels = de_novo_data.index.get_level_values('clone').unique()
+		nrows = len(labels)
+		
+		ax2 = plt.subplot(ax[idx:idx+nrows], sharex=ax1)
+		# SNP/indel
+		snp_indel_data = filter_multiindex(group, names=['snp_indel'])
+		snp_indel_genotype(snp_indel_data, ax2)
+		# Copy number
+		copy_number_data = filter_multiindex(group, names=['copy_number'])
+		copy_number(copy_number_data, ax2)
+		# LOH
+		loh_data = filter_multiindex(group, names=['loh'])
+		loh_genotype(loh_data, ax2)
+
+		# Annotate clonal lineages
+		ax2.set_yticks(np.arange(len(labels)) + 0.5)
+		ax2.set_yticklabels('C' + labels, fontweight='bold', va='center')
+		[ax2.axhline(g, lw=0.5, ls="-", color="lightgray") for g in np.arange(len(labels))]
+		lineage = group.index.get_level_values('lineage').unique()[0]
+		ax2.tick_params(axis='y', colors=config.lineages[lineage]['fill'], width=5, which='both')
+		
+		# Show chromosome boundaries
+		chrom_boundaries(ax2)
+		
+		idx += nrows
+
+	# Set axis label
+	ax2.set_xlabel('Chromosome')
+	
+
+def scatter_plot(x, y, ax=None, **kwargs):
+    
+    ax.plot(x, y, linestyle='', **kwargs)#, label=config.population['long_label'][t])
+    
+    ax.axvline(x=0, ls='--', lw=1.5, color='lightgray', zorder=0)
+    ax.axhline(y=0, ls='--', lw=1.5, color='lightgray', zorder=0)
+
+    from matplotlib.ticker import MaxNLocator
+    ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=5, prune='upper'))
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=5, prune='upper'))
     
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
+    ax.get_xaxis().tick_bottom()
+    ax.get_yaxis().tick_left()
+
+def histogram_x(data, ax=None, time=None):
+	
+    import gmm
+    import matplotlib.patheffects as PathEffects
+    
+    X = data.groupby(level=['isolate']).agg([np.mean])
+            
+    # fit the Gaussian mixture model
+    N = np.arange(1, 6)
+    models = gmm.gmm_fit(X, N)
+
+    # compute the AIC and the BIC
+    AIC = [m.aic(X) for m in models]
+    BIC = [m.bic(X) for m in models]
+    M_best = models[np.argmin(BIC)]
+    
+    # plot data
+    bins = 34
+    xbins, y = histogram_binned_data(ax, X, bins=bins)
+                        
+    ax.fill_between(xbins, 0, y, label=config.population['long_label'][time], 
+                    alpha=0.5, facecolor=config.population['color'][time])
+            
+    xbins = np.linspace(ax.get_xlim()[0], ax.get_xlim()[1], 1000)
+    logprob = M_best.score_samples(np.array([xbins]).T)
+    pdf = np.exp(logprob)
+            
+    ax.plot(xbins, pdf / bins, '-', 
+            color=config.population['color'][time], lw=1)
+
+    # mean of the distribution
+    for p in abs(M_best.means_.ravel()):
+        ax.axvline(x=p, ls='--', lw=1.5, color=config.population['color'][time], zorder=1)
+        pos = ax.get_ylim()[0] * 0.75 + ax.get_ylim()[1] * 0.25
+        trans = ax.get_xaxis_transform() # x in data units, y in axes fraction
+        ax.annotate(np.around(p, 2),
+                    xy=(p, 0.85), xycoords=trans, fontsize=6,
+                    color='k', va='center',
+                    ha=('right' if time=='ancestral' else 'left'),
+                    xytext=((-5 if time=='ancestral' else 5),0), textcoords='offset points',
+                    path_effects=[PathEffects.withStroke(linewidth=0.5, foreground="w")])
+
+    ax.set_xticks([])
+    ax.set_xticklabels([])
+    
+    ax.set_yticks(ax.get_yticks()[1:])
+    
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.get_xaxis().tick_bottom()
+    ax.get_yaxis().tick_left()
+
+def histogram_y(data, ax=None, time=None):
+	
+    import gmm
+    import matplotlib.patheffects as PathEffects
+    
+    Y = data.groupby(level=['isolate']).agg([np.mean])
+            
+    # fit the Gaussian mixture model
+    N = np.arange(1, 6)
+    models = gmm.gmm_fit(Y, N)
+
+    # compute the AIC and the BIC
+    AIC = [m.aic(Y) for m in models]
+    BIC = [m.bic(Y) for m in models]
+    M_best = models[np.argmin(BIC)]
+            
+    # plot data
+    bins = 34
+    ybins, x = histogram_binned_data(ax, Y, bins=bins)
+    
+    ax.fill_betweenx(ybins, 0, x, label=config.population['long_label'][time], 
+                     alpha=0.5, facecolor=config.population['color'][time])
+            
+    ybins = np.linspace(ax.get_ylim()[0], ax.get_ylim()[1], 1000)
+    logprob = M_best.score_samples(np.array([ybins]).T)
+    pdf = np.exp(logprob)
+            
+    ax.plot(pdf / bins, ybins, '-', 
+            color=config.population['color'][time], lw=1)
+
+    # mean of the distribution
+    for p in abs(M_best.means_.ravel()):
+        ax.axhline(y=p, ls='--', lw=1.5, color=config.population['color'][time], zorder=1)
+        pos = ax.get_xlim()[0] * 0.75 + ax.get_xlim()[1] * 0.25
+        trans = ax.get_yaxis_transform() # x in data units, y in axes fraction
+        ax.annotate(np.around(p, 2),
+                    xy=(0.85, p), xycoords=trans, fontsize=6,
+                    color='k', ha='center',
+                    va=('bottom' if time=='ancestral' else 'top'),
+                    xytext=(0,(-10 if time=='ancestral' else 10)), textcoords='offset points',
+                    path_effects=[PathEffects.withStroke(linewidth=0.5, foreground="w")])
+
+    ax.set_yticks([])
+    ax.set_yticklabels([])
+    
+    ax.set_xticks(ax.get_xticks()[1:])
+    
+    ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.get_xaxis().tick_bottom()
+    ax.get_yaxis().tick_left()
+    
+def lollipops(data, ax=None):
+            
+    data = data.agg([np.mean, np.median, np.std, 'count'])
+    
+    if len(data)>0:
+        x_data = np.array(data)
+        y_data = np.repeat([0.2*(ax.get_ylim()[1]-ax.get_ylim()[0])], len(x_data))
+        arr = zip(x_data, y_data)
+        print(x_data)
+        markerline, stemlines, baseline = ax.stem(x_data, y_data)
+                
+        plt.setp(markerline, 'color', config.population['color'][time], 
+                 markersize = 2.75, markeredgewidth=.75, markeredgecolor='k', zorder=3)
+        plt.setp(stemlines, linewidth=.75, color=config.population['color'][time],
+                 path_effects=[PathEffects.withStroke(linewidth=1.25, foreground='k')], zorder=2)  
+        plt.setp(baseline, 'color', 'none', zorder=1)
+                    
+#         for idx, label in data.iterrows():
+#             ax.annotate(label.name[1],
+#                         xy = (label, 0.2), xycoords=('data','axes fraction'), 
+#                         xytext = (0, 8), textcoords = 'offset points', 
+#                         ha = 'center', va = 'top',
+#                         fontsize = 6, style = 'italic',
+#                         path_effects=[PathEffects.withStroke(linewidth=0.5, foreground="w")])
+
+import seaborn.apionly as sns
+
+def scatter_rank_correlation(data, ax=None, environment=None):
+    """
+    Scatter plot - Rank correlation
+    """
+    if ax is None:
+        ax = plt.gca()
+    # Define colour palettes
+    colors = [config.population['color'].get(e, 'k') for e in data['group'].unique()]
+    # Scatter plot
+    sns.stripplot(ax=ax, data=data[data['environment']=='YNB'], 
+                  x="population", y="value", hue="group", marker='o', size=7,#marker='marker', 
+                  palette=colors, clip_on=False)
+
+    sns.stripplot(ax=ax, data=data[data['environment']==environment],
+                  x="population", y="value", hue="group", marker='^', size=7,
+                  palette=colors, clip_on=False)
+
+    # Remove default legend
+    ax.legend_.remove()
+    # Mean expectation
+    ax.axvline(x=0.0, c='lightgray', ls='--', lw=2)
+    # Axes limits
+    ax.set_xlim((-1,1))
+    
+    ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=5))
+    
+    ax.tick_params(axis='x-axis', which='major', size=2, labelsize=6)
+    ax.tick_params(axis='y-axis', which='major', size=0, labelsize=7)
+    
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
 
-def structural_variants(data, ax=None, offset=0):
-    """
-    
-    """
-    
-    # ### Deletions ###
-    # for ii, variant in data.ix['DEL'].iterrows():
-    #     start = variant['start_cum']
-    #     end = variant['end_cum']
-    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['deletion'])
-    #
-    # ### Duplications ###
-    # for ii, variant in data.ix['DUP'].iterrows():
-    #     start = variant['start_cum']
-    #     end = variant['end_cum']
-    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['duplication'])
-    #
-    # ### Insertions ###
-    # for ii, variant in data.ix['INS'].iterrows():
-    #     start = variant['start_cum']
-    #     end = variant['end_cum']
-    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['insertion'])
-    #
-    # ### Inversions ###
-    # for ii, variant in data.ix['INV'].iterrows():
-    #     start = variant['start_cum']
-    #     end = variant['end_cum']
-    #     bezier_curve(start, end, ax, offset=offset, **config.variant_type['inversion'])
 
-    ### Translocations ###
-    for ii, variant in data.ix['TRA'].iterrows():
-        start = variant['start_cum']
-        end = variant['end_cum']
-        bezier_curve(start, end, ax, offset=offset, **config.variant_type['translocation'])
-    
-    ax.set_xlim((0, 1.2E7))
+def chrom_boundaries(ax=None):
+	"""
+	Show chromosome boundaries
+	"""
+	# Set labels
+	chr_coords = utils.chr_coords()
+	ticks = chr_coords.chr_start + (chr_coords.chr_end - chr_coords.chr_start)/2.
+	labels = chr_coords.chr_roman
+	ax.set_xticks(ticks)
+	ax.set_xticklabels(labels)
+	# Show grid
+	start = chr_coords.chr_start
+	grid=[x+1. for x in list(set(start))]
+	[ax.axvline(g, lw=0.5, ls="-", color="gray") for g in grid]
+
 
 def set_custom_labels(index, pos):
     """
@@ -508,71 +813,3 @@ def custom_div_cmap(numcolors=11, name='custom_div_cmap',
                                             colors =[mincol, midcol, maxcol])#,
                                     # N=numcolors)
     return cmap
-
-
-def adjust_spines(ax, spines):
-    """
-    see http://matplotlib.org/devdocs/examples/pylab_examples/spine_placement_demo.html#pylab-examples-spine-placement-demo
-    """
-    for loc, spine in ax.spines.items():
-        if loc in spines:
-            spine.set_position(('outward', 10))  # outward by 10 points
-            spine.set_smart_bounds(True)
-        else:
-            spine.set_color('none')  # don't draw spine
-
-    # turn off ticks where there is no spine
-    if 'left' in spines:
-        ax.yaxis.set_ticks_position('left')
-    else:
-        # no yaxis ticks
-        ax.yaxis.set_ticks([])
-
-    if 'bottom' in spines:
-        ax.xaxis.set_ticks_position('bottom')
-    else:
-        # no xaxis ticks
-        ax.xaxis.set_ticks([])
-
-
-def align_xaxis(ax1, v1, ax2, v2):
-    """
-    Adjust ax2 xlimit so that v2 in ax2 is aligned to v1 in ax1
-    see: http://stackoverflow.com/questions/7630778/matplotlib-align-origin-of-right-axis-with-specific-left-axis-value
-    """
-    _, x1 = ax1.transData.transform((0, v1))
-    _, x2 = ax2.transData.transform((0, v2))
-    inv = ax2.transData.inverted()
-    _, dx = inv.transform((0, 0)) - inv.transform((0, x1-x2))
-    miny, maxy = ax2.get_xlim()
-    ax2.set_xlim(minx+dx, maxx+dx) 
-    
-       
-def align_yaxis(ax1, v1, ax2, v2):
-    """
-    Adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1
-    see: http://stackoverflow.com/questions/7630778/matplotlib-align-origin-of-right-axis-with-specific-left-axis-value
-    """
-    _, y1 = ax1.transData.transform((0, v1))
-    _, y2 = ax2.transData.transform((0, v2))
-    inv = ax2.transData.inverted()
-    _, dy = inv.transform((0, 0)) - inv.transform((0, y1-y2))
-    miny, maxy = ax2.get_ylim()
-    ax2.set_ylim(miny+dy, maxy+dy)
-
-
-def adjust_yaxis(ax,ydif,v):
-    """
-	Shift axis ax by ydiff, maintaining point v at the same location
-	"""
-    inv = ax.transData.inverted()
-    _, dy = inv.transform((0, 0)) - inv.transform((0, ydif))
-    miny, maxy = ax.get_ylim()
-    miny, maxy = miny - v, maxy - v
-    if -miny>maxy or (-miny==maxy and dy > 0):
-        nminy = miny
-        nmaxy = miny*(maxy+dy)/(miny+dy)
-    else:
-        nmaxy = maxy
-        nminy = maxy*(miny+dy)/(maxy+dy)
-    ax.set_ylim(nminy+v, nmaxy+v)

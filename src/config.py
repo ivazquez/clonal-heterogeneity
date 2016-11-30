@@ -82,6 +82,38 @@ spores_gt_long = {
     }
 }
 
+# # genotype attributes
+# spores_gt_short = {
+#     'position': {
+#         'HU':
+#         {'+': 0, '-': 1},
+#         'RM':
+#         {'+': 0, '-': 1}
+#     },
+#     'color': {
+#         'HU':
+#         {'+': colors.fte_colors[1], '-': colors.fte_colors[5]},
+#         'RM':
+#         {'+': colors.fte_colors[1], '-': colors.fte_colors[5]}
+#     }
+# }
+
+# # genotype attributes
+# spores_gt_short = {
+#     'position': {
+#         'HU':
+#         {'+': 0, '-': 1},
+#         'RM':
+#         {'+': 0, '-': 1}
+#     },
+#     'color': {
+#         'HU':
+#         {'+': '#3481b4', '-': '#63d08b'},
+#         'RM':
+#         {'+': '#3481b4', '-': '#63d08b'}
+#     }
+# }
+
 # genotype attributes
 spores_gt_short = {
     'position': {
@@ -92,9 +124,9 @@ spores_gt_short = {
     },
     'color': {
         'HU': 
-        {'+': colors.fte_colors[1], '-': colors.fte_colors[5]},
+        {'+': '#43b2c9', '-': '#c0efb9'},
         'RM': 
-        {'+': colors.fte_colors[1], '-': colors.fte_colors[5]}
+        {'+': '#43b2c9', '-': '#c0efb9'}
     }
 }
 
@@ -171,6 +203,38 @@ hybrids_gt_long = {
     }
 }
 
+# # genotype attributes
+# hybrids_gt_short = {
+#     'position': {
+#         'HU':
+#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
+#         'RM':
+#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}
+#     },
+#     'color': {
+#         'HU':
+#         {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
+#         'RM':
+#         {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]}
+#     }
+# }
+
+# # genotype attributes
+# hybrids_gt_short = {
+#     'position': {
+#         'HU':
+#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
+#         'RM':
+#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}
+#     },
+#     'color': {
+#         'HU':
+#         {('+','+'): '#3481b4', ('+','-'): '#32a273', ('-','+'): '#32a273', ('-','-'): '#63d08b'},
+#         'RM':
+#         {('+','+'): '#3481b4', ('+','-'): '#32a273', ('-','+'): '#32a273', ('-','-'): '#63d08b'}
+#     }
+# }
+
 # genotype attributes
 hybrids_gt_short = {
     'position': {
@@ -181,9 +245,9 @@ hybrids_gt_short = {
     },
     'color': {
         'HU':
-        {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
+        {('+','+'): '#43b2c9', ('+','-'): '#86ccc2', ('-','+'): '#86ccc2', ('-','-'): '#c0efb9'},
         'RM':
-        {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]}
+        {('+','+'): '#43b2c9', ('+','-'): '#86ccc2', ('-','+'): '#86ccc2', ('-','-'): '#c0efb9'}
     }
 }
 
@@ -227,20 +291,57 @@ genotype = {
     }
 }
 
+# # population attributes
+# population = {
+#     'position':{
+#         'parents': 0, 'ancestral': 1, 'evolved': 2
+#     },
+#     'facecolor':{
+#         'parents': '#32a273',
+#         'ancestral': '#32a273',
+#         'evolved': '#6a3d9a'
+#     },
+#     'color':{
+#         'parents': '#32a273',
+#         'ancestral': '#32a273',
+#         'evolved': '#6a3d9a'
+#     },
+#     'long_label':{
+#         'parents': 'parents',
+#         'ancestral': r'ancestral ($t=0$)',
+#         'evolved': r'evolved ($t=32$)'
+#     },
+#     'short_label':{
+#         'parents': 'par.',
+#         'ancestral': 'anc.',
+#         'evolved': 'evolved'
+#     },
+#     'alpha':{
+#         'parents': 0.5,
+#         'ancestral': 0.5,
+#         'evolved': 0.5
+#     },
+#     'pad':{
+#         'parents': 0.11,
+#         'ancestral': 0.11,
+#         'evolved': 0.11
+#     }
+# }
+
 # population attributes
 population = {
     'position':{
         'parents': 0, 'ancestral': 1, 'evolved': 2
     },
     'facecolor':{
-        'parents': '#32a273', 
-        'ancestral': '#32a273',
-        'evolved': '#6a3d9a'
+        'parents': colors.fte_colors[3], 
+        'ancestral': '#22a884',#'#32a273'#colors.fte_colors[3],
+        'evolved': '#833d9a'#'#6a3d9a'
     },
     'color':{
-        'parents': '#32a273', 
-        'ancestral': '#32a273',
-        'evolved': '#6a3d9a'
+        'parents': colors.fte_colors[3], 
+        'ancestral': '#22a884',#'#32a273',#colors.fte_colors[3],
+        'evolved': '#833d9a'#'#6a3d9a'
     },
     'long_label':{
         'parents': 'parents', 
@@ -299,9 +400,9 @@ labels = {
 # selection attributes
 selection = {
     'color': {
-        'HU':colors.fte_colors_light[5],
-        'RM':colors.fte_colors[5],
-        'YPD':colors.fte_colors_dark[5]
+        'HU':'#ffb05c',#colors.fte_colors_light[5],
+        'RM':'#9f8fc6', #colors.fte_colors[5],
+        'YPD':'#007cba' #colors.fte_colors_dark[5]
     },
     'linewidth': {
         'HU':0.75,'RM':0.75,'YPD':0.75
@@ -324,9 +425,9 @@ selection = {
 # environment attributes
 environment = {
     'color': {
-        'HU':colors.bg_colors[2],
-        'RM':colors.bg_colors[1],
-        'YNB':'k'
+        'HU':'#F2532D',
+        'RM':'#FAB323',
+        'YNB':'#515153'
     },
     'linewidth': {
         'HU':0.75,'RM':0.75,'YNB':0.75
@@ -358,6 +459,16 @@ lineages = {
     'bulk': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
     '': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
 }
+
+# # lineage attributes
+# lineages = {
+#     'subclone A': {'fill':'#b71c47', 'line':'#b71c47'},
+#     'subclone B': {'fill':'#fdb365', 'line':'#fdb365'},
+#     'subclone C': {'fill':'#7ccaa5', 'line':'#7ccaa5'},
+#     'subclone D': {'fill':'#5e4fa2', 'line':'#5e4fa2'},
+#     'bulk': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
+#     '': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
+# }
 
 # mutation type attributes
 mutation_type = {

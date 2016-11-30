@@ -5,7 +5,7 @@
 # set the number of threads
 export OMP_NUM_THREADS=4;
 
-# change this to your gv-paper-2016 directory, or remove if
+# change this to your science-advances-2016 directory, or remove if
 # you put filterHD and cloneHD into your system-wide path:
 CWD=$(git rev-parse --show-toplevel)
 BUILD_DIR=${CWD}/build

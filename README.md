@@ -1,6 +1,6 @@
 # Background-dependent effects of selection on subclonal heterogeneity
 
-This repository contains supporting material for the manuscript in preparation:
+This repository contains supporting material for the manuscript:
 
 > "Background-dependent effects of selection on subclonal heterogeneity"
 
@@ -41,23 +41,31 @@ Alternatively, you can run the notebooks online using [Binder](http://mybinder.o
 ## Sequence data
 Sequencing reads are available in BAM or CRAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780) and the NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608). Sequence data for the time-resolved populations and the evolved individuals have been submitted to the SRA/ENA databases under study accession no. [ERP003953](http://www.ebi.ac.uk/ena/data/view/ERP003953) and the NCBI BioProject under accession no. [PRJEB4645](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB4645). To download the files programmatically from the FTP server (156GB):
 
-    $ wget -i <(awk -F, '{gsub("#","%23",$NF); print $NF}' data/seq/sample_ids_unmerged.csv)
+```sh
+wget -i <(awk -F, '{gsub("#","%23",$NF); print $NF}' data/seq/sample_ids_unmerged.csv)
+```
 
 Sequences must be aligned to the *S. cerevisiae* reference genome [R64-1-1](http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz).
 
 Variant calls are available in VCF format with accession no. [PRJEB13491](http://www.ebi.ac.uk/ena/data/view/PRJEB13491) and can be browsed on the [European Variation Archive](http://www.ebi.ac.uk/eva/?eva-study=PRJEB13491). Each VCF file corresponds to one [sample](data/seq/sample\_ids\_merged\_dup.csv) and contains either pre-existing variants (`*.background.vcf.gz`) or *de novo* variants (`*.de_novo.vcf.gz`). They can be downloaded programmatically from the FTP (713MB):
 
-    $ wget -i <(awk -F, '{gsub(";","\n",$NF); print $NF;}' data/seq/sample_ids_merged_dup.csv)
+```sh
+wget -i <(awk -F, '{gsub(";","\n",$NF); print $NF;}' data/seq/sample_ids_merged_dup.csv)
+```
 
 Alternatively, variants can also be found in tab-separated format or serialized in Pickle format for Python in the `data/seq/` directory, annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html).
 
 With the sequence data we carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. To test this method with simulated data:
 
-    $ src/subclonality_simulated.sh
+```sh
+src/subclonality_simulated.sh
+```
 
 Also, to test this on a representative time series dataset for one of the populations (as shown in [Figure 1](src/figure1.ipynb)):
 
-    $ src/subclonality_experiment.sh
+```sh
+src/subclonality_experiment.sh
+```
 
 The full documentation for [filterHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
