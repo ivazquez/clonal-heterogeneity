@@ -3,14 +3,12 @@
 This repository contains supporting material for the manuscript:
 
 > "Background-dependent effects of selection on subclonal heterogeneity"
-
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
-
 > [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://biorxiv.org/content/early/2016/07/27/039859)
 
 To clone this repository, run the following command in a local directory:
 
-    $ git clone --recursive https://github.com/ivazquez/science-advances-2016.git
+    $ git clone --recursive https://github.com/ivazquez/genetic-variation.git
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
 
@@ -21,14 +19,14 @@ and others. These are found in the `src/` directory. The repository also include
 
 To install all Python dependencies inside a virtual environment and build the cloneHD executables into the `build/` directory, run:
 
-    $ cd science-advances-2016
+    $ cd genetic-variation
     $ make
 
 You can then browse and run the notebooks locally to reproduce all figures with:
 
     $ jupyter notebook
 
-Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/science-advances-2016).
+Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/genetic-variation).
 
 | Figures | Notebook |
 | ------- | -------- |

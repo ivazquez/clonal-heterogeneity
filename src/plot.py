@@ -88,7 +88,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     """
     # plot the heatmap
     if speed=='slow':
-        c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, zorder=zorder)
+        c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, rasterized=True, zorder=zorder)
     
         # place the major ticks at the middle of each cell
         ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
@@ -98,7 +98,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
         ax.set_xticklabels(xticklabels, minor=False, rotation=90)
         ax.set_yticklabels(yticklabels, minor=False)
     else:
-        c = ax.pcolormesh(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, zorder=zorder)
+        c = ax.pcolormesh(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, rasterized=True, zorder=zorder)
 
     # set title and x/y labels
     ax.set_title(title)
@@ -167,7 +167,7 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     Z = np.ma.array(Z, mask=np.isnan(Z))
     cmap.set_bad('0.1',1.)
 
-    im = ax.pcolor(Z, edgecolors='lightgrey', linewidths=0.5, cmap=cmap, vmin=vmin, vmax=vmax)
+    im = ax.pcolor(Z, edgecolors='lightgrey', linewidths=0.5, cmap=cmap, vmin=vmin, vmax=vmax, rasterized=True)
     
     # place the major ticks at the middle of each cell
     ax.set_xticks(np.arange(Z.shape[1]) + 0.5, minor=False)
@@ -217,13 +217,13 @@ def gw_frequency(data, ax=None):
     data.reset_index().plot(ax=ax, kind='line',
 							x='pos', y=data.columns,
 							color=colors, lw=0.4, #alpha=(0.6 if e in ['HU','RM'] else 0.9), 
-							legend=False, zorder=3)
+							legend=False, rasterized=True, zorder=3)
 	# shades
     chr_coords = utils.chr_coords()
     for start, end in zip(chr_coords.chr_start, chr_coords.chr_end):
 		for chrom, g in chr_coords.groupby('chr_arabic'):
 			ax.axvspan(g.chr_start.squeeze(), g.chr_end.squeeze(),
-					   color=('0.95' if chrom % 2 == 1 else 'w'), lw=0, zorder=0) 
+					   color=('0.95' if chrom % 2 == 1 else 'w'), lw=0, zorder=0, rasterized=True) 
     
     ax.set_ylim((0, 1))
     ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
@@ -236,7 +236,7 @@ def histogram_frequency(data, ax=None):
 	
     for time in data:    
         x, y = histogram_binned_data(ax, data[time], bins=50)
-        ax.plot(x, y, color=config.time['color'][time], lw=0.5)
+        ax.plot(x, y, color=config.time['color'][time], lw=0.5, rasterized=True)
         ax.fill_between(x, 0, y, label=time, #alpha=(0.6 if e in ['HU','RM'] else 0.9), 
 						facecolor=config.time['color'][time])            
 	
@@ -314,7 +314,7 @@ def snp_indel_genotype(data, ax=None):
 			x = g.columns.get_level_values('pos').values
 			y = [ii+.5]*len(x)
 			colors = [config.genotype['color'][int(gt)] for gt in g.values.flatten()]
-			ax.scatter(x, y, facecolors=colors, edgecolors='k', s=8, zorder=3)
+			ax.scatter(x, y, facecolors=colors, edgecolors='k', s=8, rasterized=False, zorder=3)
 
 ### Copy number ###
 def copy_number(data, ax=None):
@@ -328,7 +328,7 @@ def copy_number(data, ax=None):
 		bounds = [1,2,3]
 		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
 			
-		for cn, hatch in zip([1, 3], ['xxx','-----']):
+		for cn, hatch in zip([1, 3], ['xx','--']):
 			heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], np.ma.masked_array(data, data!=cn),
 					ax, '', '', '', [], [], cmap=cmap, hatch=hatch, vmin=1, vmax=3, zorder=2)
 
