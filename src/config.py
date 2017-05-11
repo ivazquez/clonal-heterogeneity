@@ -413,7 +413,7 @@ selection = {
     'long_label': {
         u'HU': u'Hydroxyurea (YPD+HU 10 mg/ml)', 
         u'RM': u'Rapamycin (YPD+RM 0.025 μg/ml)',
-        u'YPD': u'Control (YNB)'
+        u'YPD': u'Control (YPD)'
     },
     'short_label': {
         'HU':'Hydroxyurea',
@@ -427,26 +427,26 @@ environment = {
     'color': {
         'HU':'#F2532D',
         'RM':'#FAB323',
-        'YNB':'#515153'
+        'SC':'#515153'
     },
     'linewidth': {
-        'HU':0.75,'RM':0.75,'YNB':0.75
+        'HU':0.75,'RM':0.75,'SC':0.75
     },
     'marker': {
-        'HU':'.','RM':'d','YNB':'o' 
+        'HU':'.','RM':'d','SC':'o' 
     },
     'style': {
-        'HU':'-','RM':'-','YNB':'-' 
+        'HU':'-','RM':'-','SC':'-' 
     },
     'long_label': {
-        'HU': u'Hydroxyurea (YNB+HU 10 mg/ml)', 
-        'RM': u'Rapamycin (YNB+RM 0.025 μg/ml)',
-        'YNB': u'Control (YNB)'
+        'HU': u'Hydroxyurea (SC+HU 10 mg/ml)', 
+        'RM': u'Rapamycin (SC+RM 0.025 μg/ml)',
+        'SC': u'Control (SC)'
     },
     'short_label': {
         'HU':'Hydroxyurea',
         'RM':'Rapamycin',
-        'YNB':'Control'
+        'SC':'Control'
     }
 }
 
