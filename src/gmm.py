@@ -5,19 +5,16 @@
 Gaussian mixture model
 """
 
-from collections import defaultdict
-
-import matplotlib.pyplot as plt
-
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
+from collections import defaultdict
 from sklearn.mixture import GaussianMixture
 
 
 def gmm_fit(X, N):
     """
-	Fit models with N range components
+    Fit models with N range components
     """
     models = [None for i in range(len(N))]
     
@@ -26,14 +23,11 @@ def gmm_fit(X, N):
         
     return models
 
-
 def gmm_plot(ax, X, M_best, label=None):
     """
-	Learn the best-fit GMM models
+    Learn the best-fit GMM models
     The fit() method uses Expectation-Maximization to find 
     the best mixture of Gaussians for the data
-
-    ax = plt.gca()
 
     Plot the results in three panels:
     1) data + best-fit mixture
@@ -54,11 +48,10 @@ def gmm_plot(ax, X, M_best, label=None):
     # ax.set_ylabel('$p(x)$')
     
     # print M_best.n_components, M_best.means_.ravel()
-
     
 def gmm_components(AIC, BIC, N):
     """
-	Plot AIC and BIC
+    Plot AIC and BIC
     """
     ax = plt.gca()
     ax.plot(N, AIC, '-k', label='AIC')
@@ -67,12 +60,10 @@ def gmm_components(AIC, BIC, N):
     ax.set_ylabel('Information criterion')
     ax.legend(loc=2)
 
-
 def gmm_posterior(ax, X, M_best):
     """
-	Plot posterior probabilities for each component
+    Plot posterior probabilities for each component
     """
-    
     ax = plt.gca()
 
     x = np.linspace(X.min()-.2, X.max()+.2, 1000)

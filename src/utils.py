@@ -12,7 +12,7 @@ import config, utils
 
 def get_git_path():
     """
-	Return the git path of the current repository
+    Return the git path of the current repository
     """
     import subprocess
     try:
@@ -52,7 +52,7 @@ def save_data(data, fn):
 def merge_two_dicts(x, y):
     """
 	Given two dicts, merge them into a new dict as a shallow copy.
-	"""
+    """
     z = x.copy()
     z.update(y)
     return z
@@ -64,7 +64,7 @@ def simple_axes(ax):
 
     Input
     -----
-	ax : matplotlib axis
+      ax : matplotlib axis
     """
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -74,7 +74,7 @@ def simple_axes(ax):
 
 def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
     """
-    Function to offset the "center" of a colormap. Useful for
+	Function to offset the "center" of a colormap. Useful for
     data with a negative min and positive max and you want the
     middle of the colormap's dynamic range to be at zero
 
@@ -164,7 +164,7 @@ def percentile(data):
 
 def stars(p):
     """
-    Convert p-values to star notation
+	Convert p-values to star notation
 
     Input
     -----
@@ -241,8 +241,7 @@ def roman_to_int(s):
             result += integer
             index += len(numeral)
     return result
-    
-    
+
 def hex_to_rgb(value):
     """
 	Convert hex code to rgb
@@ -251,13 +250,11 @@ def hex_to_rgb(value):
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
-
 def rgb_to_hex(rgb):
     """
-	Convert rgb to hex code
+    Convert rgb to hex code
 	"""
     return '#%02x%02x%02x' % rgb
-
 
 def chr_coords():
 	# Load config file with chromosome lengths
@@ -268,7 +265,6 @@ def chr_coords():
     df['chr_start'] = ((df['chr_length'].rolling(window=2,center=False).sum() - df['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
     df['chr_end'] = (df['chr_length']).cumsum(axis=0)
     return df
-
 
 def chr_to_gw(df, chr_coords):
     df = df.merge(chr_coords, how='left', on='chr_arabic')
@@ -289,16 +285,17 @@ def est_cum_pos(position, aggregation='chrom', column='pos', offset=0, chrom_len
 	Compute the cumulative position of each variant given the position and the chromosome
     Also return the starting cumulativeposition of each chromosome
 
-    Args:
-        position:   pandas DataFrame of basepair positions (key='pos') and chromosome values (key='chrom')
-                    The DataFrame will be updated with field 'pos_cum'
-        chrom_len:  vector with predefined chromosome length
-        offset:     offset between chromosomes for cumulative position (default 0 bp)
+    Input
+    -----
+      position:   pandas DataFrame of basepair positions (key='pos') and chromosome values (key='chrom')
+                  The DataFrame will be updated with field 'pos_cum'
+      chrom_len:  vector with predefined chromosome length
+      offset:     offset between chromosomes for cumulative position (default 0 bp)
     
-    Returns:
-        chrom_pos,position:
-        chrom_pos:  numpy.array of starting cumulative positions for each chromosome
-        position:   augmented position object where cumulative positions are defined
+    Output
+    -----
+      chrom_pos:  numpy.array of starting cumulative positions for each chromosome
+      position:   augmented position object where cumulative positions are defined
     """
     RV = position.copy()
     chromvals =  sp.unique(position[aggregation]) # sp.unique is always sorted

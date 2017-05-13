@@ -274,7 +274,7 @@ def loh_fluctuation(data, ax=None):
     utils.simple_axes(ax)
     
     ax.set_xlabel('Environment')
-    ax.set_ylabel('5-FOA+/total 5-FOA')
+    ax.set_ylabel('5-FOA+/total YPD')
     ax.set_yscale('log')
     ax.set_xticklabels(data.index.get_level_values('environment'), minor=False, rotation=0)
 
@@ -813,3 +813,10 @@ def custom_div_cmap(numcolors=11, name='custom_div_cmap',
                                             colors =[mincol, midcol, maxcol])#,
                                     # N=numcolors)
     return cmap
+
+
+def save_figure(filename):
+	
+	plt.savefig(filename+'.pdf', bbox_inches='tight')
+	plt.savefig(filename+'.png', bbox_inches='tight')
+	plt.savefig(filename+'.svg', bbox_inches='tight')

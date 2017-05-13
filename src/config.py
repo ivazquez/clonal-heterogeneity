@@ -254,7 +254,7 @@ hybrids_gt_short = {
 # factor attributes
 factors = {
     'color': {
-        'Time': colors.fte_colors[2],
+        'Time of\nsampling': colors.fte_colors[2],
         'Background\n(genotype)': colors.fte_colors[0],
         'De novo\n(genotype)': colors.fte_colors[1],
         'Auxotrophy': colors.fte_colors[5]
@@ -264,7 +264,7 @@ factors = {
         'hybrids': "/"
         },
     'position': {
-        'Time': 0, 
+        'Time of\nsampling': 0, 
         'De novo\n(genotype)': 1,
         'Auxotrophy': 2,
         'Background\n(genotype)': 3
