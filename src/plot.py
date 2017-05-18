@@ -274,7 +274,7 @@ def loh_fluctuation(data, ax=None):
     utils.simple_axes(ax)
     
     ax.set_xlabel('Environment')
-    ax.set_ylabel('Locus-specific LOH rate\n(5-FOA+ c.f.u./YPD c.f.u.)')
+    ax.set_ylabel('Locus-specific LOH rate')
     ax.set_yscale('log')
     ax.set_xticklabels(data.index.get_level_values('environment'), minor=False, rotation=0)
 
@@ -423,7 +423,7 @@ def genome_instability(data, ax=None, title=None):
 
 def scatter_plot(x, y, ax=None, **kwargs):
     
-    ax.plot(x, y, linestyle='', **kwargs)#, label=config.population['long_label'][t])
+    ax.plot(x, y, linestyle='', rasterized=True, **kwargs)#, label=config.population['long_label'][t])
     
     ax.axvline(x=0, ls='--', lw=1.5, color='lightgray', zorder=0)
     ax.axhline(y=0, ls='--', lw=1.5, color='lightgray', zorder=0)
@@ -579,18 +579,18 @@ def scatter_rank_correlation(data, ax=None, environment=None):
     if ax is None:
         ax = plt.gca()
     # Define colour palettes
-    colors = [config.population['color'].get(e, 'k') for e in data['group'].unique()]
-    # Scatter plot
-    sns.stripplot(ax=ax, data=data[data['environment']=='YNB'], 
-                  x="population", y="value", hue="group", marker='o', size=7,#marker='marker', 
-                  palette=colors, clip_on=False)
+    colors = [config.population['color'].get(e, 'k') for e in data.columns]
+    # # Scatter plot
+    # sns.stripplot(ax=ax, data=data[data['environment']=='YNB'],
+    #               x="population", y="value", hue="group", marker='o', size=7,#marker='marker',
+    #               palette=colors, clip_on=False)
+    #
+    # sns.stripplot(ax=ax, data=data[data['environment']==environment],
+    #               x="population", y="value", hue="group", marker='^', size=7,
+    #               palette=colors, clip_on=False)
 
-    sns.stripplot(ax=ax, data=data[data['environment']==environment],
-                  x="population", y="value", hue="group", marker='^', size=7,
-                  palette=colors, clip_on=False)
-
-    # Remove default legend
-    ax.legend_.remove()
+    # # Remove default legend
+    # ax.legend_.remove()
     # Mean expectation
     ax.axvline(x=0.0, c='lightgray', ls='--', lw=2)
     # Axes limits
