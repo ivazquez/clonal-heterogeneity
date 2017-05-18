@@ -16,7 +16,7 @@
 	"legend.frameon": "False",
 	"legend.handletextpad": 0.3,
 	"lines.linewidth": 1,
-	"lines.markeredgewidth" : 1,
+	"lines.markeredgewidth" : 0.5,
 	"lines.solid_capstyle": "butt",
 	"figure.subplot.left"    : 0.08,
 	"figure.subplot.right"   : 0.95, 
