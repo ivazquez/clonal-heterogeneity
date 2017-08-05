@@ -1,10 +1,11 @@
 jupyter
 numpy
 scipy
-matplotlib
 pandas
+xlrd
+matplotlib
+seaborn
 scikit-learn
 statsmodels
 patsy
 pyvcf
-limix

@@ -1,12 +1,12 @@
-# Clonal genetic heterogeneity influences the fate of new adaptive mutations
+# Clonal heterogeneity influences the fate of new adaptive mutations
 
 This repository contains supporting material for the manuscript:
 
-> "Clonal genetic heterogeneity influences the fate of new adaptive mutations"
+> "Clonal heterogeneity influences the fate of new adaptive mutations"
 >
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
 >
-> [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://biorxiv.org/content/early/2016/07/27/039859)
+> [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://dx.doi.org/10.1101/039859)
 
 To clone this repository, run the following command in a local directory:
 
@@ -32,11 +32,13 @@ Alternatively, you can run the notebooks online using [Binder](http://mybinder.o
 
 | Figures | Notebook |
 | ------- | -------- |
-| Figures 1, S2 | [Study design and driver-passenger dynamics](src/figure1.ipynb) |
-| Figures 2, S3, S4, S10 | [Reconstruction of subclonal heterogeneity](src/figure2.ipynb) |
-| Figures 3, S5, S6 | [Pervasive genome instability](src/figure3.ipynb) |
-| Figures 4, S11, S12, S13 | [Background-averaged fitness effects](src/figure4.ipynb)|
-| Figures S7, S8, S9 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
+| Figure 1 | [Schematic of study design](src/figure1.ipynb) |
+| Figures 2, S2 | [Driver-passenger dynamics](src/figure2.ipynb) |
+| Figures 3, S3, S4, S9 | [Reconstruction of subclonal heterogeneity](src/figure3.ipynb) |
+| Figures 4, S5 | [Pervasive genome instability](src/figure4.ipynb) |
+| Figure 5 | [Pervasive genome instability](src/figure5.ipynb) |
+| Figures 6, S10, S11, S12 | [Background-averaged fitness effects](src/figure6.ipynb)|
+| Figures S6, S7, S8 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
 
 ## Sequence data
 Sequencing reads are available in BAM or CRAM format from the European Nucleotide Archive and the NCBI BioProject. Sequence data for the parental strains and the ancestral individuals were previously submitted to the SRA/ENA databases under study accession no. [ERP000780](http://www.ebi.ac.uk/ena/data/view/ERP000780) and the NCBI BioProject under accession no. [PRJEB2608](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB2608). Sequence data for the time-resolved populations and the evolved individuals have been submitted to the SRA/ENA databases under study accession no. [ERP003953](http://www.ebi.ac.uk/ena/data/view/ERP003953) and the NCBI BioProject under accession no. [PRJEB4645](http://www.ncbi.nlm.nih.gov/bioproject/?term=PRJEB4645). To download the files programmatically from the FTP server (156GB):
@@ -55,7 +57,7 @@ wget -i <(awk -F, '{gsub(";","\n",$NF); print $NF;}' data/seq/sample_ids_merged_
 
 Alternatively, variants can also be found in tab-separated format or serialized in Pickle format for Python in the `data/seq/` directory, annotated with Ensembl [Variant Effect Predictor](http://www.ensembl.org/info/docs/tools/vep/index.html).
 
-With the sequence data we carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 2](src/figure2.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. To test this method with simulated data:
+With the sequence data we carry out subclonal decomposition using a probabilistic inference method named cloneHD, as shown in [Figure 3](src/figure3.ipynb) of the manuscript. The source code contains a minimal example to carry out subclonal decomposition in a simulated dataset. To test this method with simulated data:
 
 ```sh
 src/subclonality_simulated.sh
@@ -70,6 +72,6 @@ src/subclonality_experiment.sh
 The full documentation for [filterHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
 ## Phenotype data
-Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in tab-separated format or serialized in Pickle format for Python. They can be found in the `data/pheno/` directory. 'NA' is used to indicate missing data or NaN.
+Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in comma-separated format or serialized in Pickle format for Python. They can be found in the `data/pheno/` directory. 'NA' is used to indicate missing data or NaN.
 
-Temporal changes to the phenotype distribution are analysed in this [notebook](src/figure2.ipynb). The results are shown in [Figure 2](manuscript/main/figures/figure2/figure2_final.png) and [S10](manuscript/supp/figures/supp_figure_pheno_evolution/supp_figure_pheno_evolution_final.png). Phenotype measurements of the genetic cross are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 4](manuscript/main/figures/figure4/figure4_final.png) and [Figures S11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_final.png) and [S12](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_final.png). Phenotype measurements of the genetic constructs are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).
+Temporal changes to the phenotype distribution are analysed in this [notebook](src/figure3.ipynb). The results are shown in [Figure 3](manuscript/main/figures/figure3/figure3_final.png) and [S9](manuscript/supp/figures/supp_figure_pheno_evolution/supp_figure_pheno_evolution_final.png). Phenotype measurements of the genetic cross are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 6](manuscript/main/figures/figure6/figure6_final.png) and [Figures S10](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_final.png) and [S11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_final.png). Phenotype measurements of the genetic constructs are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).

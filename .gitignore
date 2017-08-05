@@ -32,5 +32,3 @@ paths.py
 *.vcf
 *.vcf.gz
 *.vcf.gz.tbi
-
-*.pdf

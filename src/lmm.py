@@ -2,14 +2,12 @@
  # -*- coding: utf-8 -*-
  
 """ 
-Variance component analysis 
+Linear mixed model - Variance component analysis 
 """
 
+# Load external dependencies
+from setup import *
 from collections import defaultdict
-
-import numpy as np
-import pandas as pd
-
 from statsmodels.formula.api import ols
 from statsmodels.stats.anova import anova_lm
     

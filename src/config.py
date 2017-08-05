@@ -1,11 +1,12 @@
- #!/usr/bin/python
- # -*- coding: utf-8 -*-
- 
-import colors
-import numpy as np
-import matplotlib.patheffects as PathEffects
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-# chromosome length
+# Load external dependencies
+from setup import *
+# Load internal dependencies
+import colors
+
+# Chromosome length
 # S. cerevisiae (R64-1-1) 
 # chr 1-16 (autosomes), chr 17 (MT), chr 18 (unknown)
 # http://downloads.yeastgenome.org/sequence/S288C_reference/genome_releases/S288C_reference_genome_R64-1-1_20110203.tgz
@@ -30,7 +31,7 @@ chrom_len = {
 	18: 6318
 }
 
-# population attributes
+# Population attributes (spores)
 spores_bg = {
     'position': {
         'HU': 
@@ -40,7 +41,7 @@ spores_bg = {
     }
 }
 
-# background attributes
+# Background attributes (spores)
 spores_cl = {
     'position': {
         'HU': 
@@ -56,7 +57,7 @@ spores_cl = {
     }
 }
 
-# gene attributes
+# Gene attributes (spores)
 spores_gn = {
     'position': {
         'HU': 
@@ -66,7 +67,7 @@ spores_gn = {
     }
 }
 
-# genotype attributes
+# Genotype attributes (spores)
 spores_gt_long = {
     'position': {
         'HU': 
@@ -82,39 +83,7 @@ spores_gt_long = {
     }
 }
 
-# # genotype attributes
-# spores_gt_short = {
-#     'position': {
-#         'HU':
-#         {'+': 0, '-': 1},
-#         'RM':
-#         {'+': 0, '-': 1}
-#     },
-#     'color': {
-#         'HU':
-#         {'+': colors.fte_colors[1], '-': colors.fte_colors[5]},
-#         'RM':
-#         {'+': colors.fte_colors[1], '-': colors.fte_colors[5]}
-#     }
-# }
-
-# # genotype attributes
-# spores_gt_short = {
-#     'position': {
-#         'HU':
-#         {'+': 0, '-': 1},
-#         'RM':
-#         {'+': 0, '-': 1}
-#     },
-#     'color': {
-#         'HU':
-#         {'+': '#3481b4', '-': '#63d08b'},
-#         'RM':
-#         {'+': '#3481b4', '-': '#63d08b'}
-#     }
-# }
-
-# genotype attributes
+# Genotype attributes (spores)
 spores_gt_short = {
     'position': {
         'HU': 
@@ -130,7 +99,7 @@ spores_gt_short = {
     }
 }
 
-# collection attributes
+# Collection attributes
 hybrids_bg = {
     'position': {
         'HU': 
@@ -142,7 +111,7 @@ hybrids_bg = {
     }
 }
 
-# background attributes
+# Background attributes (hybrids)
 hybrids_cl = {
     'position': {
         'HU': 
@@ -158,7 +127,7 @@ hybrids_cl = {
     }
 }
 
-# gene attributes
+# Gene attributes (hybrids)
 hybrids_gn = {
     'position': {
         'HU': 
@@ -171,7 +140,7 @@ hybrids_gn = {
     }
 }
 
-# genotype attributes
+# Genotype attributes (hybrids)
 hybrids_gt_long = {
     'position': {
         'HU': 
@@ -203,39 +172,7 @@ hybrids_gt_long = {
     }
 }
 
-# # genotype attributes
-# hybrids_gt_short = {
-#     'position': {
-#         'HU':
-#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
-#         'RM':
-#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}
-#     },
-#     'color': {
-#         'HU':
-#         {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]},
-#         'RM':
-#         {('+','+'): colors.fte_colors[1], ('+','-'): colors.fte_colors[0], ('-','+'): colors.fte_colors[0], ('-','-'): colors.fte_colors[5]}
-#     }
-# }
-
-# # genotype attributes
-# hybrids_gt_short = {
-#     'position': {
-#         'HU':
-#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3},
-#         'RM':
-#         {('+','+'): 0, ('+','-'): 1, ('-','+'): 2, ('-','-'): 3}
-#     },
-#     'color': {
-#         'HU':
-#         {('+','+'): '#3481b4', ('+','-'): '#32a273', ('-','+'): '#32a273', ('-','-'): '#63d08b'},
-#         'RM':
-#         {('+','+'): '#3481b4', ('+','-'): '#32a273', ('-','+'): '#32a273', ('-','-'): '#63d08b'}
-#     }
-# }
-
-# genotype attributes
+# Genotype attributes (hybrids)
 hybrids_gt_short = {
     'position': {
         'HU': 
@@ -251,7 +188,7 @@ hybrids_gt_short = {
     }
 }
 
-# factor attributes
+# Factor attributes
 factors = {
     'color': {
         'Time of\nsampling': colors.fte_colors[2],
@@ -271,14 +208,14 @@ factors = {
     }
 }
 
-# gene attributes
+# Gene attributes
 gene = {
     'position':{
         'RNR2':0, 'RNR4':1, 'no driver':0, 'FPR1':1, 'TOR1':2   
     }
 }
 
-# genotype attributes
+# Genotype attributes
 genotype = {
     'position':{
         '+':0,
@@ -291,62 +228,25 @@ genotype = {
     }
 }
 
-# # population attributes
-# population = {
-#     'position':{
-#         'parents': 0, 'ancestral': 1, 'evolved': 2
-#     },
-#     'facecolor':{
-#         'parents': '#32a273',
-#         'ancestral': '#32a273',
-#         'evolved': '#6a3d9a'
-#     },
-#     'color':{
-#         'parents': '#32a273',
-#         'ancestral': '#32a273',
-#         'evolved': '#6a3d9a'
-#     },
-#     'long_label':{
-#         'parents': 'parents',
-#         'ancestral': r'ancestral ($t=0$)',
-#         'evolved': r'evolved ($t=32$)'
-#     },
-#     'short_label':{
-#         'parents': 'par.',
-#         'ancestral': 'anc.',
-#         'evolved': 'evolved'
-#     },
-#     'alpha':{
-#         'parents': 0.5,
-#         'ancestral': 0.5,
-#         'evolved': 0.5
-#     },
-#     'pad':{
-#         'parents': 0.11,
-#         'ancestral': 0.11,
-#         'evolved': 0.11
-#     }
-# }
-
-# population attributes
+# Population attributes
 population = {
     'position':{
         'parents': 0, 'ancestral': 1, 'evolved': 2
     },
     'facecolor':{
         'parents': colors.fte_colors[3], 
-        'ancestral': '#22a884',#'#32a273'#colors.fte_colors[3],
-        'evolved': '#833d9a'#'#6a3d9a'
+        'ancestral': '#22a884',
+        'evolved': '#833d9a'
     },
     'color':{
         'parents': colors.fte_colors[3], 
-        'ancestral': '#22a884',#'#32a273',#colors.fte_colors[3],
-        'evolved': '#833d9a'#'#6a3d9a'
+        'ancestral': '#22a884',
+        'evolved': '#833d9a'
     },
     'long_label':{
         'parents': 'parents', 
-        'ancestral': r'ancestral ($t=0$)',
-        'evolved': r'evolved ($t=32$)'  
+        'ancestral': r'ancestral ($t=0$d)',
+        'evolved': r'evolved ($t=32$d)'  
     },
     'short_label':{
         'parents': 'par.', 
@@ -365,7 +265,7 @@ population = {
     }
 }
 
-# background attributes
+# Background attributes
 background = {
     'position':{
         'WA':0, 
@@ -397,12 +297,12 @@ labels = {
     'genotype_short':'de_novo_genotype'
 }
 
-# selection attributes
+# Selection attributes
 selection = {
     'color': {
-        'HU':'#ffb05c',#colors.fte_colors_light[5],
-        'RM':'#9f8fc6', #colors.fte_colors[5],
-        'YPD':'#007cba' #colors.fte_colors_dark[5]
+        'HU':'#ffb05c',
+        'RM':'#9f8fc6',
+        'YPD':'#007cba'
     },
     'linewidth': {
         'HU':0.75,'RM':0.75,'YPD':0.75
@@ -422,7 +322,7 @@ selection = {
     }
 }
 
-# environment attributes
+# Environment attributes
 environment = {
     'color': {
         'HU':'#F2532D',
@@ -450,7 +350,7 @@ environment = {
     }
 }
 
-# lineage attributes
+# Lineage attributes
 lineages = {
     'subclone A': {'fill':colors.fte_colors[0], 'line':colors.fte_colors[0]},
     'subclone B': {'fill':colors.fte_colors[1], 'line':colors.fte_colors[1]},
@@ -460,34 +360,24 @@ lineages = {
     '': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
 }
 
-# # lineage attributes
-# lineages = {
-#     'subclone A': {'fill':'#b71c47', 'line':'#b71c47'},
-#     'subclone B': {'fill':'#fdb365', 'line':'#fdb365'},
-#     'subclone C': {'fill':'#7ccaa5', 'line':'#7ccaa5'},
-#     'subclone D': {'fill':'#5e4fa2', 'line':'#5e4fa2'},
-#     'bulk': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
-#     '': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
-# }
-
-# mutation type attributes
+# Mutation type attributes
 mutation_type = {
     'driver' : {
         'linestyle':'-',
         'linewidth':1.5,
-        'path_effects':[PathEffects.withStroke(linewidth=2, foreground="k")],
+        'path_effects':[path_effects.withStroke(linewidth=2, foreground="k")],
         'zorder':2
     },
     'passenger': {
         'linestyle':'--',
         'dashes':(3,2),
         'linewidth':1.5,
-        'path_effects':[PathEffects.withStroke(linewidth=2, foreground="k")],
+        'path_effects':[path_effects.withStroke(linewidth=2, foreground="k")],
         'zorder':1,
     }
 }
 
-# mutation consequence attributes
+# Mutation consequence attributes
 consequence_short = {
     'non-synonymous' : {
         'marker':'o',
@@ -503,7 +393,7 @@ consequence_short = {
     }
 }
 
-# time attributes
+# Time attributes
 time = {
     'color': {
         0:colors.t_colors[0],
@@ -521,7 +411,7 @@ time = {
     }
 }
 
-# background attributes for genetic constructs
+# Background attributes (genetic constructs)
 construct_background = {
     'color': {
         'wt': {'WA':colors.bg_colors_wt[0], 'NA':colors.bg_colors_wt[1], 'WA/WA':colors.bg_colors_wt[0], 'NA/NA':colors.bg_colors_wt[1], 'WA/NA':colors.bg_colors_wt[2]},
@@ -532,7 +422,7 @@ construct_background = {
     }
 }
 
-# genotype attributes for genetic constructs
+# Genotype attributes (genetic constructs)
 construct_genotype = {
 'HU': {u'RNR2':{u'WT':0, u'rnr2Δ':1, u'rnr2Δ/RNR2':2, u'rnr2::RNR2*':3,
                 u'rnr2Δ WA/RNR2 NA':4, u'RNR2 WA/rnr2Δ NA':5,
@@ -555,7 +445,7 @@ construct_genotype = {
                    u'ynr066cΔ WA/YNR066C NA':2, u'YNR066C WA/ynr066cΔ NA':3}}
 }
 
-# statistical tests for genetic constructs
+# Statistical tests (genetic constructs)
 construct_tests = {
     u'CTF8':{
         (u'WA', u'ctf8Δ'): (u'WA', u'WT'),
@@ -618,7 +508,7 @@ construct_tests = {
     }
 }
 
-# attributes for variant types
+# Attributes for variant types
 variant_type = {
     'snp': {
 		'color':'r',
@@ -652,19 +542,19 @@ variant_type = {
     }
 }
 
-# mutation type attributes
+# Mutation type attributes
 mutation_type = {
     'driver' : {
         'linestyle':'-',
         'linewidth':1.5,
-        'path_effects':[PathEffects.withStroke(linewidth=2, foreground="k")],
+        'path_effects':[path_effects.withStroke(linewidth=2, foreground="k")],
         'zorder':2
     },
     'passenger': {
         'linestyle':'--',
         'dashes':(3,2),
         'linewidth':1.5,
-        'path_effects':[PathEffects.withStroke(linewidth=2, foreground="k")],
+        'path_effects':[path_effects.withStroke(linewidth=2, foreground="k")],
         'zorder':1,
     }
 }

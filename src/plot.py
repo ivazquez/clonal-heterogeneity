@@ -1,18 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import numpy as np
-import scipy as sp
-from numpy.random import *
-
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-from matplotlib.collections import PatchCollection
-from matplotlib import lines,ticker
-from matplotlib.patches import Polygon
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import matplotlib.colors as mcolors
-
+# Load external dependencies
+from setup import *
+# Load internal dependencies
 import config, utils
 
 def histogram_binned_data(ax, data, bins=50):
@@ -20,8 +11,8 @@ def histogram_binned_data(ax, data, bins=50):
 	"""
     nx, xbins = np.histogram(data, bins=bins, normed=True)
 
-    nx_frac = nx/float(len(nx)) # each bin divided by total number of objects.
-    width = xbins[1] - xbins[0] # width of each bin.
+    nx_frac = nx/float(len(nx)) # Each bin divided by total number of objects
+    width = xbins[1] - xbins[0] # Width of each bin
     x = np.ravel(zip(xbins[:-1], xbins[:-1]+width))
     y = np.ravel(zip(nx_frac,nx_frac))
     
@@ -41,17 +32,19 @@ def boxplot_custom(bp, ax, colors, hatches):
             boxX.append(box.get_xdata()[j])
             boxY.append(box.get_ydata()[j])
             boxCoords = zip(boxX,boxY)
-            boxPolygon = Polygon(boxCoords, 
-                                 facecolor = colors[i % len(colors)], 
-                                 linewidth=0, 
-                                 hatch = hatches[i % len(hatches)],
-                                 zorder=4)
+            boxPolygon = patches.Polygon(
+                boxCoords, 
+                facecolor = colors[i % len(colors)], 
+                linewidth=0, 
+                hatch = hatches[i % len(hatches)],
+                zorder=4
+            )
             ax.add_patch(boxPolygon)
 
     for i in range(0, len(bp['boxes'])):
-        # boxes
+        # Boxes
         bp['boxes'][i].set(color=colors[i])
-        # whiskers
+        # Whiskers
         bp['whiskers'][i*2].set(color=colors[i], 
                                 linewidth=1.5,
                                 linestyle='-',
@@ -60,14 +53,14 @@ def boxplot_custom(bp, ax, colors, hatches):
                                 linewidth=1.5,
                                 linestyle='-',
                                 zorder=4)
-        # top and bottom fliers
+        # Top and bottom fliers
         bp['fliers'][i].set(markerfacecolor=colors[i],
                             marker='o', alpha=0.75, markersize=3,
                             markeredgecolor='none', zorder=4)
         bp['medians'][i].set(color='black',
                              linewidth=2,
                              zorder=5)
-        # and 4 caps to remove
+        # 4 caps to remove
         for c in bp['caps']:
             c.set_linewidth(0)
 
@@ -86,30 +79,30 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
     - http://stackoverflow.com/a/16124677/395857 
     - http://stackoverflow.com/a/25074150/395857
     """
-    # plot the heatmap
+    # Plot the heatmap
     if speed=='slow':
         c = ax.pcolor(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, rasterized=True, zorder=zorder)
     
-        # place the major ticks at the middle of each cell
+        # Place the major ticks at the middle of each cell
         ax.set_xticks(np.arange(z.shape[1]) + 0.5, minor=False)
         ax.set_yticks(np.arange(z.shape[0]) + 0.5, minor=False)
 
-        # set tick labels
+        # Set tick labels
         ax.set_xticklabels(xticklabels, minor=False, rotation=90)
         ax.set_yticklabels(yticklabels, minor=False)
     else:
         c = ax.pcolormesh(x, y, z, linewidths=1, cmap=cmap, hatch=hatch, vmin=vmin, vmax=vmax, rasterized=True, zorder=zorder)
 
-    # set title and x/y labels
+    # Set title and x/y labels
     ax.set_title(title)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
-    # remove last blank column
-    ax.set_xlim( (min(x), max(x)) )
-    ax.set_ylim( (min(y), max(y)) )
+    # Remove last blank column
+    ax.set_xlim(min(x), max(x))
+    ax.set_ylim(min(y), max(y))
 
-    # turn off all the ticks
+    # Turn off all the ticks
     for t in ax.xaxis.get_major_ticks():
         t.tick1On = False
         t.tick2On = False
@@ -117,7 +110,7 @@ def heatmap(x, y, z, ax, title, xlabel, ylabel, xticklabels, yticklabels, cmap='
         t.tick1On = False
         t.tick2On = False
 
-    # proper orientation (origin at the top left instead of bottom left)
+    # Proper orientation (origin at the top left instead of bottom left)
     ax.invert_yaxis()
     
     return c
@@ -133,7 +126,7 @@ def heatmap_spores(S, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold=
     for mating in dict_mat.iterkeys():
         data = map(list, zip(*[dict_mat[mating]['x'], dict_mat[mating]['y']]))
         circles = [plt.Circle([x, y], radius) for (x, y) in data]
-        col = PatchCollection(circles, edgecolor='black', lw=0.75)
+        col = collections(circles, edgecolor='black', lw=0.75)
 
         s = S.ix[mating].values
         
@@ -153,13 +146,13 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     from matplotlib.ticker import FormatStrFormatter
     
     if fold:
-        # get the matrix M and its transpose
+        # Get the matrix M and its transpose
         X = H.values
         Y = H.values.T
-        # calculate the element-wise average of the two matrices
+        # Calculate the element-wise average of the two matrices
         Z = np.add(X, Y) / 2.
-        Z = np.tril(Z) # get the lower triangle of the matrix
-        Z = np.ma.masked_array(Z, Z == 0) # mask the upper triangle
+        Z = np.tril(Z) # Get the lower triangle of the matrix
+        Z = np.ma.masked_array(Z, Z == 0) # Mask the upper triangle
     else:
         Z = H.values
     
@@ -169,24 +162,24 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
 
     im = ax.pcolor(Z, edgecolors='lightgrey', linewidths=0.5, cmap=cmap, vmin=vmin, vmax=vmax, rasterized=True)
     
-    # place the major ticks at the middle of each cell
+    # Place the major ticks at the middle of each cell
     ax.set_xticks(np.arange(Z.shape[1]) + 0.5, minor=False)
     ax.set_yticks(np.arange(Z.shape[0]) + 0.5, minor=False)
 
-    # set tick labels
+    # Set tick labels
     ax.set_xticklabels(xticklabels, minor=False, rotation=90)
     ax.set_yticklabels(yticklabels, minor=False)
 
-    # set title and x/y labels
+    # Set title and x/y labels
     ax.set_title(title, fontsize=6, y=1.15)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     
-    # remove last blank column
+    # Remove last blank column
     ax.set_xlim( (0, Z.shape[1]) )
     ax.set_ylim( (0, Z.shape[0]) )
     
-    # turn off all the ticks
+    # Turn off all the ticks
     for t in ax.xaxis.get_major_ticks():
         t.tick1On = False
         t.tick2On = False
@@ -194,59 +187,63 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
         t.tick1On = False
         t.tick2On = False
         
-    # proper orientation (origin at the top left instead of bottom left)
+    # Proper orientation (origin at the top left instead of bottom left)
     ax.invert_yaxis()
     
-    # set equal aspect ratio
+    # Set equal aspect ratio
     ax.set_aspect('equal')
 
-    # add colorbar
+    # Add colorbar
     cax = inset_axes(ax, width='4%', height='30%', loc=3,
                      bbox_to_anchor=(1.05, 0., 1, 1),
                      bbox_transform=ax.transAxes,
                      borderpad=0)
     cbar = plt.colorbar(im, cax=cax, ticks=[vmin, 0, vmax], format='%.1f')
-    cbar.ax.set_title(legend_title, horizontalalignment='center', fontsize=5)
+    cbar.ax.set_title(legend_title, horizontalalignment='center', fontsize=6)
     cbar.ax.tick_params(labelsize=5)
     cbar.locator = ticker.MaxNLocator(nbins = 3)
     cbar.outline.set_visible(False)
 	
-def gw_frequency(data, ax=None):
-
-    colors = [config.time['color'][k] for k in data.columns.get_level_values('time')]
-    data.reset_index().plot(ax=ax, kind='line',
-							x='pos', y=data.columns,
-							color=colors, lw=0.4, #alpha=(0.6 if e in ['HU','RM'] else 0.9), 
-							legend=False, rasterized=True, zorder=3)
-	# shades
+def gw_frequency(data, ax=None, **kwargs):
+    # Line plots
+    data.plot(
+        ax=ax, kind='line',
+        lw=0.4, legend=False, rasterized=True, zorder=2, **kwargs
+    )
+	# Draw chromosome shades
     chr_coords = utils.chr_coords()
-    for start, end in zip(chr_coords.chr_start, chr_coords.chr_end):
-		for chrom, g in chr_coords.groupby('chr_arabic'):
-			ax.axvspan(g.chr_start.squeeze(), g.chr_end.squeeze(),
-					   color=('0.95' if chrom % 2 == 1 else 'w'), lw=0, zorder=0, rasterized=True) 
-    
-    ax.set_ylim((0, 1))
-    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
-    ax.yaxis.set_minor_locator(ticker.MaxNLocator(nbins=4))
+    for chrom, g in chr_coords.groupby('chr_arabic'):
+        ax.axvspan(g.chr_start.squeeze(), g.chr_end.squeeze(),
+                   color=('0.95' if chrom % 2 == 1 else 'w'), lw=0, zorder=0, rasterized=True) 
+    # Axes limits
+    ax.set_ylim(0, 1)
+    # Axis tick properties
+    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=4))
+    ax.yaxis.set_minor_locator(ticker.MaxNLocator(nbins=20))
     ax.yaxis.set_ticks_position('left')
-
-    ax.yaxis.grid(lw=0.6, ls='-', color='0.9', which='minor')
-	
-def histogram_frequency(data, ax=None):
-	
-    for time in data:    
+    # Grid
+    ax.yaxis.grid(lw=0.6, ls='-', color='0.9', which='major', zorder=1)
+    # Turn off the x-axis ticks
+    for tick in ax.xaxis.get_major_ticks():
+        tick.tick1On = False
+        tick.tick2On = False
+    
+def histogram_frequency(data, ax=None, **kwargs):
+	# Histogram plots
+    for time in data:
         x, y = histogram_binned_data(ax, data[time], bins=50)
-        ax.plot(x, y, color=config.time['color'][time], lw=0.5, rasterized=True)
-        ax.fill_between(x, 0, y, label=time, #alpha=(0.6 if e in ['HU','RM'] else 0.9), 
-						facecolor=config.time['color'][time])            
-	
-    ax.set_xlim((0, 1))
+        ax.plot(x, y, color=config.time['color'][time], lw=0.5, rasterized=True, zorder=0)
+        ax.fill_between(x, 0, y, label=time, facecolor=config.time['color'][time], zorder=0, **kwargs)
+    # Axes limits
+    ax.set_xlim(0, 1)
+    ax.set_ylim(bottom=0)
+    # Axis tick properties
     ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=2))
     ax.xaxis.set_minor_locator(ticker.MaxNLocator(nbins=4))
     ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=3, prune='upper'))
     ax.yaxis.set_ticks_position('right')
-	
-    ax.xaxis.grid(lw=0.6, ls=':', color='0.9', which='minor')
+	# Grid
+    ax.xaxis.grid(lw=0.6, ls=':', color='0.9', which='minor', zorder=1)
 
 def loh_length(data, ax=None):
     
@@ -256,27 +253,47 @@ def loh_length(data, ax=None):
     .plot(ax=ax, logy=True, color=colors, style='.', marker='o', ms=3, mec='none', legend=False)
 
     utils.simple_axes(ax)
+    # Axes limits
     ax.set_xlim(0,1.1E3)
+    ax.set_ylim(1E-5,1E-0)
+    # Axes labels
     ax.set_xlabel('Homozygosity segment length (kb)')
     ax.set_ylabel('Frequency')
-
+    # Legend
     ax.legend(frameon=False, loc='upper right', 
               borderaxespad=0., prop={'size':5},
               handlelength=0.75)
 
 def loh_fluctuation(data, ax=None):
     
-    colors = [config.background['color'][b] for b in data['LOH rate','mean'].columns] 
-    data['LOH rate','mean'].plot(ax=ax, kind='bar', yerr = data['LOH rate','sem'], 
-                                 color=colors, edgecolor='k', legend=False,
-                                 error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
+    # colors = [config.background['color'][b] for b in data['LOH rate','mean'].columns]
+    # data['LOH rate','mean'].plot(ax=ax, kind='bar', yerr = data['LOH rate','sem'],
+    #                              color=colors, edgecolor='k', legend=False,
+    #                              error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
+    colors = [config.background['color'][b] for b in data['LOH_rate'].columns] 
+    data['LOH_rate'].plot(ax=ax, kind='bar', yerr=data[['lower','upper']].values.T, 
+                          color=colors, edgecolor='k', legend=False,
+                          error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
 
     utils.simple_axes(ax)
     
-    ax.set_xlabel('Environment')
-    ax.set_ylabel('Locus-specific LOH rate')
-    ax.set_yscale('log')
+    # Set tick labels
     ax.set_xticklabels(data.index.get_level_values('environment'), minor=False, rotation=0)
+    
+    # labels = [ w.get_text() for w in ax.get_yticklabels()]
+    # locs = list(ax.get_yticks())
+    # # ax.set_yticks(list(ax.get_yticks()) + [2E-3])
+    # # ax.set_yticklabels(list(ax.get_yticks()) + [r'$2 \times 10^{-2}$'])
+    # print(labels, locs)
+    # # labels+=[r'$2 \times 10^{-3}$']
+    # # locs+=[2E-3]
+    # # ax.set_yticklabels(labels)
+    # # ax.set_yticks(locs)
+    
+    ax.set_xlabel('Environment')
+    ax.set_ylabel(r'Locus-specific LOH rate (gen$^{-1}$)')
+    # ax.set_ylim(1E-7,2E-3)
+    ax.set_yscale('log')
 
     ax.legend(frameon=False, loc='upper right', 
               borderaxespad=0., prop={'size':5},
@@ -304,7 +321,7 @@ def consensus_genotype(data, ax=None):
 		heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
 				ax, '', '', '', [], [], cmap=cmap, vmin=0, vmax=2)
 
-### SNP/indel mutations ###
+### SNV/indel mutations ###
 def snp_indel_genotype(data, ax=None):
 
 	if len(data) > 0:
@@ -440,20 +457,19 @@ def scatter_plot(x, y, ax=None, **kwargs):
 def histogram_x(data, ax=None, time=None):
 	
     import gmm
-    import matplotlib.patheffects as PathEffects
     
     X = data.groupby(level=['isolate']).agg([np.mean])
             
-    # fit the Gaussian mixture model
+    # Fit the Gaussian mixture model
     N = np.arange(1, 6)
     models = gmm.gmm_fit(X, N)
 
-    # compute the AIC and the BIC
+    # Compute the AIC and the BIC
     AIC = [m.aic(X) for m in models]
     BIC = [m.bic(X) for m in models]
     M_best = models[np.argmin(BIC)]
     
-    # plot data
+    # Plot data
     bins = 34
     xbins, y = histogram_binned_data(ax, X, bins=bins)
                         
@@ -467,7 +483,7 @@ def histogram_x(data, ax=None, time=None):
     ax.plot(xbins, pdf / bins, '-', 
             color=config.population['color'][time], lw=1)
 
-    # mean of the distribution
+    # Mean of the distribution
     for p in abs(M_best.means_.ravel()):
         ax.axvline(x=p, ls='--', lw=1.5, color=config.population['color'][time], zorder=1)
         pos = ax.get_ylim()[0] * 0.75 + ax.get_ylim()[1] * 0.25
@@ -477,7 +493,7 @@ def histogram_x(data, ax=None, time=None):
                     color='k', va='center',
                     ha=('right' if time=='ancestral' else 'left'),
                     xytext=((-5 if time=='ancestral' else 5),0), textcoords='offset points',
-                    path_effects=[PathEffects.withStroke(linewidth=0.5, foreground="w")])
+                    path_effects=[patheffects.withStroke(linewidth=0.5, foreground="w")])
 
     ax.set_xticks([])
     ax.set_xticklabels([])
@@ -494,20 +510,19 @@ def histogram_x(data, ax=None, time=None):
 def histogram_y(data, ax=None, time=None):
 	
     import gmm
-    import matplotlib.patheffects as PathEffects
     
     Y = data.groupby(level=['isolate']).agg([np.mean])
             
-    # fit the Gaussian mixture model
+    # Fit the Gaussian mixture model
     N = np.arange(1, 6)
     models = gmm.gmm_fit(Y, N)
 
-    # compute the AIC and the BIC
+    # Compute the AIC and the BIC
     AIC = [m.aic(Y) for m in models]
     BIC = [m.bic(Y) for m in models]
     M_best = models[np.argmin(BIC)]
             
-    # plot data
+    # Plot data
     bins = 34
     ybins, x = histogram_binned_data(ax, Y, bins=bins)
     
@@ -521,7 +536,7 @@ def histogram_y(data, ax=None, time=None):
     ax.plot(pdf / bins, ybins, '-', 
             color=config.population['color'][time], lw=1)
 
-    # mean of the distribution
+    # Mean of the distribution
     for p in abs(M_best.means_.ravel()):
         ax.axhline(y=p, ls='--', lw=1.5, color=config.population['color'][time], zorder=1)
         pos = ax.get_xlim()[0] * 0.75 + ax.get_xlim()[1] * 0.25
@@ -531,7 +546,7 @@ def histogram_y(data, ax=None, time=None):
                     color='k', ha='center',
                     va=('bottom' if time=='ancestral' else 'top'),
                     xytext=(0,(-10 if time=='ancestral' else 10)), textcoords='offset points',
-                    path_effects=[PathEffects.withStroke(linewidth=0.5, foreground="w")])
+                    path_effects=[patheffects.withStroke(linewidth=0.5, foreground="w")])
 
     ax.set_yticks([])
     ax.set_yticklabels([])
@@ -559,7 +574,7 @@ def lollipops(data, ax=None):
         plt.setp(markerline, 'color', config.population['color'][time], 
                  markersize = 2.75, markeredgewidth=.75, markeredgecolor='k', zorder=3)
         plt.setp(stemlines, linewidth=.75, color=config.population['color'][time],
-                 path_effects=[PathEffects.withStroke(linewidth=1.25, foreground='k')], zorder=2)  
+                 path_effects=[patheffects.withStroke(linewidth=1.25, foreground='k')], zorder=2)  
         plt.setp(baseline, 'color', 'none', zorder=1)
                     
 #         for idx, label in data.iterrows():
@@ -568,7 +583,7 @@ def lollipops(data, ax=None):
 #                         xytext = (0, 8), textcoords = 'offset points', 
 #                         ha = 'center', va = 'top',
 #                         fontsize = 6, style = 'italic',
-#                         path_effects=[PathEffects.withStroke(linewidth=0.5, foreground="w")])
+#                         path_effects=[patheffects.withStroke(linewidth=0.5, foreground="w")])
 
 import seaborn.apionly as sns
 
@@ -638,6 +653,7 @@ def set_custom_labels(index, pos):
 def add_inner_title(ax, title, loc, size=None, **kwargs):
     from matplotlib.offsetbox import AnchoredText
     from matplotlib.patheffects import withStroke
+    
     if size is None:
         size = dict(size=plt.rcParams['legend.fontsize'])
     at = AnchoredText(title, loc=loc, prop=size,
@@ -646,18 +662,14 @@ def add_inner_title(ax, title, loc, size=None, **kwargs):
     ax.add_artist(at)
     at.txt._text.set_path_effects([withStroke(foreground="w", linewidth=3)])
     return at
-    
-
-from matplotlib.transforms import Bbox, TransformedBbox, \
-    blended_transform_factory
-
-from mpl_toolkits.axes_grid1.inset_locator import BboxPatch, BboxConnector,\
-    BboxConnectorPatch
 
 
 def connect_bbox(bbox1, bbox2,
                  loc1a, loc2a, loc1b, loc2b,
                  prop_lines, prop_patches=None):
+    from matplotlib.transforms import Bbox, TransformedBbox, blended_transform_factory
+    from mpl_toolkits.axes_grid1.inset_locator import BboxPatch, BboxConnector, BboxConnectorPatch
+    
     if prop_patches is None:
         prop_patches = prop_lines.copy()
         prop_patches["alpha"] = prop_patches.get("alpha", 1)*0.2
@@ -722,7 +734,6 @@ def colorbar_index(ncolors, cmap):
     mappable.set_clim(-0.5, ncolors+0.5)
     return mappable
 
-
 def cmap_discretize(cmap, N):
     """
 	Return a discrete colormap from the continuous colormap cmap.
@@ -735,6 +746,7 @@ def cmap_discretize(cmap, N):
         djet = cmap_discretize(cm.jet, 5)
         imshow(x, cmap=djet)
     """
+    import matplotlib.colors as mcolors
 
     if type(cmap) == str:
         cmap = plt.get_cmap(cmap)
@@ -745,7 +757,7 @@ def cmap_discretize(cmap, N):
     for ki,key in enumerate(('red','green','blue')):
         cdict[key] = [ (indices[i], colors_rgba[i-1,ki], colors_rgba[i,ki])
                        for i in xrange(N+1) ]
-    # Return colormap object.
+    # Return colormap object
     return mcolors.LinearSegmentedColormap(cmap.name + "_%d"%N, cdict, 1024)
 
 

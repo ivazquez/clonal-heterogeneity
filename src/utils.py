@@ -1,26 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os, re
-import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
-import numpy as np
-import scipy as sp
-import pandas as pd
-
+# Load external dependencies
+from setup import *
+# Load internal dependencies
 import config, utils
-
-def get_git_path():
-    """
-    Return the git path of the current repository
-    """
-    import subprocess
-    try:
-        dir_repo = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'], stdout=subprocess.PIPE).communicate()[0].rstrip().decode('utf-8')
-        return dir_repo
-    except ValueError:
-        print "Error: no git repo found."
-
 
 def load_data(fn):
     """
@@ -56,6 +40,26 @@ def merge_two_dicts(x, y):
     z = x.copy()
     z.update(y)
     return z
+	
+	
+def combine_columns(df, c1, c2, mirror=True):
+    from itertools import combinations
+	
+    df.sort_values([c1,c2], inplace=True)
+    comb = list(combinations(df[c1].unique(),2))
+    
+    genotype=[]
+    for index, row in df.iterrows():
+        if mirror:
+            if (row[c1], row[c2]) in comb:
+                g = (row[c1],row[c2])
+            else:
+                g = (row[c2],row[c1])
+        else:
+            g = (row[c1],row[c2])
+        genotype.append(g)
+            
+    return genotype
 
     
 def simple_axes(ax):
@@ -118,7 +122,7 @@ def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
         cdict['blue'].append((si, b, b))
         cdict['alpha'].append((si, a, a))
 
-    newcmap = LinearSegmentedColormap(name, cdict)
+    newcmap = mpl.colors.LinearSegmentedColormap(name, cdict)
     plt.register_cmap(cmap=newcmap)
 
     return newcmap

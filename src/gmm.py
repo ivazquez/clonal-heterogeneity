@@ -5,12 +5,10 @@
 Gaussian mixture model
 """
 
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from collections import defaultdict
+# Load external dependencies
+from setup import *
+# Load internal dependencies
 from sklearn.mixture import GaussianMixture
-
 
 def gmm_fit(X, N):
     """
@@ -68,7 +66,6 @@ def gmm_posterior(ax, X, M_best):
 
     x = np.linspace(X.min()-.2, X.max()+.2, 1000)
     p = M_best.predict_proba(np.array([x]).T)
-    # p = p[:, (1, 0, 2)]  # rearrange order so the plot looks better
     p = p.cumsum(1).T
 
     ax.fill_between(x, 0, p[0], color='gray', alpha=0.3)
@@ -78,9 +75,3 @@ def gmm_posterior(ax, X, M_best):
     ax.set_ylim(0, 1)
     ax.set_xlabel('$\lambda$')
     ax.set_ylabel(r'$p(j|\lambda)$')
-
-#     ax.text(-5, 0.3, 'class 1', rotation='vertical')
-#     ax.text(0, 0.5, 'class 2', rotation='vertical')
-#     ax.text(3, 0.3, 'class 3', rotation='vertical')
-
-#     plt.show()
