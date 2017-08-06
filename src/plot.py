@@ -412,7 +412,7 @@ def genome_instability(data, ax=None, title=None):
 		nrows = len(labels)
 		
 		ax2 = plt.subplot(ax[idx:idx+nrows], sharex=ax1)
-		# SNP/indel
+		# SNV/indel
 		snp_indel_data = filter_multiindex(group, names=['snp_indel'])
 		snp_indel_genotype(snp_indel_data, ax2)
 		# Copy number
