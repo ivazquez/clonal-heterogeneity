@@ -9,7 +9,7 @@ This repository contains supporting material for the manuscript:
 > [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://dx.doi.org/10.1101/039859)
 
 <p align="center">
-  <img src="https://github.com/ivazquez/clonal-heterogeneity/blob/master/manuscript/main/figures/graphical-abstract/graphical_abstract_publication.png?raw=true" alt="Graphical abstract"/>
+  <img src="https://github.com/ivazquez/clonal-heterogeneity/blob/master/manuscript/main/figures/graphical-abstract/graphical_abstract_publication.png?raw=true" width="60%" height="60%" alt="Graphical abstract"/>
 </p>
 
 To clone this repository, run the following command in a local directory:
