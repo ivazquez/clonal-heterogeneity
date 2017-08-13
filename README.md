@@ -8,9 +8,13 @@ This repository contains supporting material for the manuscript:
 >
 > [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://dx.doi.org/10.1101/039859)
 
+<p align="center">
+  <img src="https://github.com/ivazquez/clonal-heterogeneity/blob/master/manuscript/main/figures/graphical-abstract/graphical_abstract_publication.png?raw=true" alt="Graphical abstract"/>
+</p>
+
 To clone this repository, run the following command in a local directory:
 
-    $ git clone --recursive https://github.com/ivazquez/genetic-variation.git
+    $ git clone --recursive https://github.com/ivazquez/clonal-heterogeneity.git
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
 
@@ -21,23 +25,23 @@ and others. These are found in the `src/` directory. The repository also include
 
 To install all Python dependencies inside a virtual environment and build the cloneHD executables into the `build/` directory, run:
 
-    $ cd genetic-variation
+    $ cd clonal-heterogeneity
     $ make
 
 You can then browse and run the notebooks locally to reproduce all figures with:
 
     $ jupyter notebook
 
-Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/genetic-variation).
+Alternatively, you can run the notebooks online using [Binder](http://mybinder.org/repo/ivazquez/clonal-heterogeneity).
 
 | Figures | Notebook |
 | ------- | -------- |
 | Figure 1 | [Schematic of study design](src/figure1.ipynb) |
 | Figures 2, S2 | [Driver-passenger dynamics](src/figure2.ipynb) |
 | Figures 3, S3, S4, S9 | [Reconstruction of subclonal heterogeneity](src/figure3.ipynb) |
-| Figures 4, S5 | [Pervasive genome instability](src/figure4.ipynb) |
-| Figure 5 | [Pervasive genome instability](src/figure5.ipynb) |
-| Figures 6, S10, S11, S12 | [Background-averaged fitness effects](src/figure6.ipynb)|
+| Figures 4, S5 | [Pervasive selection for adaptive mutations and genome instability](src/figure4.ipynb) |
+| Figure 5 | [Elevated rates of loss of heterozygosity](src/figure5.ipynb) |
+| Figures 6, S10, S11, S12 | [Ensemble-averaged fitness effects of genetic background and de novo mutations](src/figure6.ipynb)|
 | Figures S6, S7, S8 | [Engineered genetic constructs](src/supp_figure_pheno_constructs.ipynb)|
 
 ## Sequence data
@@ -63,7 +67,7 @@ With the sequence data we carry out subclonal decomposition using a probabilisti
 src/subclonality_simulated.sh
 ```
 
-Also, to test this on a representative time series dataset for one of the populations (as shown in [Figure 1](src/figure1.ipynb)):
+Also, to test this on a representative time series dataset for one of the populations (as shown in [Figure 2](src/figure2.ipynb)):
 
 ```sh
 src/subclonality_experiment.sh

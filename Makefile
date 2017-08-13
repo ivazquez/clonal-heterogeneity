@@ -3,7 +3,7 @@ all: notebooks cloneHD
 # The following defaults are based on my preferences, but possible for others
 # to override thanks to the `?=' operator.
 WORKON_HOME ?= $(HOME)/.virtualenvs
-VIRTUAL_ENV ?= $(WORKON_HOME)/gv-paper-2016
+VIRTUAL_ENV ?= $(WORKON_HOME)/clonal-heterogeneity
 ACTIVATE = . "$(VIRTUAL_ENV)/bin/activate"
 	
 default:
