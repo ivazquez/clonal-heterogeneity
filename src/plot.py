@@ -259,8 +259,8 @@ def histogram_frequency(data, ax=None, **kwargs):
 	# Histogram plots
     for time in data:
         x, y = histogram_binned_data(ax, data[time], bins=50)
-        ax.plot(x, y, color=config.time['color'][time], lw=0.5, rasterized=True, zorder=0)
-        ax.fill_between(x, 0, y, label=time, facecolor=config.time['color'][time], zorder=0, **kwargs)
+        ax.plot(x, y, color=config.time['color'][time], lw=0.5, rasterized=True, zorder=1)
+        ax.fill_between(x, 0, y, label=time, facecolor=config.time['color'][time], zorder=1, **kwargs)
     # Axes limits
     ax.set_xlim(0, 1)
     ax.set_ylim(bottom=0)
@@ -273,7 +273,7 @@ def histogram_frequency(data, ax=None, **kwargs):
     ax.tick_params(axis='both', which='major', size=2, labelsize=6)
     ax.tick_params(axis='both', which='minor', size=1, labelsize=4)
 	# Grid
-    ax.xaxis.grid(lw=0.6, ls=':', color='0.9', which='minor', zorder=1)
+    ax.xaxis.grid(lw=0.6, ls='-', color='0.9', which='minor', zorder=0)
 
 def loh_length(data, ax=None):
     
@@ -301,7 +301,7 @@ def loh_fluctuation(data, ax=None):
     #                              color=colors, edgecolor='k', legend=False,
     #                              error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
     colors = [config.background['color'][b] for b in data['LOH_rate'].columns] 
-    data['LOH_rate'].plot(ax=ax, kind='bar', yerr=data[['lower','upper']].values.T, 
+    data['LOH_rate'].plot(ax=ax, kind='bar', yerr=data[['LOH_rate_ci_lower','LOH_rate_ci_upper']].values.T, 
                           color=colors, edgecolor='k', legend=False,
                           error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
 
@@ -825,11 +825,11 @@ def colormap_discretize(cmap, N):
     # Return colormap object
     return mcolors.LinearSegmentedColormap(cmap.name + "_%d"%N, cdict, 1024)
 
-def save_figure(filename, formats=['pdf','png','svg']):
+def save_figure(filename, formats=['pdf','png','svg'], **kwargs):
 	
 	if 'pdf' in formats:
-		plt.savefig(filename+'.pdf', bbox_inches='tight')
+		plt.savefig(filename+'.pdf', bbox_inches='tight', **kwargs)
 	if 'png' in formats:
-		plt.savefig(filename+'.png', bbox_inches='tight')
+		plt.savefig(filename+'.png', bbox_inches='tight', **kwargs)
 	if 'svg' in formats:
-		plt.savefig(filename+'.svg', bbox_inches='tight')
+		plt.savefig(filename+'.svg', bbox_inches='tight', **kwargs)
