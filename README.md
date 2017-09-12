@@ -8,15 +8,15 @@ This repository contains supporting material for the manuscript:
 >
 > [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://dx.doi.org/10.1101/039859)
 
-<p align="center">
-  <img src="https://github.com/ivazquez/clonal-heterogeneity/blob/master/manuscript/main/figures/graphical-abstract/graphical_abstract_publication.png?raw=true" width="60%" height="60%" alt="Graphical abstract"/>
-</p>
-
 To clone this repository, run the following command in a local directory:
 
     $ git clone --recursive https://github.com/ivazquez/clonal-heterogeneity.git
 
 The `--recursive` flag is required in order to download the nested git submodule from an external repository.
+
+<p align="center">
+  <img src="https://github.com/ivazquez/clonal-heterogeneity/blob/master/manuscript/main/figures/graphical-abstract/graphical_abstract_publication.png?raw=true" width="60%" height="60%" alt="Graphical abstract"/>
+</p>
 
 ## Source code
 
@@ -76,6 +76,16 @@ src/subclonality_experiment.sh
 The full documentation for [filterHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-filterHD.md) and [cloneHD](https://github.com/ivazquez/cloneHD/blob/master/docs/README-cloneHD.md) can be found in the cloneHD repository.
 
 ## Phenotype data
-Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in comma-separated format or serialized in Pickle format for Python. They can be found in the `data/pheno/` directory. 'NA' is used to indicate missing data or NaN.
+This dataset comprises phenotype measurements of intra-population heterogeneity, of engineered genetic constructs, and of a recombinant library of pre-existing and *de novo* mutations created by genetic crossing. Raw imaging data is available upon request (~250GB). Phenotype measurements are analysed using [scan-o-matic](https://github.com/local-minimum/scanomatic) and are available in comma-separated format. They can be found in the `data/pheno/` directory.
 
-Temporal changes to the phenotype distribution are analysed in this [notebook](src/figure3.ipynb). The results are shown in [Figure 3](manuscript/main/figures/figure3/figure3_final.png) and [S9](manuscript/supp/figures/supp_figure_pheno_evolution/supp_figure_pheno_evolution_final.png). Phenotype measurements of the genetic cross are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 6](manuscript/main/figures/figure6/figure6_final.png) and [Figures S10](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_final.png) and [S11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_final.png). Phenotype measurements of the genetic constructs are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).
+* Temporal changes to the phenotype distribution are summarised in this [dataset](data/pheno/populations/pheno_populations.csv) and are analysed in this [notebook](src/figure3.ipynb). The results are shown in [Figure 3](manuscript/main/figures/figure3/figure3_final.png) and [S9](manuscript/supp/figures/supp_figure_pheno_evolution/supp_figure_pheno_evolution_final.png).
+* Phenotype measurements of the genetic cross are summarised in this dataset ([spores](data/pheno/genetic-cross/pheno_genetic_cross_spores.csv) and [hybrids](data/pheno/genetic-cross/pheno_genetic_cross_hybrids.csv)) and are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 6](manuscript/main/figures/figure6/figure6_final.png) and [Figures S10](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_final.png) and [S11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_final.png).
+* Phenotype measurements of the genetic constructs are summarised in this [dataset](data/pheno/genetic-constructs/pheno_genetic_constructs.csv) and are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).
+
+Each measurement is indexed by experimental run, plate, row and column. All datasets report the growth rate and the doubling time. For each observable, the dataset reports absolute values and normalised values extracted after spatial normalisation. `NaN' is used to indicate missing data.
+
+## Fluctuation assay data
+Locus-specific measurements of the LOH rate using a Luria-Delbruck fluctuation test. This dataset reports the raw colony counts measured in the fluctuation assay and the estimated LOH rates.  They can be found in the `data/fluctuation/` directory.
+
+* The raw counts contain the [number of colony-forming units](data/fluctuation/fluctuation_assay_counts.csv) (c.f.u.) in YPD medium and in 5-FOA+ dropout medium. This provides the average number of cells per culture, `N`, the average number of LOH events per culture, `m`.
+* For every background and environment, the [mean LOH rate](data/fluctuation/fluctuation_assay_rates.csv) and 5\%/95\% confidence intervals are estimated using the probability generating function of the Luria-Delbruck distribution defined by Hamon et al. (2012).
