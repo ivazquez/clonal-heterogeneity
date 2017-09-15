@@ -3,8 +3,6 @@
 
 # Load external dependencies
 from setup import *
-# Load internal dependencies
-import colors
 
 # Chromosome length
 # S. cerevisiae (R64-1-1) 
@@ -51,9 +49,9 @@ spores_cl = {
     },
     'color': {
         'HU':
-        {'WA': colors.fte_colors[0], 'NA': colors.fte_colors[1], 'WAxNA': colors.fte_colors[2]},
+        {'WA': "#30a2da", 'NA': "#fc4f30", 'WAxNA': "#fab52f"},
         'RM':
-        {'WA': colors.fte_colors[0], 'NA': colors.fte_colors[1], 'WAxNA': colors.fte_colors[2]},
+        {'WA': "#30a2da", 'NA': "#fc4f30", 'WAxNA': "#fab52f"},
     }
 }
 
@@ -77,9 +75,9 @@ spores_gt_long = {
     },
     'color': {
         'HU': 
-        { '': colors.fte_colors[0], 'RNR2': colors.fte_colors[1], 'RNR2*': colors.fte_colors[2], 'RNR4': colors.fte_colors[1], 'RNR4*': colors.fte_colors[2]},
+        { '': "#30a2da", 'RNR2': "#fc4f30", 'RNR2*': "#fab52f", 'RNR4': "#fc4f30", 'RNR4*': "#fab52f"},
         'RM': 
-        {'': colors.fte_colors[0], 'no driver': colors.fte_colors[1], 'FPR1*': colors.fte_colors[2], 'TOR1': colors.fte_colors[1], 'TOR1*': colors.fte_colors[2]}
+        {'': "#30a2da", 'no driver': "#fc4f30", 'FPR1*': "#fab52f", 'TOR1': "#fc4f30", 'TOR1*': "#fab52f"}
     }
 }
 
@@ -121,9 +119,9 @@ hybrids_cl = {
     },
     'color': {
         'HU':
-        {('WA','WA'): colors.fte_colors[0], ('NA','NA'): colors.fte_colors[1], ('WAxNA','WAxNA'): colors.fte_colors[2]},
+        {('WA','WA'): "#30a2da", ('NA','NA'): "#fc4f30", ('WAxNA','WAxNA'): "#fab52f"},
         'RM':
-        {('WA','WA'): colors.fte_colors[0], ('NA','NA'): colors.fte_colors[1], ('WAxNA','WAxNA'): colors.fte_colors[2]}
+        {('WA','WA'): "#30a2da", ('NA','NA'): "#fc4f30", ('WAxNA','WAxNA'): "#fab52f"}
     }
 }
 
@@ -158,17 +156,17 @@ hybrids_gt_long = {
     },
     'color': {
         'HU':
-        {('',''): colors.fte_colors[0],
-        ('','RNR2'): colors.fte_colors[1], ('','RNR2*'): colors.fte_colors[2], ('','RNR4'): colors.fte_colors[1], ('','RNR4*'): colors.fte_colors[2],
-        ('RNR2','RNR2'): colors.fte_colors[1], ('RNR2','RNR2*'): colors.fte_colors[2], ('RNR2*','RNR2*'): colors.fte_colors[3],
-        ('RNR4','RNR4'): colors.fte_colors[1], ('RNR4','RNR4*'): colors.fte_colors[2], ('RNR4*','RNR4*'): colors.fte_colors[3],
-        ('RNR2','RNR4'): colors.fte_colors[1], ('RNR2*','RNR4'): colors.fte_colors[2], ('RNR2','RNR4*'): colors.fte_colors[2], ('RNR2*','RNR4*'): colors.fte_colors[3]},
+        {('',''): "#30a2da",
+        ('','RNR2'): "#fc4f30", ('','RNR2*'): "#fab52f", ('','RNR4'): "#fc4f30", ('','RNR4*'): "#fab52f",
+        ('RNR2','RNR2'): "#fc4f30", ('RNR2','RNR2*'): "#fab52f", ('RNR2*','RNR2*'): "#32a273",
+        ('RNR4','RNR4'): "#fc4f30", ('RNR4','RNR4*'): "#fab52f", ('RNR4*','RNR4*'): "#32a273",
+        ('RNR2','RNR4'): "#fc4f30", ('RNR2*','RNR4'): "#fab52f", ('RNR2','RNR4*'): "#fab52f", ('RNR2*','RNR4*'): "#32a273"},
         'RM':
-        {('',''): colors.fte_colors[0],
-        ('','FPR1'): colors.fte_colors[1], ('','FPR1*'): colors.fte_colors[2], ('','TOR1'): colors.fte_colors[1], ('','TOR1*'): colors.fte_colors[2],
-        ('no driver','no driver'): colors.fte_colors[1], ('FPR1','FPR1'): colors.fte_colors[1], ('FPR1*','FPR1*'): colors.fte_colors[3],
-        ('TOR1','TOR1'): colors.fte_colors[1], ('TOR1','TOR1*'): colors.fte_colors[2], ('TOR1*','TOR1*'): colors.fte_colors[3],
-        ('FPR1','TOR1'): colors.fte_colors[1], ('FPR1*','TOR1'): colors.fte_colors[2], ('FPR1','TOR1*'): colors.fte_colors[2], ('FPR1*','TOR1*'): colors.fte_colors[3]}
+        {('',''): "#30a2da",
+        ('','FPR1'): "#fc4f30", ('','FPR1*'): "#fab52f", ('','TOR1'): "#fc4f30", ('','TOR1*'): "#fab52f",
+        ('no driver','no driver'): "#fc4f30", ('FPR1','FPR1'): "#fc4f30", ('FPR1*','FPR1*'): "#32a273",
+        ('TOR1','TOR1'): "#fc4f30", ('TOR1','TOR1*'): "#fab52f", ('TOR1*','TOR1*'): "#32a273",
+        ('FPR1','TOR1'): "#fc4f30", ('FPR1*','TOR1'): "#fab52f", ('FPR1','TOR1*'): "#fab52f", ('FPR1*','TOR1*'): "#32a273"}
     }
 }
 
@@ -191,10 +189,10 @@ hybrids_gt_short = {
 # Factor attributes
 factors = {
     'color': {
-        'Time of\nsampling': colors.fte_colors[2],
-        'Background\n(genotype)': colors.fte_colors[0],
-        'De novo\n(genotype)': colors.fte_colors[1],
-        'Auxotrophy': colors.fte_colors[5]
+        'Time of\nsampling': "#fab52f",
+        'Background\n(genotype)': "#30a2da",
+        'De novo\n(genotype)': "#fc4f30",
+        'Auxotrophy': "#32a273"
         },
     'hatch': {
         'spores': " ", 
@@ -234,12 +232,12 @@ population = {
         'parents': 0, 'ancestral': 1, 'evolved': 2
     },
     'facecolor':{
-        'parents': colors.fte_colors[3], 
+        'parents': "#32a273", 
         'ancestral': '#22a884',
         'evolved': '#833d9a'
     },
     'color':{
-        'parents': colors.fte_colors[3], 
+        'parents': "#32a273", 
         'ancestral': '#22a884',
         'evolved': '#833d9a'
     },
@@ -276,12 +274,12 @@ background = {
         'WA/NA':5
     },
     'color':{
-        'WA':colors.bg_colors_mut[0],
-        'NA':colors.bg_colors_mut[1],
-        'WAxNA':colors.bg_colors_mut[2],
-        'WA/WA':colors.bg_colors_mut[0],
-        'NA/NA':colors.bg_colors_mut[1],
-        'WA/NA':colors.bg_colors_mut[2]
+        'WA':"#30a2da",
+        'NA':"#fc4f30",
+        'WAxNA':"#6a3d9a",
+        'WA/WA':"#30a2da",
+        'NA/NA':"#fc4f30",
+        'WA/NA':"#6a3d9a"
     },
     'marker':{
         'WA':'o', 
@@ -352,12 +350,12 @@ environment = {
 
 # Lineage attributes
 lineages = {
-    'subclone A': {'fill':colors.fte_colors[0], 'line':colors.fte_colors[0]},
-    'subclone B': {'fill':colors.fte_colors[1], 'line':colors.fte_colors[1]},
-    'subclone C': {'fill':colors.fte_colors[2], 'line':colors.fte_colors[2]},
-    'subclone D': {'fill':colors.fte_colors[3], 'line':colors.fte_colors[3]},
-    'bulk': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
-    '': {'fill':colors.fte_colors[4], 'line':colors.fte_colors[4]},
+    'subclone A': {'fill':"#30a2da", 'line':"#30a2da"},
+    'subclone B': {'fill':"#fc4f30", 'line':"#fc4f30"},
+    'subclone C': {'fill':"#fab52f", 'line':"#fab52f"},
+    'subclone D': {'fill':"#32a273", 'line':"#32a273"},
+    'bulk': {'fill':"#8b8b8b", 'line':"#8b8b8b"},
+    '': {'fill':"#8b8b8b", 'line':"#8b8b8b"},
 }
 
 # Mutation type attributes
@@ -396,12 +394,12 @@ consequence_short = {
 # Time attributes
 time = {
     'color': {
-        0:colors.t_colors[0],
-        2:colors.t_colors[1],
-        4:colors.t_colors[2],
-        8:colors.t_colors[3],
-        16:colors.t_colors[4],
-        32:colors.t_colors[5]
+        0:"#fde725",
+        2:"#7ad151",
+        4:"#22a884",
+        8:"#2a788e",
+        16:"#414487",
+        32:"#440154"
     },
     'linewidth': {
         0:0.75,2:0.75,4:0.75,8:0.75,16:0.75,32:0.75
@@ -414,8 +412,8 @@ time = {
 # Background attributes (genetic constructs)
 construct_background = {
     'color': {
-        'wt': {'WA':colors.bg_colors_wt[0], 'NA':colors.bg_colors_wt[1], 'WA/WA':colors.bg_colors_wt[0], 'NA/NA':colors.bg_colors_wt[1], 'WA/NA':colors.bg_colors_wt[2]},
-        'mut': {'WA':colors.bg_colors_mut[0], 'NA':colors.bg_colors_mut[1], 'WA/WA':colors.bg_colors_mut[0], 'NA/NA':colors.bg_colors_mut[1], 'WA/NA':colors.bg_colors_mut[2]}
+        'wt': {'WA':"#96d0ec", 'NA':"#feb4a6", 'WA/WA':"#96d0ec", 'NA/NA':"#feb4a6", 'WA/NA':"#cfbce4"},
+        'mut': {'WA':"#30a2da", 'NA':"#fc4f30", 'WA/WA':"#30a2da", 'NA/NA':"#fc4f30", 'WA/NA':"#6a3d9a"}
     },
     'position': {
         'WA':0, 'NA':1, 'WA/WA':2, 'NA/NA':3, 'WA/NA':4
