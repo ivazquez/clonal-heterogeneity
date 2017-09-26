@@ -8,7 +8,7 @@ import config, utils
 
 def histogram_binned_data(ax, data, bins=50):
     """
-	"""
+    """
     nx, xbins = np.histogram(data, bins=bins, normed=True)
 
     nx_frac = nx/float(len(nx)) # Each bin divided by total number of objects
@@ -201,16 +201,25 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     cbar = plt.colorbar(im, cax=cax, ticks=[vmin, 0, vmax], format='%.1f')
     cbar.ax.set_title(legend_title, horizontalalignment='center', fontsize=6)
     cbar.ax.tick_params(labelsize=5)
+<<<<<<< HEAD
     cbar.locator = ticker.MaxNLocator(nbins=3)
     #cbar.outline.set_visible(False)
+    
+=======
+    cbar.locator = ticker.MaxNLocator(nbins = 3)
+    cbar.outline.set_visible(False)
 	
+>>>>>>> parent of 74c7b89... Clean up code indentation
 def gw_frequency(data, ax=None, **kwargs):
+    """
+    
+    """
     # Line plots
     data.plot(
         ax=ax, kind='line',
         legend=False, rasterized=True, zorder=2, **kwargs
     )
-	# Draw chromosome shades
+    # Draw chromosome shades
     chr_coords = utils.chr_coords()
     for chrom, g in chr_coords.groupby('chr_arabic'):
         ax.axvspan(g.chr_start.squeeze(), g.chr_end.squeeze(),
@@ -233,6 +242,9 @@ def gw_frequency(data, ax=None, **kwargs):
         tick.tick2On = False
 
 def chr_frequency(data, ax=None, **kwargs):
+    """
+    
+    """
     # Line plots
     data.plot(
         ax=ax, kind='line',
@@ -256,7 +268,10 @@ def chr_frequency(data, ax=None, **kwargs):
         tick.tick2On = False
     
 def histogram_frequency(data, ax=None, **kwargs):
-	# Histogram plots
+    """
+    
+    """
+    # Histogram plots
     for time in data:
         x, y = histogram_binned_data(ax, data[time], bins=50)
         ax.plot(x, y, color=config.time['color'][time], lw=0.5, rasterized=True, zorder=1)
@@ -272,15 +287,14 @@ def histogram_frequency(data, ax=None, **kwargs):
     # Axis tick parameters
     ax.tick_params(axis='both', which='major', size=2, labelsize=6)
     ax.tick_params(axis='both', which='minor', size=1, labelsize=4)
-	# Grid
+    # Grid
     ax.xaxis.grid(lw=0.6, ls='-', color='0.9', which='minor', zorder=0)
 
-def loh_length(data, ax=None):
+def loh_length(data, ax=None, **kwargs):
+    """
     
-    colors = [config.selection['color'][e] for e in data.columns]
-    
-    data.rename(columns=config.selection['short_label'])\
-    .plot(ax=ax, logy=True, color=colors, style='.', marker='o', ms=3, mec='none', legend=False)
+    """
+    data.plot(ax=ax, logy=True, style='.', marker='o', ms=3, mec='none', legend=False, **kwargs)
 
     utils.simple_axes(ax)
     # Axes limits
@@ -294,180 +308,187 @@ def loh_length(data, ax=None):
               borderaxespad=0., prop={'size':5},
               handlelength=0.75)
 
-def loh_fluctuation(data, ax=None):
+def loh_fluctuation(data, ax=None, **kwargs):
+    """
     
-    # colors = [config.background['color'][b] for b in data['LOH rate','mean'].columns]
-    # data['LOH rate','mean'].plot(ax=ax, kind='bar', yerr = data['LOH rate','sem'],
-    #                              color=colors, edgecolor='k', legend=False,
-    #                              error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
-    colors = [config.background['color'][b] for b in data['LOH_rate'].columns] 
-    data['LOH_rate'].plot(ax=ax, kind='bar', yerr=data[['LOH_rate_ci_lower','LOH_rate_ci_upper']].values.T, 
-                          color=colors, edgecolor='k', legend=False,
-                          error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75))
+    """
+    data.plot(ax=ax, kind='bar', edgecolor='k', legend=False,
+              error_kw=dict(ecolor='0.1', lw=.75, capsize=.75, capthick=.75), 
+              **kwargs)
 
     utils.simple_axes(ax)
     
     # Set tick labels
     ax.set_xticklabels(data.index.get_level_values('environment'), minor=False, rotation=0)
     
-    # labels = [ w.get_text() for w in ax.get_yticklabels()]
-    # locs = list(ax.get_yticks())
-    # # ax.set_yticks(list(ax.get_yticks()) + [2E-3])
-    # # ax.set_yticklabels(list(ax.get_yticks()) + [r'$2 \times 10^{-2}$'])
-    # print(labels, locs)
-    # # labels+=[r'$2 \times 10^{-3}$']
-    # # locs+=[2E-3]
-    # # ax.set_yticklabels(labels)
-    # # ax.set_yticks(locs)
-    
+    # Set axes labels
     ax.set_xlabel('Environment')
     ax.set_ylabel(r'Locus-specific LOH rate (gen$^{-1}$)')
-    # ax.set_ylim(1E-7,2E-3)
+    
+    # Set log scale
     ax.set_yscale('log')
-
+    
+    # Draw legend
     ax.legend(frameon=False, loc='upper right', 
               borderaxespad=0., prop={'size':5},
               handlelength=0.75)
-			  
+              
 def filter_multiindex(data, names=None):
-	indexer = [slice(None)]*len(data.index.names)
-	indexer[data.index.names.index('type')] = names
-	return data.loc[tuple(indexer),:].dropna(axis=1, how='all')
-	
+    """
+    
+    """
+    indexer = [slice(None)]*len(data.index.names)
+    indexer[data.index.names.index('type')] = names
+    return data.loc[tuple(indexer),:].dropna(axis=1, how='all')
+    
 ### Consensus genotype ###
 def consensus_genotype(data, ax=None):
-
-	if len(data) > 0:
-		x = data.columns.get_level_values('pos').values
-		y = np.arange(len(data.index))
-					
-		# Make a color map of fixed colors
-		cmap = mpl.colors.ListedColormap([config.background['color']['NA/NA'],
-										  config.background['color']['WA/NA'],
-										  config.background['color']['WA/WA']])
-		bounds = [0,1,2]
-		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
-			
-		heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
-				ax, '', '', '', [], [], cmap=cmap, vmin=0, vmax=2)
+    """
+    
+    """
+    if len(data) > 0:
+        x = data.columns.get_level_values('pos').values
+        y = np.arange(len(data.index))
+                    
+        # Make a color map of fixed colors
+        cmap = mpl.colors.ListedColormap([config.background['color']['NA/NA'],
+                                          config.background['color']['WA/NA'],
+                                          config.background['color']['WA/WA']])
+        bounds = [0,1,2]
+        norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+            
+        heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
+                ax, '', '', '', [], [], cmap=cmap, vmin=0, vmax=2)
 
 ### SNV/indel mutations ###
 def snv_indel_genotype(data, ax=None):
-
-	if len(data) > 0:
-		
-		for ii,(k,g) in enumerate(data.groupby(level='clone')):
-			g = g.dropna(axis=1)
-			x = g.columns.get_level_values('pos').values
-			y = [ii+.5]*len(x)
-			colors = [config.genotype['color'][int(gt)] for gt in g.values.flatten()]
-			ax.scatter(x, y, facecolors=colors, edgecolors='k', s=8, rasterized=False, zorder=3)
+    """
+    
+    """
+    if len(data) > 0:
+        
+        for ii,(k,g) in enumerate(data.groupby(level='clone')):
+            g = g.dropna(axis=1)
+            x = g.columns.get_level_values('pos').values
+            y = [ii+.5]*len(x)
+            colors = [config.genotype['color'][int(gt)] for gt in g.values.flatten()]
+            ax.scatter(x, y, facecolors=colors, edgecolors='k', s=8, rasterized=False, zorder=3)
 
 ### Copy number ###
 def copy_number(data, ax=None):
+    """
     
-	if len(data) > 0:
-		
-		x = data.columns.get_level_values('pos').values
-		y = np.arange(len(data.index.get_level_values('clone')))
-					
-		cmap = mpl.colors.ListedColormap(['none','w','none'])
-		bounds = [1,2,3]
-		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
-			
-		for cn, hatch in zip([1, 3], ['xx','--']):
-			heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], np.ma.masked_array(data, data!=cn),
-					ax, '', '', '', [], [], cmap=cmap, hatch=hatch, vmin=1, vmax=3, zorder=2)
+    """
+    if len(data) > 0:
+        
+        x = data.columns.get_level_values('pos').values
+        y = np.arange(len(data.index.get_level_values('clone')))
+                    
+        cmap = mpl.colors.ListedColormap(['none','w','none'])
+        bounds = [1,2,3]
+        norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+            
+        for cn, hatch in zip([1, 3], ['xx','--']):
+            heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], np.ma.masked_array(data, data!=cn),
+                    ax, '', '', '', [], [], cmap=cmap, hatch=hatch, vmin=1, vmax=3, zorder=2)
 
 ### LOH ###
 def loh_genotype(data, ax=None):
-	
-	if len(data) > 0:
+    """
+    
+    """
+    if len(data) > 0:
 
-		x = data.columns.get_level_values('pos').values
-		y = np.arange(len(data.index.get_level_values('clone')))
-				
-		# Make a color map of fixed colors
-		cmap = mpl.colors.ListedColormap(['k','w','k'])
-		bounds = [-1,0,1]
-		norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
-			
-		heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
-				ax, '', '', '', [], [], cmap=cmap, vmin=-1, vmax=1, zorder=1)
+        x = data.columns.get_level_values('pos').values
+        y = np.arange(len(data.index.get_level_values('clone')))
+                
+        # Make a color map of fixed colors
+        cmap = mpl.colors.ListedColormap(['k','w','k'])
+        bounds = [-1,0,1]
+        norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+            
+        heatmap(np.r_[x, x.max()+1], np.r_[y, y.max()+1], data,
+                ax, '', '', '', [], [], cmap=cmap, vmin=-1, vmax=1, zorder=1)
 
 def annotate_genotype(data, ax=None):
-	
-	labels = data.columns.get_level_values('gene')
-	loc = zip(data.columns.get_level_values('pos'), [-.25]*data.shape[1])
-		
-	for l, xy in zip(labels, loc):
-		trans = ax.get_xaxis_transform() # x in data units, y in axes fraction
-		ax.annotate(l, xy=xy, xytext=(0, 4), textcoords='offset points',
-					arrowprops=dict(arrowstyle='wedge,tail_width=0.7', color='black'),
-					fontsize=5, style=('italic' if l!='non-coding' else 'normal'),
-					weight=('bold' if l in ['RNR2','RNR4','FPR1','TOR1'] else 'normal'),
-					annotation_clip=False, va='bottom', ha='center')
+    """
+    
+    """
+    labels = data.columns.get_level_values('gene')
+    loc = zip(data.columns.get_level_values('pos'), [-.25]*data.shape[1])
+        
+    for l, xy in zip(labels, loc):
+        trans = ax.get_xaxis_transform() # x in data units, y in axes fraction
+        ax.annotate(l, xy=xy, xytext=(0, 4), textcoords='offset points',
+                    arrowprops=dict(arrowstyle='wedge,tail_width=0.7', color='black'),
+                    fontsize=5, style=('italic' if l!='non-coding' else 'normal'),
+                    weight=('bold' if l in ['RNR2','RNR4','FPR1','TOR1'] else 'normal'),
+                    annotation_clip=False, va='bottom', ha='center')
 
 def genome_instability(data, ax=None, title=None):
-	
-	idx = 0
-	
-	# Plot tracks
-	for ii, (s, group) in enumerate(data.groupby(level='set')):
-		
-		# Consensus genotypes
-		consensus_data = filter_multiindex(group, names=['consensus'])
-		nrows = consensus_data.index.get_level_values('clone').nunique()
-		
-		ax1 = plt.subplot(ax[idx:idx+nrows])
-		consensus_genotype(consensus_data, ax1)
-		
-		if ax1.is_first_row():
-			# Set axis label
-			labels = ['Consensus']
-			ax1.set_yticks(np.arange(len(labels)) + 0.5, minor=True)
-			ax1.set_yticklabels(labels, fontweight='bold', va='center', minor=True)
-			ax1.set_title(title, fontsize=6, y=2, weight='bold')
-			# Annotate variants
-			annotation = filter_multiindex(data, names=[' snv_indel'])
-			annotate_genotype(annotation, ax1)
-		
-		idx += nrows
-		
-		# De novo genotypes
-		de_novo_data = filter_multiindex(group, names=[' snv_indel','copy_number','loh'])
-		labels = de_novo_data.index.get_level_values('clone').unique()
-		nrows = len(labels)
-		
-		ax2 = plt.subplot(ax[idx:idx+nrows], sharex=ax1)
-		# SNV/indel
-		snv_indel_data = filter_multiindex(group, names=[' snv_indel'])
-		snv_indel_genotype(snv_indel_data, ax2)
-		# Copy number
-		copy_number_data = filter_multiindex(group, names=['copy_number'])
+    """
+    
+    """
+    idx = 0
+    
+    # Plot tracks
+    for ii, (s, group) in enumerate(data.groupby(level='set')):
+        
+        # Consensus genotypes
+        consensus_data = filter_multiindex(group, names=['consensus'])
+        nrows = consensus_data.index.get_level_values('clone').nunique()
+        
+        ax1 = plt.subplot(ax[idx:idx+nrows])
+        consensus_genotype(consensus_data, ax1)
+        
+        if ax1.is_first_row():
+            # Set axis label
+            labels = ['Consensus']
+            ax1.set_yticks(np.arange(len(labels)) + 0.5, minor=True)
+            ax1.set_yticklabels(labels, fontweight='bold', va='center', minor=True)
+            ax1.set_title(title, fontsize=6, y=2, weight='bold')
+            # Annotate variants
+            annotation = filter_multiindex(data, names=[' snv_indel'])
+            annotate_genotype(annotation, ax1)
+        
+        idx += nrows
+        
+        # De novo genotypes
+        de_novo_data = filter_multiindex(group, names=[' snv_indel','copy_number','loh'])
+        labels = de_novo_data.index.get_level_values('clone').unique()
+        nrows = len(labels)
+        
+        ax2 = plt.subplot(ax[idx:idx+nrows], sharex=ax1)
+        # SNV/indel
+        snv_indel_data = filter_multiindex(group, names=[' snv_indel'])
+        snv_indel_genotype(snv_indel_data, ax2)
+        # Copy number
+        copy_number_data = filter_multiindex(group, names=['copy_number'])
         # copy_number(copy_number_data, ax2)
-		# LOH
-		loh_data = filter_multiindex(group, names=['loh'])
-		loh_genotype(loh_data, ax2)
+        # LOH
+        loh_data = filter_multiindex(group, names=['loh'])
+        loh_genotype(loh_data, ax2)
 
-		# Annotate clonal lineages
-		ax2.set_yticks(np.arange(len(labels)) + 0.5)
-		ax2.set_yticklabels('C' + labels, fontweight='bold', va='center')
-		[ax2.axhline(g, lw=0.5, ls="-", color="lightgray") for g in np.arange(len(labels))]
-		lineage = group.index.get_level_values('lineage').unique()[0]
-		ax2.tick_params(axis='y', colors=config.lineages[lineage]['fill'], width=5, which='both')
-		
-		# Show chromosome boundaries
-		chrom_boundaries(ax2)
-		
-		idx += nrows
+        # Annotate clonal lineages
+        ax2.set_yticks(np.arange(len(labels)) + 0.5)
+        ax2.set_yticklabels('C' + labels, fontweight='bold', va='center')
+        [ax2.axhline(g, lw=0.5, ls="-", color="lightgray") for g in np.arange(len(labels))]
+        lineage = group.index.get_level_values('lineage').unique()[0]
+        ax2.tick_params(axis='y', colors=config.lineages[lineage]['fill'], width=5, which='both')
+        
+        # Show chromosome boundaries
+        chrom_boundaries(ax2)
+        
+        idx += nrows
 
-	# Set axis label
-	ax2.set_xlabel('Chromosome')
-	
+    # Set axis label
+    ax2.set_xlabel('Chromosome')
+    
 
 def scatter_plot(x, y, ax=None, **kwargs):
+    """
     
+    """
     ax.plot(x, y, linestyle='', rasterized=True, **kwargs)#, label=config.population['long_label'][t])
     
     ax.axvline(x=0, ls='--', lw=1.5, color='lightgray', zorder=0)
@@ -483,7 +504,9 @@ def scatter_plot(x, y, ax=None, **kwargs):
     ax.get_yaxis().tick_left()
 
 def histogram_x(data, ax=None, time=None):
-	
+    """
+    
+    """
     import gmm
     
     X = data.groupby(level=['isolate']).agg([np.mean])
@@ -536,7 +559,9 @@ def histogram_x(data, ax=None, time=None):
     ax.get_yaxis().tick_left()
 
 def histogram_y(data, ax=None, time=None):
-	
+    """
+    
+    """
     import gmm
     
     Y = data.groupby(level=['isolate']).agg([np.mean])
@@ -589,7 +614,9 @@ def histogram_y(data, ax=None, time=None):
     ax.get_yaxis().tick_left()
     
 def lollipops(data, ax=None):
-            
+    """
+    
+    """
     data = data.agg([np.mean, np.median, np.std, 'count'])
     
     if len(data)>0:
@@ -650,19 +677,19 @@ def scatter_rank_correlation(data, ax=None, environment=None):
 
 
 def chrom_boundaries(ax=None):
-	"""
-	Show chromosome boundaries
-	"""
-	# Set labels
-	chr_coords = utils.chr_coords()
-	ticks = chr_coords.chr_start + (chr_coords.chr_end - chr_coords.chr_start)/2.
-	labels = chr_coords.chr_roman
-	ax.set_xticks(ticks)
-	ax.set_xticklabels(labels)
-	# Show grid
-	start = chr_coords.chr_start
-	grid=[x+1. for x in list(set(start))]
-	[ax.axvline(g, lw=0.5, ls="-", color="gray") for g in grid]
+    """
+    Show chromosome boundaries
+    """
+    # Set labels
+    chr_coords = utils.chr_coords()
+    ticks = chr_coords.chr_start + (chr_coords.chr_end - chr_coords.chr_start)/2.
+    labels = chr_coords.chr_roman
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(labels)
+    # Show grid
+    start = chr_coords.chr_start
+    grid=[x+1. for x in list(set(start))]
+    [ax.axvline(g, lw=0.5, ls="-", color="gray") for g in grid]
 
 def set_custom_labels(index, pos):
     """
@@ -679,6 +706,9 @@ def set_custom_labels(index, pos):
 def connect_bbox(bbox1, bbox2,
                  loc1a, loc2a, loc1b, loc2b,
                  prop_lines, prop_connector=None, prop_patches=None):
+    """
+    
+    """
     from mpl_toolkits.axes_grid1.inset_locator import BboxPatch, BboxConnector, BboxConnectorPatch
     
     if prop_connector is None:
@@ -749,6 +779,9 @@ def zoom_effect(ax1, ax2, xmin, xmax, **kwargs):
     return c1, c2, bbox_patch1, bbox_patch2, p
 
 def get_text_positions(x_data, y_data, txt_width, txt_height):
+    """
+    
+    """
     a = zip(y_data, x_data)
     text_positions = y_data.copy()
     for index, (y, x) in enumerate(a):
@@ -769,6 +802,9 @@ def get_text_positions(x_data, y_data, txt_width, txt_height):
     return text_positions
 
 def text_plotter(x_data, y_data, text_positions, axis,txt_width,txt_height):
+    """
+    
+    """
     for x,y,t in zip(x_data, y_data, text_positions):
         axis.text(x - txt_width, 1.01*t, '%d'%int(y),rotation=0, color='blue')
         if y != t:
@@ -777,6 +813,9 @@ def text_plotter(x_data, y_data, text_positions, axis,txt_width,txt_height):
                        zorder=0,length_includes_head=True)
 
 def annotate_custom(ax, s, xy_arr=[], *args, **kwargs):
+    """
+    
+    """
     ans = []
     an = ax.annotate(s, xy_arr[0], *args, **kwargs)
     ans.append(an)
@@ -795,6 +834,9 @@ def annotate_custom(ax, s, xy_arr=[], *args, **kwargs):
     return ans
 
 def colorbar_index(ncolors, cmap):
+    """
+    
+    """
     cmap = colormap_discretize(cmap, ncolors)
     mappable = plt.cm.ScalarMappable(cmap=cmap)
     mappable.set_array([])
@@ -803,7 +845,7 @@ def colorbar_index(ncolors, cmap):
     
 def colormap_discretize(cmap, N):
     """
-	Return a discrete colormap from the continuous colormap cmap.
+    Return a discrete colormap from the continuous colormap cmap.
         cmap: colormap instance, eg. cm.jet. 
         N: number of colors.
     Example
@@ -826,10 +868,12 @@ def colormap_discretize(cmap, N):
     return mcolors.LinearSegmentedColormap(cmap.name + "_%d"%N, cdict, 1024)
 
 def save_figure(filename, formats=['pdf','png','svg'], **kwargs):
-	
-	if 'pdf' in formats:
-		plt.savefig(filename+'.pdf', bbox_inches='tight', **kwargs)
-	if 'png' in formats:
-		plt.savefig(filename+'.png', bbox_inches='tight', **kwargs)
-	if 'svg' in formats:
-		plt.savefig(filename+'.svg', bbox_inches='tight', **kwargs)
+    """
+    
+    """
+    if 'pdf' in formats:
+        plt.savefig(filename+'.pdf', bbox_inches='tight', **kwargs)
+    if 'png' in formats:
+        plt.savefig(filename+'.png', bbox_inches='tight', **kwargs)
+    if 'svg' in formats:
+        plt.savefig(filename+'.svg', bbox_inches='tight', **kwargs)

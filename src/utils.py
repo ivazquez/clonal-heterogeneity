@@ -8,7 +8,7 @@ import config, utils
 
 def load_data(fn):
     """
-    Load the data for the plots
+	Load the data for the plots
     
     Input
     -----
@@ -18,9 +18,10 @@ def load_data(fn):
     with open(fn, 'rb') as f:
         return pickle.load(f)
 
+
 def save_data(data, fn):
     """
-    Store data to file for the plots
+	Store data to file for the plots
     
     Input
     -----
@@ -31,6 +32,7 @@ def save_data(data, fn):
     with open(fn, 'wb') as f:
         pickle.dump(data, f, protocol=-1)
 
+
 def merge_two_dicts(x, y):
     """
 	Given two dicts, merge them into a new dict as a shallow copy.
@@ -38,6 +40,7 @@ def merge_two_dicts(x, y):
     z = x.copy()
     z.update(y)
     return z
+	
 	
 def combine_columns(df, c1, c2, mirror=True):
     from itertools import combinations
@@ -57,10 +60,11 @@ def combine_columns(df, c1, c2, mirror=True):
         genotype.append(g)
             
     return genotype
+
     
 def simple_axes(ax):
     """
-    Show left and bottom axes in a plot
+	Show left and bottom axes in a plot
 
     Input
     -----
@@ -71,9 +75,10 @@ def simple_axes(ax):
     ax.get_xaxis().tick_bottom()
     ax.get_yaxis().tick_left()
 
+
 def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
     """
-    Function to offset the "center" of a colormap. Useful for
+	Function to offset the "center" of a colormap. Useful for
     data with a negative min and positive max and you want the
     middle of the colormap's dynamic range to be at zero
 
@@ -122,9 +127,10 @@ def shift_colormap(cmap, start=0, midpoint=0.5, stop=1.0, name='shiftedcmap'):
 
     return newcmap
 
+
 def discrete_colormap(N, base_cmap=None):
     """
-    Create an N-bin discrete colormap from the specified input map
+	Create an N-bin discrete colormap from the specified input map
     
     Input
     -----
@@ -141,9 +147,10 @@ def discrete_colormap(N, base_cmap=None):
     cmap_name = base.name + str(N)
     return base.from_list(cmap_name, color_list, N)
 
+
 def percentile(data):
     """
-    Calculate the median and top/bottom percentiles
+	Calculate the median and top/bottom percentiles
     
     Input
     -----
@@ -158,9 +165,10 @@ def percentile(data):
         perc_75[i] = np.percentile(data[:, i], 75)
     return median, perc_25, perc_75
 
+
 def stars(p):
     """
-    Convert p-values to star notation
+	Convert p-values to star notation
 
     Input
     -----
@@ -177,7 +185,7 @@ def stars(p):
     else:
         return "n.s."
         
-# Define digit mapping
+#Define digit mapping
 roman_numeral = (('M',  1000),
 				 ('CM', 900),
 				 ('D',  500),
@@ -194,12 +202,12 @@ roman_numeral = (('M',  1000),
 
 def int_to_roman(n):
     """
-    Convert integer to roman numeral
+	Convert integer to roman numeral
 	"""
     if not (0 < n < 5000):
-        raise OutOfRangeError, "number out of range (must be 1..4999)"
+        raise(OutOfRangeError, "number out of range (must be 1..4999)")
     if int(n) != n:
-        raise NotIntegerError, "decimals can not be converted"
+        raise(NotIntegerError, "decimals can not be converted")
 
     result = ""
     for numeral, integer in roman_numeral:
@@ -223,12 +231,12 @@ roman_numeral_pattern = re.compile("""
 
 def roman_to_int(s):
     """
-    Convert roman numeral to integer
+	Convert roman numeral to integer
 	"""
     if not s:
-        raise InvalidRomanNumeralError, 'Input can not be blank'
+        raise(InvalidRomanNumeralError, 'Input can not be blank')
     if not roman_numeral_pattern.search(s):
-        raise InvalidRomanNumeralError, 'Invalid Roman numeral: %s' % s
+        raise(InvalidRomanNumeralError, 'Invalid Roman numeral: %s' % s)
 
     result = 0
     index = 0
@@ -240,8 +248,8 @@ def roman_to_int(s):
 
 def hex_to_rgb(value):
     """
-    Convert hex code to rgb
-    """
+	Convert hex code to rgb
+	"""
     value = value.lstrip('#')
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
@@ -249,15 +257,15 @@ def hex_to_rgb(value):
 def rgb_to_hex(rgb):
     """
     Convert rgb to hex code
-    """
+	"""
     return '#%02x%02x%02x' % rgb
 
 def chr_coords():
-    # Load config file with chromosome lengths
+	# Load config file with chromosome lengths
     df = pd.DataFrame(config.chrom_len.items(), columns=['chr_arabic', 'chr_length'])
     df = df[~(df['chr_arabic'].isin([17,18]))]
     df['chr_roman'] = df['chr_arabic'].apply(utils.int_to_roman)
-    # Calculate start/end coordinates
+	# Calculate start/end coordinates
     df['chr_start'] = ((df['chr_length'].rolling(window=2,center=False).sum() - df['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
     df['chr_end'] = (df['chr_length']).cumsum(axis=0)
     return df
@@ -267,8 +275,8 @@ def chr_to_gw(df, chr_coords):
     if 'start' and 'end' in df:
         df['pos_start'] = df.start + df.chr_start
         df['pos_end'] = df.end + df.chr_start
-    if 'site' in df:
-        df['pos'] = df.site + df.chr_start
+    if 'pos' in df:
+        df['pos_cum'] = df.pos + df.chr_start
         
     df['chr_roman'] = df['chr_arabic'].apply(int_to_roman)
     
@@ -278,7 +286,7 @@ def chr_to_gw(df, chr_coords):
 	
 def est_cum_pos(position, aggregation='chrom', column='pos', offset=0, chrom_len=None):
     """
-    Compute the cumulative position of each variant given the position and the chromosome
+	Compute the cumulative position of each variant given the position and the chromosome
     Also return the starting cumulativeposition of each chromosome
 
     Input
