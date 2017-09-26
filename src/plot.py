@@ -201,15 +201,9 @@ def heatmap_hybrids(H, ax, title, xlabel, ylabel, xticklabels, yticklabels, fold
     cbar = plt.colorbar(im, cax=cax, ticks=[vmin, 0, vmax], format='%.1f')
     cbar.ax.set_title(legend_title, horizontalalignment='center', fontsize=6)
     cbar.ax.tick_params(labelsize=5)
-<<<<<<< HEAD
     cbar.locator = ticker.MaxNLocator(nbins=3)
-    #cbar.outline.set_visible(False)
-    
-=======
-    cbar.locator = ticker.MaxNLocator(nbins = 3)
     cbar.outline.set_visible(False)
 	
->>>>>>> parent of 74c7b89... Clean up code indentation
 def gw_frequency(data, ax=None, **kwargs):
     """
     
