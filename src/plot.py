@@ -329,7 +329,7 @@ def loh_fluctuation(data, ax=None, **kwargs):
               
 def filter_multiindex(data, names=None):
     """
-    
+    Filter multiindex by level 'type'
     """
     indexer = [slice(None)]*len(data.index.names)
     indexer[data.index.names.index('type')] = names
@@ -338,10 +338,10 @@ def filter_multiindex(data, names=None):
 ### Consensus genotype ###
 def consensus_genotype(data, ax=None):
     """
-    
+    Plot the consensus genotype across multiple clones
     """
     if len(data) > 0:
-        x = data.columns.get_level_values('pos').values
+        x = data.columns.get_level_values('pos_cum').values
         y = np.arange(len(data.index))
                     
         # Make a color map of fixed colors
@@ -357,13 +357,13 @@ def consensus_genotype(data, ax=None):
 ### SNV/indel mutations ###
 def snv_indel_genotype(data, ax=None):
     """
-    
+    Plot genotype of SNVs/indels
     """
     if len(data) > 0:
         
         for ii,(k,g) in enumerate(data.groupby(level='clone')):
             g = g.dropna(axis=1)
-            x = g.columns.get_level_values('pos').values
+            x = g.columns.get_level_values('pos_cum').values
             y = [ii+.5]*len(x)
             colors = [config.genotype['color'][int(gt)] for gt in g.values.flatten()]
             ax.scatter(x, y, facecolors=colors, edgecolors='k', s=8, rasterized=False, zorder=3)
@@ -371,11 +371,13 @@ def snv_indel_genotype(data, ax=None):
 ### Copy number ###
 def copy_number(data, ax=None):
     """
-    
+    Plot copy number aberrations
     """
-    if len(data) > 0:
+    if len(data.columns) > 0:
         
-        x = data.columns.get_level_values('pos').values
+        print(data)
+        
+        x = data.columns.get_level_values('pos_cum').values
         y = np.arange(len(data.index.get_level_values('clone')))
                     
         cmap = mpl.colors.ListedColormap(['none','w','none'])
@@ -389,11 +391,11 @@ def copy_number(data, ax=None):
 ### LOH ###
 def loh_genotype(data, ax=None):
     """
-    
+    Plot genotype changes due to LOH
     """
     if len(data) > 0:
 
-        x = data.columns.get_level_values('pos').values
+        x = data.columns.get_level_values('pos_cum').values
         y = np.arange(len(data.index.get_level_values('clone')))
                 
         # Make a color map of fixed colors
@@ -406,10 +408,10 @@ def loh_genotype(data, ax=None):
 
 def annotate_genotype(data, ax=None):
     """
-    
+    Annotate mutation genotype
     """
     labels = data.columns.get_level_values('gene')
-    loc = zip(data.columns.get_level_values('pos'), [-.25]*data.shape[1])
+    loc = zip(data.columns.get_level_values('pos_cum'), [-.25]*data.shape[1])
         
     for l, xy in zip(labels, loc):
         trans = ax.get_xaxis_transform() # x in data units, y in axes fraction
@@ -442,23 +444,23 @@ def genome_instability(data, ax=None, title=None):
             ax1.set_yticklabels(labels, fontweight='bold', va='center', minor=True)
             ax1.set_title(title, fontsize=6, y=2, weight='bold')
             # Annotate variants
-            annotation = filter_multiindex(data, names=[' snv_indel'])
+            annotation = filter_multiindex(data, names=['snv_indel'])
             annotate_genotype(annotation, ax1)
         
         idx += nrows
         
         # De novo genotypes
-        de_novo_data = filter_multiindex(group, names=[' snv_indel','copy_number','loh'])
+        de_novo_data = filter_multiindex(group, names=['snv_indel','copy_number','loh'])
         labels = de_novo_data.index.get_level_values('clone').unique()
         nrows = len(labels)
         
         ax2 = plt.subplot(ax[idx:idx+nrows], sharex=ax1)
         # SNV/indel
-        snv_indel_data = filter_multiindex(group, names=[' snv_indel'])
+        snv_indel_data = filter_multiindex(group, names=['snv_indel'])
         snv_indel_genotype(snv_indel_data, ax2)
         # Copy number
         copy_number_data = filter_multiindex(group, names=['copy_number'])
-        # copy_number(copy_number_data, ax2)
+        copy_number(copy_number_data, ax2)
         # LOH
         loh_data = filter_multiindex(group, names=['loh'])
         loh_genotype(loh_data, ax2)
@@ -483,11 +485,8 @@ def scatter_plot(x, y, ax=None, **kwargs):
     """
     
     """
-    ax.plot(x, y, linestyle='', rasterized=True, **kwargs)#, label=config.population['long_label'][t])
+    ax.plot(x, y, linestyle='', rasterized=False, **kwargs)#, label=config.population['long_label'][t])
     
-    ax.axvline(x=0, ls='--', lw=1.5, color='lightgray', zorder=0)
-    ax.axhline(y=0, ls='--', lw=1.5, color='lightgray', zorder=0)
-
     from matplotlib.ticker import MaxNLocator
     ax.xaxis.set_major_locator(ticker.MaxNLocator(nbins=5, prune='upper'))
     ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=5, prune='upper'))
@@ -497,16 +496,14 @@ def scatter_plot(x, y, ax=None, **kwargs):
     ax.get_xaxis().tick_bottom()
     ax.get_yaxis().tick_left()
 
-def histogram_x(data, ax=None, time=None):
+def histogram_x(X, ax=None, time=None):
     """
     
     """
     import gmm
-    
-    X = data.groupby(level=['isolate']).agg([np.mean])
-            
+                
     # Fit the Gaussian mixture model
-    N = np.arange(1, 6)
+    N = np.arange(1, 4)
     models = gmm.gmm_fit(X, N)
 
     # Compute the AIC and the BIC
@@ -552,16 +549,14 @@ def histogram_x(data, ax=None, time=None):
     ax.get_xaxis().tick_bottom()
     ax.get_yaxis().tick_left()
 
-def histogram_y(data, ax=None, time=None):
+def histogram_y(Y, ax=None, time=None):
     """
     
     """
     import gmm
-    
-    Y = data.groupby(level=['isolate']).agg([np.mean])
-            
+                
     # Fit the Gaussian mixture model
-    N = np.arange(1, 6)
+    N = np.arange(1, 4)
     models = gmm.gmm_fit(Y, N)
 
     # Compute the AIC and the BIC
@@ -634,7 +629,7 @@ def lollipops(data, ax=None):
 #                         fontsize = 6, style = 'italic',
 #                         path_effects=[path_effects.withStroke(linewidth=0.5, foreground="w")])
 
-import seaborn.apionly as sns
+import seaborn as sns
 
 def scatter_rank_correlation(data, ax=None, environment=None):
     """
@@ -863,7 +858,9 @@ def colormap_discretize(cmap, N):
 
 def save_figure(filename, formats=['pdf','png','svg'], **kwargs):
     """
-    
+    Save matplotlib figure in multiple formats (pdf, png, svg).
+        formats: list of formats.
+        kwargs: arguments to plt.savefig (e.g. dpi).
     """
     if 'pdf' in formats:
         plt.savefig(filename+'.pdf', bbox_inches='tight', **kwargs)

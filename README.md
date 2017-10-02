@@ -82,10 +82,10 @@ This dataset comprises phenotype measurements of intra-population heterogeneity,
 * Phenotype measurements of the genetic cross are summarised in this dataset ([spores](data/pheno/genetic-cross/pheno_genetic_cross_spores.csv) and [hybrids](data/pheno/genetic-cross/pheno_genetic_cross_hybrids.csv)) and are analysed in this [notebook](src/figure4.ipynb). The results are shown in [Figure 6](manuscript/main/figures/figure6/figure6_final.png) and [Figures S10](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_extended_final.png) and [S11](manuscript/supp/figures/supp_figure_pheno_cross/supp_figure_pheno_cross_reduced_final.png).
 * Phenotype measurements of the genetic constructs are summarised in this [dataset](data/pheno/genetic-constructs/pheno_genetic_constructs.csv) and are analysed in this [notebook](src/supp_figure_pheno_constructs.ipynb).
 
-Each measurement is indexed by experimental run, plate, row and column. All datasets report the growth rate and the doubling time. For each observable, the dataset reports absolute values and normalised values extracted after spatial normalisation. `NaN' is used to indicate missing data.
+Each measurement is indexed by experimental run, plate, row and column. All datasets report the growth rate and the doubling time. For each observable, the dataset reports absolute values and normalised values extracted after spatial normalisation. `NaN` is used to indicate missing data.
 
 ## Fluctuation assay data
 Locus-specific measurements of the LOH rate using a Luria-Delbruck fluctuation test. This dataset reports the raw colony counts measured in the fluctuation assay and the estimated LOH rates.  They can be found in the `data/fluctuation/` directory.
 
-* The raw counts contain the [number of colony-forming units](data/fluctuation/fluctuation_assay_counts.csv) (c.f.u.) in YPD medium and in 5-FOA+ dropout medium. This provides the average number of cells per culture, `N`, the average number of LOH events per culture, `m`.
+* The raw counts contain the [number of colony-forming units](data/fluctuation/fluctuation_assay_counts.csv) (CFU) in YPD medium and in 5-FOA+ dropout medium. This provides the average number of cells per culture, `N`, the average number of LOH events per culture, `m`.
 * For every background and environment, the [mean LOH rate](data/fluctuation/fluctuation_assay_rates.csv) and 5\%/95\% confidence intervals are estimated using the probability generating function of the Luria-Delbruck distribution defined by Hamon et al. (2012).

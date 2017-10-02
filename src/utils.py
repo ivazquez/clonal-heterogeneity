@@ -4,7 +4,7 @@
 # Load external dependencies
 from setup import *
 # Load internal dependencies
-import config, utils
+import config
 
 def load_data(fn):
     """
@@ -263,22 +263,21 @@ def rgb_to_hex(rgb):
 def chr_coords():
 	# Load config file with chromosome lengths
     df = pd.DataFrame(config.chrom_len.items(), columns=['chr_arabic', 'chr_length'])
-    df = df[~(df['chr_arabic'].isin([17,18]))]
-    df['chr_roman'] = df['chr_arabic'].apply(utils.int_to_roman)
+    df['chr_roman'] = df['chr_arabic'].apply(int_to_roman)
 	# Calculate start/end coordinates
     df['chr_start'] = ((df['chr_length'].rolling(window=2,center=False).sum() - df['chr_length']).fillna(0)).cumsum(axis=0).astype(int)
     df['chr_end'] = (df['chr_length']).cumsum(axis=0)
     return df
 
 def chr_to_gw(df, chr_coords):
+    
     df = df.merge(chr_coords, how='left', on='chr_arabic')
+
     if 'start' and 'end' in df:
-        df['pos_start'] = df.start + df.chr_start
-        df['pos_end'] = df.end + df.chr_start
+        df['start_cum'] = df.start + df.chr_start
+        df['end_cum'] = df.end + df.chr_start
     if 'pos' in df:
         df['pos_cum'] = df.pos + df.chr_start
-        
-    df['chr_roman'] = df['chr_arabic'].apply(int_to_roman)
     
     df = df.drop(['chr_start','chr_end'], axis=1)
     

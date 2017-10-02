@@ -17,7 +17,7 @@ def gmm_fit(X, N):
     models = [None for i in range(len(N))]
     
     for i in range(len(N)):
-        models[i] = GaussianMixture(N[i]).fit(X)
+        models[i] = GaussianMixture(N[i], n_init=100).fit(X)
         
     return models
 
@@ -33,7 +33,7 @@ def gmm_plot(ax, X, M_best, label=None):
     3) probability that a point came from each component
     """
 
-    # plot data + best-fit mixture
+    # Plot data + best-fit mixture
     x = np.linspace(X.min()-.2, X.max()+.2, 1000)
     logprob, responsibilities = M_best.score_samples(np.array([x]).T)
     pdf = np.exp(logprob)
