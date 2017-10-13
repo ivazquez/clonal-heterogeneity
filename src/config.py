@@ -309,8 +309,8 @@ selection = {
         'HU':'-','RM':'-','YPD':'-' 
     },
     'long_label': {
-        u'HU': u'Hydroxyurea (YPD+HU 10 mg/ml)', 
-        u'RM': u'Rapamycin (YPD+RM 0.025 μg/ml)',
+        u'HU': u'Hydroxyurea (YPD+HU 10 mg/mL)', 
+        u'RM': u'Rapamycin (YPD+RM 0.025 μg/mL)',
         u'YPD': u'Control (YPD)'
     },
     'short_label': {
@@ -337,8 +337,8 @@ environment = {
         'HU':'-','RM':'-','SC':'-' 
     },
     'long_label': {
-        'HU': u'Hydroxyurea (SC+HU 10 mg/ml)', 
-        'RM': u'Rapamycin (SC+RM 0.025 μg/ml)',
+        'HU': u'Hydroxyurea (SC+HU 10 mg/mL)', 
+        'RM': u'Rapamycin (SC+RM 0.025 μg/mL)',
         'SC': u'Control (SC)'
     },
     'short_label': {

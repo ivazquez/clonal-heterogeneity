@@ -6,7 +6,7 @@ This repository contains supporting material for the manuscript:
 >
 > Ignacio Vázquez-García, Francisco Salinas, Jing Li, Andrej Fischer, Benjamin Barré, Johan Hallin, Anders Bergström, Elisa Alonso-Pérez, Jonas Warringer, Ville Mustonen, Gianni Liti
 >
-> [bioRxiv 039859; doi: http://dx.doi.org/10.1101/039859](http://dx.doi.org/10.1101/039859)
+> [Cell Reports 21, 732-744 (2017), doi: https://doi.org/10.1016/j.celrep.2017.09.046](https://doi.org/10.1016/j.celrep.2017.09.046)
 
 To clone this repository, run the following command in a local directory:
 
